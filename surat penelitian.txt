@@ -1,0 +1,20 @@
+Input Form :
+
+ - Upload Surat
+ - Upload Proposal
+ - No hp/ email
+ - Nama
+ - NIK
+ - Alamat:Provinsi, Kota/Kab, Kecamatan, Kelurahan, Kode Pos
+ - NIM
+ - Asal Kampus
+ - Progdi
+ - Jenjang Pendidikan
+ - Judul Rencana Penilitian
+ - Waktu
+ - Keperluan/Lokasi Penelitian
+ 
+ 
+ - Affiliasi/Universitas/Kantor Kerja
+ - Status: Dosen, Mahasiswa, Pelajar
+ - Tracking Surat
