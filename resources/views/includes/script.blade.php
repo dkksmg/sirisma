@@ -12,3 +12,4 @@
 
 
     <script src="{{ url('assets/js/main.js') }}"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script> --}}

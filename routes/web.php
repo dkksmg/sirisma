@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\ApplicationController;
-use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\ApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +19,32 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
-Route::get('/permohonan', [ApplicationController::class, 'index'])->name('permohonan')
-    ->middleware(['auth', 'verified']);
+Route::prefix('permohonan')
+    ->middleware(['auth', 'verified'])
+    ->group(function () {
+        Route::get('/', [ApplicationController::class, 'index'])->name(
+            'permohonan'
+        );
+        Route::get('/tambah', [ApplicationController::class, 'input'])->name(
+            'permohonan.tambah'
+        );
+        Route::post('/getkotakab', [
+            ApplicationController::class,
+            'getkotakab',
+        ])->name('getkotakab');
+        Route::post('/getkecamatan', [
+            ApplicationController::class,
+            'getkecamatan',
+        ])->name('getkecamatan');
+        Route::post('/getkeldesa', [
+            ApplicationController::class,
+            'getkeldesa',
+        ])->name('getkeldesa');
+    });
+
 Auth::routes(['verify' => true]);
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/profile', [ApplicantController::class, 'index'])
+    ->middleware(['auth', 'verified'])->name('profile');

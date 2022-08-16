@@ -322,6 +322,19 @@ section {
         transition: 0.3s;
         position: relative;
     }
+    .btn-out {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+        font-family: var(--font-secondary);
+        font-size: 16px;
+        font-weight: 400;
+        color: rgba(var(--color-secondary-dark-rgb), 0.7);
+        white-space: nowrap;
+        transition: 0.3s;
+        position: relative;
+    }
 
     .navbar a i,
     .navbar a:focus i {
@@ -397,12 +410,21 @@ section {
         font-weight: 400;
         color: rgba(var(--color-white-rgb), 0.5);
     }
+    .btn-out {
+        margin-left: 10px;
+        padding: 10px 20px;
+        font-size: 15px;
+        text-transform: none;
+        font-weight: 400;
+        color: rgba(var(--color-white-rgb), 0.5);
+    }
 
     .navbar .dropdown ul a i {
         font-size: 12px;
     }
 
     .navbar .dropdown ul a:hover,
+    .navbar .dropdown ul form button:hover,
     .navbar .dropdown ul .active,
     .navbar .dropdown ul .active:hover,
     .navbar .dropdown ul li:hover > a {
@@ -3319,6 +3341,7 @@ section {
     border: none;
     padding: 0 !important;
     cursor: pointer;
+    margin-left: 20px;
 }
 .info {
     text-decoration: none;

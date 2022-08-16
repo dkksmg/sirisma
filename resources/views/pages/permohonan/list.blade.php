@@ -8,15 +8,20 @@
                 </div>
             </div>
             <div class="container">
+                <div class="row justify-content-left mb-4">
+                    <div class="col-md-3">
+                        <a class="btn btn-md btn-success" href="{{ route('permohonan.tambah') }}">Tambah Permohonan</a>
+                    </div>
+                </div>
                 <div class="row justify-content-center">
                     <div class="col-md-12">
-                        <table id="example" class="table table-striped" style="width:100%">
+                        <table id="example" class="table table-striped" width="100%" cellspacing="0" height="auto">
                             <thead>
                                 <tr>
                                     <th class="text-center">Nama</th>
                                     <th class="text-center">Instansi</th>
                                     <th class="text-center">Jenis Permohonan</th>
-                                    <th class="text-center">Keperluan</th>
+                                    <th class="text-justify">Keperluan</th>
                                     <th class="text-center">Waktu</th>
                                     <th class="text-center">File Surat Pengantar</th>
                                     <th class="text-center">File Proposal</th>

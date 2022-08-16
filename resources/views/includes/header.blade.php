@@ -9,43 +9,39 @@
 
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto" href="{{ url('/') }}#">Home</a></li>
-                    <li><a class="nav-link scrollto" href="{{ url('/') }}#syarat">Syarat Permohonan</a></li>
-                    <li><a class="nav-link scrollto" href="{{ url('/') }}#faq">FAQs</a></li>
-                    <li><a class="nav-link scrollto" href="{{ url('/') }}#tata-cara">Tata Cara</a></li>
-                    <li><a class="nav-link scrollto" href="{{ url('/') }}#contact">Kontak</a></li>
-                    @auth
-                        <li><a class="nav-link scrollto" href="{{ route('permohonan') }}">Permohonan</a></li>
-                    @endauth
+                    <li><a class="nav-link scrollto" href="{{ route('home') }}#">Home</a></li>
+                    <li><a class="nav-link scrollto" href="{{ route('home') }}#syarat">Syarat Permohonan</a></li>
+                    <li><a class="nav-link scrollto" href="{{ route('home') }}#tata-cara">Tata Cara</a></li>
+                    <li><a class="nav-link scrollto" href="{{ route('home') }}#faq">FAQs</a></li>
+                    <li><a class="nav-link scrollto" href="{{ route('home') }}#contact">Kontak</a></li>
                     @guest()
                         <li><a class="nav-link scrollto" href="{{ route('login') }}">Login</a></li>
                         <li><a class="nav-link scrollto" href="{{ route('register') }}">Register</a></li>
                     @endguest
-                </ul>
-                <i class="bi bi-list mobile-nav-toggle d-none"></i>
-            </nav><!-- .navbar -->
-
-
-            <a class="btn-getstarted scrollto" style="visibility: hidden">Get Started</a>
-            @auth()
-                <nav class="navbar scrollto" id="navbar" role="navigation">
-                    <ul class="">
-
-                        <li class="dropdown"><a href="#"><span>Hi, {{ Auth::user()->name }}</span> <i
+                    @auth()
+                        <li><a class="nav-link scrollto" href="{{ route('permohonan') }}">Permohonan</a></li>
+                        <li class="dropdown"><a href="#"><span>{{ salam() }},
+                                    {{ Auth::user()->name }}</span> <i
                                     class="bi bi-chevron-down dropdown-indicator"></i></a>
                             <ul>
                                 <li><a href="{{ url('/profile') }}">Profile</a></li>
                                 <li>
-                                    <form action="{{ route('logout') }}" method="POST" class=" dropdown-item">
+                                    {{-- <a href="" class="">Keluar</a> --}}
+                                    <form action="{{ route('logout') }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn-out">Keluar</button>
                                     </form>
                                 </li>
                             </ul>
                         </li>
-                    </ul>
-                </nav>
-            @endauth
+                    @endauth
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle d-none"></i>
+            </nav><!-- .navbar -->
+
+
+            <a class="btn-getstarted scrollto" style="visibility: hidden">Get Started</a>
+
 
         </div>
     </header><!-- End Header -->

@@ -21,10 +21,10 @@
                 <div class="col-lg-2 col-md-6 footer-links">
                     <h4>Useful Links</h4>
                     <ul>
-                        <li><i class="bi bi-chevron-right"></i> <a href="{{ url('/') }}#">Home</a></li>
-                        <li><i class="bi bi-chevron-right"></i> <a href="{{ url('/') }}#syarat">Syarat
+                        <li><i class="bi bi-chevron-right"></i> <a href="{{ route('home') }}#">Home</a></li>
+                        <li><i class="bi bi-chevron-right"></i> <a href="{{ route('home') }}#syarat">Syarat
                                 Permohonan</a></li>
-                        <li><i class="bi bi-chevron-right"></i> <a href="{{ url('/') }}#faqs">FAQs</a></li>
+                        <li><i class="bi bi-chevron-right"></i> <a href="{{ route('home') }}#faqs">FAQs</a></li>
                         <li><i class="bi bi-chevron-right"></i> <a href="{{ route('login') }}">Login</a></li>
                         <li><i class="bi bi-chevron-right"></i> <a href="{{ route('register') }}">Register</a></li>
                     </ul>
