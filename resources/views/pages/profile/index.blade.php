@@ -12,44 +12,58 @@
                     <div class="col-lg-4">
                         <div class="card mb-4">
                             <div class="card-body text-center">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                                    alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                                <label for="fileField">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                                        alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                                </label>
+                                <input type="file" id="fileField" name="file-img" accept=".png, .jpg, .jpeg"
+                                    hidden="true">
                                 <h5 class="my-3">{{ Auth::user()->name }}</h5>
-                                <p class="text-muted mb-1">{{ $data->status }}</p>
-                                <p class="text-muted mb-4">{{ $data->asal }}</p>
+                                <p class="text-muted mb-1">
+                                    @if (isset($data->status) && isset($data->jenjang) && isset($data->program_studi))
+                                        {{ $data->status }},
+                                        {{ $data->jenjang }}{{ $data->program_studi }}
+                                    @else
+                                        -
+                                    @endif
+                                </p>
+                                <p class="text-muted mb-4">
+                                    @if (isset($data->asal))
+                                        {{ $data->asal }}
+                                    @else
+                                        -
+                                    @endif
+                                </p>
                                 <div class="d-flex justify-content-center mb-2">
-                                    <button type="button" class="btn btn-danger">Ubah Password</button>
+                                    <a href="{{ route('password.request') }}" class="btn btn-danger">Ubah Password</a>
                                     <button type="button" class="btn btn-outline-warning ms-1" data-bs-toggle="modal"
                                         data-bs-target="#staticBackdrop">Perbarui Data Diri</button>
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="card mb-4 mb-lg-0">
+                        <div class="card mb-4 mb-lg-0">
                             <div class="card-body p-0">
                                 <ul class="list-group list-group-flush rounded-3">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                        <i class="fas fa-globe fa-lg text-warning"></i>
-                                        <p class="mb-0">https://mdbootstrap.com</p>
+                                    <li class="list-group-item d-flex justify-content-center align-items-center p-3">
+                                        {{-- <p class="mb-0">Foto KTP</p> --}}
+                                        <img src="{{ url('assets/img/ktp/ktp.png') }}" alt="foto-ktp"
+                                            class="img-fluid img-thumbnail rounded mx-auto d-block" width="50%"
+                                            height="50%" data-bs-toggle="modal" data-bs-target="#imgKTP">
+                                        {{-- <i class="fas fa-globe fa-lg text-warning"></i> --}}
+                                        {{-- <a href="{{ route('permohonan.tambah') }}"
+                                    class="mb-0 btn btn-sm btn-success ">Tambah
+                                    Permohonan</a> --}}
                                     </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                        <i class="fab fa-github fa-lg" style="color: #333333;"></i>
-                                        <p class="mb-0">mdbootstrap</p>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                        <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
-                                        <p class="mb-0">@mdbootstrap</p>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                        <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
-                                        <p class="mb-0">mdbootstrap</p>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                        <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
-                                        <p class="mb-0">mdbootstrap</p>
+                                    <li class="list-group-item d-flex justify-content-center align-items-center p-3">
+                                        {{-- <i class="fab fa-github fa-lg" style="color: #333333;"></i> --}}
+                                        {{-- <a href="" class="mb-0 btn btn-sm btn-warning">Riwayat Permohonan</a> --}}
+                                        <img src="{{ url('assets/img/ktm/ktm.jpg') }}" alt="foto-ktm"
+                                            class="img-fluid img-thumbnail rounded mx-auto d-block" width="50%"
+                                            height="50%" data-bs-toggle="modal" data-bs-target="#imgKTM" />
                                     </li>
                                 </ul>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                     <div class="col-lg-8">
                         <div class="card mb-4">
@@ -59,25 +73,7 @@
                                         <p class="mb-0">Nama Lengkap</p>
                                     </div>
                                     <div class="col-sm-9">
-                                        <p class="text-muted mb-0">{{ $data->user->name }}</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <p class="mb-0">NIK</p>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <p class="text-muted mb-0">{{ $data->nik }}</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <p class="mb-0">NIP/NIM</p>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <p class="text-muted mb-0">{{ $data->nim }}</p>
+                                        <p class="text-muted mb-0">{{ Auth::user()->name }}</p>
                                     </div>
                                 </div>
                                 <hr>
@@ -86,7 +82,39 @@
                                         <p class="mb-0">Email</p>
                                     </div>
                                     <div class="col-sm-9">
-                                        <p class="text-muted mb-0">{{ $data->user->email }}</p>
+                                        <p class="text-muted mb-0">
+                                            {{ Auth::user()->email }}
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">NIK</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">
+                                            @if (isset($data->nik))
+                                                {{ $data->nik }}
+                                            @else
+                                                -
+                                            @endif
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p class="mb-0">NIP/NIM</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <p class="text-muted mb-0">
+                                            @if (isset($data->nim))
+                                                {{ $data->nim }}
+                                            @else
+                                                -
+                                            @endif
+                                        </p>
                                     </div>
                                 </div>
                                 <hr>
@@ -95,7 +123,13 @@
                                         <p class="mb-0">No HP</p>
                                     </div>
                                     <div class="col-sm-9">
-                                        <p class="text-muted mb-0">{{ $data->no_hp }}</p>
+                                        <p class="text-muted mb-0">
+                                            @if (isset($data->no_hp))
+                                                {{ $data->no_hp }}
+                                            @else
+                                                -
+                                            @endif
+                                        </p>
                                     </div>
                                 </div>
                                 <hr>
@@ -105,12 +139,20 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <p class="text-muted mb-0">
-                                            {{ $data->alamat_ktp }}, Kelurahan/Desa
-                                            {{ $data->village_ktp->nama_kelurahan }}
-                                            Kecamatan {{ $data->sub_district_ktp->nama_kecamatan }},
-                                            {{ $data->district_ktp->nama_kota }}
-                                            Provinsi
-                                            {{ $data->province_ktp->nama_provinsi }}
+                                            @if (isset($data->alamat_ktp) &&
+                                                isset($data->village_ktp->nama_kelurahan) &&
+                                                isset($data->sub_district_ktp->nama_kecamatan) &&
+                                                isset($data->district_ktp->nama_kota) &&
+                                                isset($data->province_ktp->nama_provinsi))
+                                                {{ $data->alamat_ktp }}, Kelurahan/Desa
+                                                {{ $data->village_ktp->nama_kelurahan }}
+                                                Kecamatan {{ $data->sub_district_ktp->nama_kecamatan }},
+                                                {{ $data->district_ktp->nama_kota }}
+                                                Provinsi
+                                                {{ $data->province_ktp->nama_provinsi }}
+                                            @else
+                                                -
+                                            @endif
                                         </p>
                                     </div>
                                 </div>
@@ -121,12 +163,20 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <p class="text-muted mb-0">
-                                            {{ $data->alamat_domisili }}, Kelurahan/Desa
-                                            {{ $data->village_domisili->nama_kelurahan }}
-                                            Kecamatan {{ $data->sub_district_domisili->nama_kecamatan }},
-                                            {{ $data->district_domisili->nama_kota }}
-                                            Provinsi
-                                            {{ $data->province_domisili->nama_provinsi }}
+                                            @if (isset($data->alamat_domisili) &&
+                                                isset($data->village_domisili->nama_kelurahan) &&
+                                                isset($data->sub_district_domisili->nama_kecamatan) &&
+                                                isset($data->district_domisili->nama_kota) &&
+                                                isset($data->province_domisili->nama_provinsi))
+                                                {{ $data->alamat_domisili }}, Kelurahan/Desa
+                                                {{ $data->village_domisili->nama_kelurahan }}
+                                                Kecamatan {{ $data->sub_district_domisili->nama_kecamatan }},
+                                                {{ $data->district_domisili->nama_kota }}
+                                                Provinsi
+                                                {{ $data->province_domisili->nama_provinsi }}
+                                            @else
+                                                -
+                                            @endif
                                         </p>
                                     </div>
                                 </div>
@@ -215,8 +265,8 @@
                         <h5 class="modal-title" id="exampleModalLabel">Perbarui Data Diri</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form id="contactForm" method="POST" action="{{ route('profile') }}">
-                        <div class="modal-body">
+                    <div class="modal-body">
+                        <form id="contactForm" method="POST" action="{{ route('profile') }}">
                             <div class="container">
                                 <div class="row justify-content-md-start">
                                     <div class="col-md-12">
@@ -226,32 +276,21 @@
                                                     <div class="form-floating mb-3">
                                                         <input class="form-control" id="nama" type="text"
                                                             placeholder="Nama" data-sb-validations="required"
-                                                            <?php if(isset(Auth::user()->name)):?> value="{{ Auth::user()->name }}"
-                                                            <?php else: ?> value="" <?php endif ?> />
+                                                            @if (isset(Auth::user()->name)) value="{{ Auth::user()->name }}"
+                                                    @else
+                                                    value="" @endif
+                                                            name="nama_lengkap_pemohon" />
                                                         <label for="nama">Nama Lengkap</label>
                                                         <div class="invalid-feedback" data-sb-feedback="nama:required">
                                                             Nama is required.
                                                         </div>
                                                     </div>
                                                     <div class="form-floating mb-3">
-                                                        <input class="form-control" id="nik" type="text"
-                                                            placeholder="NIK" data-sb-validations="required" />
-                                                        <label for="nik">NIK</label>
-                                                        <div class="invalid-feedback" data-sb-feedback="nik:required">NIK
-                                                            is required.</div>
-                                                    </div>
-                                                    <div class="form-floating mb-3">
-                                                        <input class="form-control" id="nim" type="text"
-                                                            placeholder="NIM" />
-                                                        <label for="nim">NIM</label>
-                                                        <div class="invalid-feedback" data-sb-feedback="nik:required">NIK
-                                                            is required.</div>
-                                                    </div>
-                                                    <div class="form-floating mb-3">
                                                         <input class="form-control" id="email" type="email"
                                                             placeholder="Email" data-sb-validations="required"
-                                                            <?php if(isset(Auth::user()->name)):?> value="{{ Auth::user()->email }}"
-                                                            <?php else: ?> value="" <?php endif ?>
+                                                            @if (isset(Auth::user()->email)) value="{{ Auth::user()->email }}"
+                                                    @else
+                                                    value="" @endif
                                                             disabled />
                                                         <label for="email">Email</label>
                                                         <div class="invalid-feedback" data-sb-feedback="email:required">
@@ -259,9 +298,36 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-floating mb-3">
+                                                        <input class="form-control" id="nik_pemohon" type="text"
+                                                            placeholder="NIK" data-sb-validations="required"
+                                                            @if (isset($data->nik)) value="{{ $data->nik }}"
+                                                    @else
+                                                    value="" @endif
+                                                            name="nik_pemohon" />
+                                                        <label for="nik">NIK</label>
+                                                        <div class="invalid-feedback" data-sb-feedback="nik:required">NIK
+                                                            is required.</div>
+                                                    </div>
+                                                    <div class="form-floating mb-3">
+                                                        <input class="form-control" id="nim" type="text"
+                                                            placeholder="NIP/NIM"
+                                                            @if (isset($data->nim)) value="{{ $data->nim }}"
+                                                    @else
+                                                    value="" @endif
+                                                            name="nim_pemohon" />
+                                                        <label for="nim">NIP/NIM</label>
+                                                        <div class="invalid-feedback" data-sb-feedback="nim:required">NIM
+                                                            is required.</div>
+                                                    </div>
+
+                                                    <div class="form-floating mb-3">
                                                         <input class="form-control" id="nik" type="number"
                                                             placeholder="Nomor HP (Terhubung dengan Whatsapp)"
-                                                            data-sb-validations="required" />
+                                                            data-sb-validations="required"
+                                                            @if (isset($data->no_hp)) value="{{ $data->no_hp }}"
+                                                    @else
+                                                    value="" @endif
+                                                            name="nohp_pemohon" />
                                                         <label for="nik">Nomor HP (Terhubung dengan Whatsapp)</label>
                                                         <div class="invalid-feedback" data-sb-feedback="nik:required">
                                                             Nomor HP is required.
@@ -270,49 +336,74 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3">
-                                                        <select class="form-select" id="jenjang">
-                                                            <option>- Pilih -</option>
-                                                            <option>D1</option>
-                                                            <option>D2</option>
-                                                            <option>D3</option>
-                                                            <option>S1/D4</option>
-                                                            <option>S2</option>
-                                                            <option>S3</option>
-                                                            <option>S4</option>
-                                                            <option>Institusi/Organisasi</option>
+                                                        <select class="form-select" id="jenjang"
+                                                            name="jenjang_pemohon">
+                                                            <option>- Pilih Jenjang Pendidikan -</option>
+                                                            @foreach ($educations as $education)
+                                                                @if (isset($data->jenjang))
+                                                                    <option value="{{ $education->level_pendidikan }}"
+                                                                        {{ $education->level_pendidikan == $data->jenjang ? 'selected' : '' }}>
+                                                                        {{ $education->level_pendidikan }}
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ $education->level_pendidikan }}">
+                                                                        {{ $education->level_pendidikan }}
+                                                                    </option>
+                                                                @endif
+                                                            @endforeach
                                                         </select>
-                                                        <label for="jenjang">Jenjang</label>
+                                                        <label for="jenjang">Jenjang Pendidikan</label>
                                                     </div>
                                                     <div class="form-floating mb-3">
-                                                        <select class="form-select" id="status">
-                                                            <option>- Pilih -</option>
-                                                            <option>Mahasiswa</option>
-                                                            <option>Dosen</option>
-                                                            <option>Lain - lain</option>
+                                                        <select class="form-select" id="status" name="status_pemohon">
+                                                            <option>- Pilih Status -</option>
+                                                            @foreach ($statuses as $status)
+                                                                @if (isset($data->status))
+                                                                    <option value="{{ $status->status_pemohon }}"
+                                                                        {{ $status->status_pemohon == $data->status ? 'selected' : '' }}>
+                                                                        {{ $status->status_pemohon }}
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ $status->status_pemohon }}">
+                                                                        {{ $status->status_pemohon }}
+                                                                    </option>
+                                                                @endif
+                                                            @endforeach
                                                         </select>
                                                         <label for="status">Status</label>
                                                     </div>
                                                     <div class="form-floating mb-3">
-                                                        <input class="form-control" id="email" type="email"
+                                                        <input class="form-control" id="asal" type="text"
                                                             data-sb-validations="required"
-                                                            placeholder=">Sekolah/Universitas/Afiliasi/Kantor" />
-                                                        <label for="email">Sekolah/Universitas/Afiliasi/Kantor</label>
-                                                        <div class="invalid-feedback" data-sb-feedback="email:required">
-                                                            Email is required.
+                                                            placeholder="Sekolah/Universitas/Afiliasi/Kantor"
+                                                            @if (isset($data->asal)) value="{{ $data->asal }}"
+                                                    @else
+                                                    value="" @endif
+                                                            name="asal_pemohon" />
+                                                        <label for="asal">Sekolah/Universitas/Afiliasi/Kantor</label>
+                                                        <div class="invalid-feedback" data-sb-feedback="asal:required">
+                                                            Asal is required.
                                                         </div>
                                                     </div>
                                                     <div class="form-floating mb-3">
-                                                        <input class="form-control" id="nim" type="text"
-                                                            placeholder="Program Studi" />
-                                                        <label for="nim">Program Studi</label>
+                                                        <input class="form-control" id="progdi" type="text"
+                                                            placeholder="Program Studi"
+                                                            @if (isset($data->program_studi)) value="{{ $data->program_studi }}"
+                                                    @else
+                                                    value="" @endif
+                                                            name="progdi_pemohon" />
+                                                        <label for="progdi">Program Studi</label>
                                                         <div class="invalid-feedback" data-sb-feedback="nik:required">
                                                             Program Studi is
                                                             required.</div>
                                                     </div>
                                                     <div class="form-floating mb-3">
-                                                        <input class="form-control" id="nim" type="text"
-                                                            placeholder="Semester" />
-                                                        <label for="nim">Semester</label>
+                                                        <input class="form-control" id="semester" type="number"
+                                                            placeholder="Semester" {{-- @if (isset($data->semester)) value="{{ $data->semester }}"
+                                                    @else
+                                                    value="" @endif --}}
+                                                            name="semester_pemohon" />
+                                                        <label for="semester">Semester</label>
                                                         <div class="invalid-feedback" data-sb-feedback="nik:required">
                                                             Semester is
                                                             required.</div>
@@ -323,21 +414,30 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3">
-                                                        <textarea class="form-control" id="message" type="text" placeholder="Message" style="height: 8rem"
-                                                            data-sb-validations="required"></textarea>
-                                                        <label for="message">Alamat sesuai KTP</label>
-                                                        <div class="invalid-feedback" data-sb-feedback="message:required">
-                                                            Message is
+                                                        <textarea class="form-control" id="alamat_ktp" placeholder="Alamat KTP" name="alamat_ktp">
+                                                            @if (!empty($data->alamat_ktp))
+{{ $data->alamat_ktp }}
+@endif
+                                                        </textarea>
+                                                        <label for="alamat_ktp">Alamat KTP</label>
+                                                        <div class="invalid-feedback"
+                                                            data-sb-feedback="alamat_ktp:required">
+                                                            Alamat KTP is
                                                             required.</div>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3">
-                                                        <textarea class="form-control" id="message" type="text" placeholder="Message" style="height: 8rem"
-                                                            data-sb-validations="required"></textarea>
-                                                        <label for="message">Alamat Domisili</label>
-                                                        <div class="invalid-feedback" data-sb-feedback="message:required">
-                                                            Message is
+                                                        <textarea class="form-control" id="alamat_domisili" placeholder="Alamat Domisili" name="alamat_domisili">
+                                                            @if (!empty($data->alamat_domisili))
+{{ $data->alamat_domisili }}
+@endif
+                                                        </textarea>
+                                                        <label for="alamat_domisili">Alamat Domisili</label>
+                                                        <div class="invalid-feedback"
+                                                            data-sb-feedback="alamat_domisili:required">
+                                                            Alamat Domisili is
                                                             required.</div>
                                                     </div>
                                                 </div>
@@ -349,9 +449,16 @@
                                                             name="provinsi_ktp">
                                                             <option>- Pilih Provinsi -</option>
                                                             @foreach ($provinces as $province)
+                                                                {{-- @if (isset($data->provinsi_ktp))
+                                                                    <option value="{{ $province->id_provinsi }}"
+                                                                        {{ $province->id_provinsi == $data->provinsi_ktp ? 'selected' : '' }}>
+                                                                        {{ $province->nama_provinsi }}
+                                                                    </option>
+                                                                @else --}}
                                                                 <option value="{{ $province->id_provinsi }}">
                                                                     {{ $province->nama_provinsi }}
                                                                 </option>
+                                                                {{-- @endif --}}
                                                             @endforeach
                                                         </select>
                                                         <label for="provinsi_ktp">Provinsi Sesuai KTP</label>
@@ -359,7 +466,6 @@
                                                     <div class="form-floating mb-3">
                                                         <select class="form-select" id="kecamatan_ktp"
                                                             name="kecamatan_ktp">
-
                                                         </select>
                                                         <label for="kecamatan_ktp">Kecamatan Sesuai KTP</label>
                                                     </div>
@@ -367,13 +473,11 @@
                                                 <div class="col-md-3">
                                                     <div class="form-floating mb-3">
                                                         <select class="form-select" id="kotakab_ktp" name="kotakab_ktp">
-
                                                         </select>
                                                         <label for="kotakab_ktp">Kota/Kab Sesuai KTP</label>
                                                     </div>
                                                     <div class="form-floating mb-3">
                                                         <select class="form-select" id="keldesa_ktp" name="keldesa_ktp">
-
                                                         </select>
                                                         <label for="keldesa_ktp">Kelurahan/Desa Sesuai KTP</label>
                                                     </div>
@@ -384,9 +488,16 @@
                                                             name="provinsi_domisili">
                                                             <option>- Pilih Provinsi -</option>
                                                             @foreach ($provinces as $province)
-                                                                <option value="{{ $province->id_provinsi }}">
-                                                                    {{ $province->nama_provinsi }}
-                                                                </option>
+                                                                @if (isset($data->provinsi_domisili))
+                                                                    <option value="{{ $province->id_provinsi }}"
+                                                                        {{ $province->id_provinsi == $data->provinsi_domisili ? 'selected' : '' }}>
+                                                                        {{ $province->nama_provinsi }}
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ $province->id_provinsi }}">
+                                                                        {{ $province->nama_provinsi }}
+                                                                    </option>
+                                                                @endif
                                                             @endforeach
                                                         </select>
                                                         <label for="provinsi_domisili">Provinsi Domisili</label>
@@ -422,155 +533,82 @@
                                                             accept="/*">
                                                     </div>
                                                 </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating-mb 3">
+                                                        <label for="formFile" class="form-label">Foto KTM/ Kartu
+                                                            Pelajar</label>
+                                                        <input class="form-control" type="file" id="formFile"
+                                                            accept="/*">
+                                                    </div>
+                                                </div>
                                             </div>
-                                            {{-- <div class="mt-6 text-md-center" style="margin-top: 50px; margin-bottom:20px">
-                                                <button class="btn btn-primary btn-md" id="submitButton"
-                                                    type="submit">Submit</button>
-                                            </div> --}}
+                                            <div class="row">
+                                                <div class="col-md-6 mt-5">
+                                                    <img src="{{ url('assets/img/ktp/ktp.png') }}" alt="foto-ktm"
+                                                        class="img-fluid img-thumbnail rounded mx-auto d-block"
+                                                        width="75%" height="75%" />
+                                                </div>
+                                                <div class="col-md-6 mt-5">
+                                                    <img src="{{ url('assets/img/ktm/ktm.jpg') }}" alt="foto-ktm"
+                                                        class="img-fluid img-thumbnail rounded mx-auto d-block"
+                                                        width="75%" height="75%" />
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="imgKTP" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Foto KTP</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="{{ url('assets/img/ktp/ktp.png') }}" alt="foto-ktp"
+                            class="img-fluid img-thumbnail rounded mx-auto d-block" width="auto" height="auto">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Modal -->
+        <div class="modal fade" id="imgKTM" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Foto KTM/Kartu Pelajar</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="{{ url('assets/img/ktm/ktm.jpg') }}" alt="foto-ktm"
+                            class="img-fluid img-thumbnail rounded mx-auto d-block" width="auto" height="auto">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 @endsection
 @push('addon-script')
-    <script>
-        $(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $(function() {
-                $('#provinsi_ktp').on('change', function() {
-                    let id_provinsi = $('#provinsi_ktp').val();
-
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{ route('getkotakab') }}",
-                        data: {
-                            id_provinsi: id_provinsi
-                        },
-                        cache: false,
-                        success: function(msg) {
-                            $('#kotakab_ktp').html(msg)
-                            $('#kecamatan_ktp').html('')
-                            $('#keldesa_ktp').html('')
-                        },
-                        error: function(data) {
-                            console.log('error :', data);
-                        },
-                    })
-                });
-                $('#provinsi_domisili').on('change', function() {
-                    let id_provinsi = $('#provinsi_domisili').val();
-
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{ route('getkotakab') }}",
-                        data: {
-                            id_provinsi: id_provinsi
-                        },
-                        cache: false,
-                        success: function(msg) {
-                            $('#kotakab_domisili').html(msg)
-                            $('#kecamatan_domisili').html('')
-                            $('#keldesa_domisili').html('')
-                        },
-                        error: function(data) {
-                            console.log('error :', data);
-                        },
-                    })
-                });
-                $('#kotakab_ktp').on('change', function() {
-                    let id_kotakab = $('#kotakab_ktp').val();
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{ route('getkecamatan') }}",
-                        data: {
-                            id_kotakab: id_kotakab
-                        },
-                        cache: false,
-                        success: function(msg) {
-                            $('#kecamatan_ktp').html(msg)
-                            $('#keldesa_ktp').html('')
-                        },
-                        error: function(data) {
-                            console.log('error :', data);
-                        },
-                    });
-
-                });
-                $('#kotakab_domisili').on('change', function() {
-                    let id_kotakab = $('#kotakab_domisili').val();
-
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{ route('getkecamatan') }}",
-                        data: {
-                            id_kotakab: id_kotakab
-                        },
-                        cache: false,
-                        success: function(msg) {
-
-                            $('#kecamatan_domisili').html(msg)
-                            $('#keldesa_domisili').html('')
-                        },
-                        error: function(data) {
-                            console.log('error :', data);
-                        },
-                    })
-                });
-                $('#kecamatan_ktp').on('change', function() {
-                    var id_kotakab = $('#kotakab_ktp').find(":selected").val();
-                    var id_kecamatan = $('#kecamatan_ktp').find(":selected").val();
-                    console.log(id_kotakab, id_kecamatan);
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{ route('getkeldesa') }}",
-                        data: {
-                            'id_kotakab': id_kotakab,
-                            'id_kecamatan': id_kecamatan
-                        },
-                        cache: false,
-                        success: function(msg) {
-                            $('#keldesa_ktp').html(msg)
-                        },
-                        error: function(data) {
-                            console.log('error :', data);
-                        },
-                    })
-                });
-                $('#kecamatan_domisili').on('change', function() {
-                    var id_kotakab = $('#kotakab_domisili').find(":selected").val();
-                    var id_kecamatan = $('#kecamatan_domisili').find(":selected").val();
-                    console.log(id_kotakab, id_kecamatan);
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{ route('getkeldesa') }}",
-                        data: {
-                            'id_kotakab': id_kotakab,
-                            'id_kecamatan': id_kecamatan
-                        },
-                        cache: false,
-                        success: function(msg) {
-                            $('#keldesa_domisili').html(msg)
-                        },
-                        error: function(data) {
-                            console.log('error :', data);
-                        },
-                    })
-                });
-            });
-        });
-    </script>
+    @if (empty($data->id_user))
+        @include('pages.profile.js-new')
+    @else
+        @include('pages.profile.js-edit')
+    @endif
 @endpush

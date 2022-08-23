@@ -888,7 +888,6 @@ class AcehVillageSeeder extends Seeder
             ['id_prov' => '1', 'id_kota' => '3', 'id_kec' => '29', 'nama_kelurahan' => "Siron Krueng"],
             ['id_prov' => '1', 'id_kota' => '3', 'id_kec' => '29', 'nama_kelurahan' => "Tutue"],
 
-
         ];
         foreach ($villages as $village) {
             Village::factory()->create($village);

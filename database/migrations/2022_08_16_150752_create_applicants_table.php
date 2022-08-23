@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id('id_applicant');
             $table->unsignedBigInteger('id_user');
             // $table->string('name');
+            // $table->string('email');
             $table->string('nik');
             $table->string('nim');
             $table->string('no_hp');
-            // $table->string('email');
             $table->text('alamat_ktp');
             $table->text('alamat_domisili');
             $table->unsignedBigInteger('provinsi_ktp');
@@ -31,12 +31,15 @@ return new class extends Migration
             $table->unsignedBigInteger('kotakab_domisili');
             $table->unsignedBigInteger('kecamatan_domisili');
             $table->unsignedBigInteger('kelurahan_domisili');
-            $table->enum('status', ['Pelajar', 'Mahasiswa', 'Dosen']);
-            $table->enum('jenjang', ['SMA', 'SMK', 'Diploma 3', 'Diploma 4', 'Sarjana', 'Magister', 'Doktor', 'Profesor']);
+            $table->string('status');
+            $table->string('jenjang');
             $table->string('asal');
             $table->string('program_studi');
             $table->string('semester');
+            $table->string('file_ktp');
+            $table->string('file_foto');
             $table->timestamps();
+            $table->softDeletes();
         });
         Schema::table('applicants', function ($table) {
             $table

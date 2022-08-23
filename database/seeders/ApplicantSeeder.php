@@ -31,10 +31,12 @@ class ApplicantSeeder extends Seeder
         $applicant->kecamatan_domisili = '1';
         $applicant->kelurahan_domisili = '1';
         $applicant->status = 'Mahasiswa';
-        $applicant->jenjang = 'Sarjana';
+        $applicant->jenjang = 'S1';
         $applicant->asal = 'Universitas Dian Nuswantoro';
         $applicant->program_studi = 'Teknik Informatika';
         $applicant->semester = '5';
+        $applicant->file_ktp = 'Cikiwir';
+        $applicant->file_foto = 'Cikiwir';
         $applicant->save();
     }
 }

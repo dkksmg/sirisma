@@ -29,17 +29,21 @@ Route::prefix('permohonan')
             'permohonan.tambah'
         );
         Route::post('/getkotakab', [
-            ApplicationController::class,
+            ApplicantController::class,
             'getkotakab',
         ])->name('getkotakab');
         Route::post('/getkecamatan', [
-            ApplicationController::class,
+            ApplicantController::class,
             'getkecamatan',
         ])->name('getkecamatan');
         Route::post('/getkeldesa', [
-            ApplicationController::class,
+            ApplicantController::class,
             'getkeldesa',
         ])->name('getkeldesa');
+        Route::post('/getdataedit', [
+            ApplicantController::class,
+            'getdataedit',
+        ])->name('getdataedit');
     });
 
 Auth::routes(['verify' => true]);

@@ -3,6 +3,7 @@
 
 <head>
     @include('includes.styles')
+    @stack('addon-styles')
 </head>
 
 <body>

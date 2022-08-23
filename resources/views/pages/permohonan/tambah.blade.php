@@ -1,4 +1,8 @@
 @extends('layouts.app')
+@push('addon-styles')
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+@endpush
 @section('content')
     <main id="hero-static" class="hero-static">
         <div class="container">
@@ -15,179 +19,85 @@
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="nama" type="text" placeholder="Nama"
-                                            data-sb-validations="required" <?php if(isset(Auth::user()->name)):?>
+                                            readonly disabled data-sb-validations="required" <?php if(isset(Auth::user()->name)):?>
                                             value="{{ Auth::user()->name }}" <?php else: ?> value=""
                                             <?php endif ?> />
-                                        <label for="nama">Nama Lengkap</label>
+                                        <label for="nama">Nama Pemohon</label>
                                         <div class="invalid-feedback" data-sb-feedback="nama:required">Nama is required.
-                                        </div>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="nik" type="text" placeholder="NIK"
-                                            data-sb-validations="required" />
-                                        <label for="nik">NIK</label>
-                                        <div class="invalid-feedback" data-sb-feedback="nik:required">NIK is required.</div>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="nim" type="text" placeholder="NIM" />
-                                        <label for="nim">NIM</label>
-                                        {{-- <div class="invalid-feedback" data-sb-feedback="nik:required">NIK is required.</div> --}}
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="email" type="email" placeholder="Email"
-                                            data-sb-validations="required" <?php if(isset(Auth::user()->name)):?>
-                                            value="{{ Auth::user()->email }}" <?php else: ?> value=""
-                                            <?php endif ?> disabled />
-                                        <label for="email">Email</label>
-                                        <div class="invalid-feedback" data-sb-feedback="email:required">Email is required.
-                                        </div>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="nik" type="number"
-                                            placeholder="Nomor HP (Terhubung dengan Whatsapp)"
-                                            data-sb-validations="required" />
-                                        <label for="nik">Nomor HP (Terhubung dengan Whatsapp)</label>
-                                        <div class="invalid-feedback" data-sb-feedback="nik:required">Nomor HP is required.
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <select class="form-select" id="jenjang">
-                                            <option>- Pilih -</option>
-                                            <option>D1</option>
-                                            <option>D2</option>
-                                            <option>D3</option>
-                                            <option>S1/D4</option>
-                                            <option>S2</option>
-                                            <option>S3</option>
-                                            <option>S4</option>
-                                            <option>Institusi/Organisasi</option>
+                                            <option>- Pilih Permohonan -</option>
+                                            <option>Penelitian</option>
+                                            <option disabled>Magang</option>
                                         </select>
-                                        <label for="jenjang">Jenjang</label>
+                                        <label for="jenjang">Jenis Permohonan</label>
                                     </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" id="status">
-                                            <option>- Pilih -</option>
-                                            <option>Mahasiswa</option>
-                                            <option>Dosen</option>
-                                            <option>Lain - lain</option>
-                                        </select>
-                                        <label for="status">Status</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="email" type="email"
-                                            data-sb-validations="required"
-                                            placeholder=">Sekolah/Universitas/Afiliasi/Kantor" />
-                                        <label for="email">Sekolah/Universitas/Afiliasi/Kantor</label>
-                                        <div class="invalid-feedback" data-sb-feedback="email:required">Email is required.
+                                        <div class="input-group date" id="datepicker">
+                                            <input type="text" class="form-control">
+                                            <span class="input-group-append">
+                                                <span class="input-group-text bg-white d-block">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <label for="nama">Waktu</label>
+                                        <div class="invalid-feedback" data-sb-feedback="nama:required">Nama is required.
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="nim" type="text"
-                                            placeholder="Program Studi" />
-                                        <label for="nim">Program Studi</label>
-                                        <div class="invalid-feedback" data-sb-feedback="nik:required">Program Studi is
-                                            required.</div>
+                                        <div class="input-group date" id="datepicker">
+                                            <input class="form-control" id="nama" type="text"
+                                                data-sb-validations="required" />
+                                            <label for="nama">Nama Pemohon</label>
+                                        </div>
+                                        <div class="invalid-feedback" data-sb-feedback="nama:required">Nama is required.
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="nim" type="text" placeholder="Semester" />
-                                        <label for="nim">Semester</label>
-                                        <div class="invalid-feedback" data-sb-feedback="nik:required">Semester is
-                                            required.</div>
+                                        <input class="form-control" id="nama" type="text"
+                                            placeholder="Judul Rencana Penelitian" data-sb-validations="required"
+                                            value="" />
+                                        <label for="nama">Judul Rencana Penelitian</label>
+                                        <div class="invalid-feedback" data-sb-feedback="nama:required">Nama is required.
+                                        </div>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
-                                        <textarea class="form-control" id="message" type="text" placeholder="Message" style="height: 8rem"
-                                            data-sb-validations="required"></textarea>
-                                        <label for="message">Alamat sesuai KTP</label>
-                                        <div class="invalid-feedback" data-sb-feedback="message:required">Message is
+                                        <textarea class="form-control" id="keperluan_pemohon" name="keperluan_pemohon" type="text" placeholder="Keperluan"
+                                            style="height: 8rem" data-sb-validations="required"></textarea>
+                                        <label for="keperluan_pemohon">Keperluan</label>
+                                        <div class="invalid-feedback" data-sb-feedback="keperluan_pemohon:required">
+                                            Keperluan is
                                             required.</div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <textarea class="form-control" id="message" type="text" placeholder="Message" style="height: 8rem"
-                                            data-sb-validations="required"></textarea>
-                                        <label for="message">Alamat Domisili</label>
-                                        <div class="invalid-feedback" data-sb-feedback="message:required">Message is
-                                            required.</div>
-                                    </div>
-                                </div>
+
                             </div>
                             <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="provinsi_ktp" name="provinsi_ktp">
-                                            <option>- Pilih Provinsi -</option>
-                                            @foreach ($provinces as $province)
-                                                <option value="{{ $province->id_provinsi }}">{{ $province->nama_provinsi }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <label for="provinsi_ktp">Provinsi Sesuai KTP</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="kecamatan_ktp" name="kecamatan_ktp">
-
-                                        </select>
-                                        <label for="kecamatan_ktp">Kecamatan Sesuai KTP</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="kotakab_ktp" name="kotakab_ktp">
-
-                                        </select>
-                                        <label for="kotakab_ktp">Kota/Kab Sesuai KTP</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="keldesa_ktp" name="keldesa_ktp">
-
-                                        </select>
-                                        <label for="keldesa_ktp">Kelurahan/Desa Sesuai KTP</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="provinsi_domisili" name="provinsi_domisili">
-                                            <option>- Pilih Provinsi -</option>
-                                            @foreach ($provinces as $province)
-                                                <option value="{{ $province->id_provinsi }}">{{ $province->nama_provinsi }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <label for="provinsi_domisili">Provinsi Domisili</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="kecamatan_domisili" name="kecamatan_domisili">
-
-                                        </select>
-                                        <label for="kecamatan_domisili">Kecamatan Domisili</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="kotakab_domisili" name="kotakab_domisili">
-
-                                        </select>
-                                        <label for="kotakab_domisili">Kota/Kab Domisili</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" id="keldesa_domisili" name="keldesa_domisili">
-
-                                        </select>
-                                        <label for="keldesa_domisili">Kelurahan/Desa Domisili</label>
+                                <div class="col-md-6">
+                                    <div class="form-floating-mb 3">
+                                        <label for="formFile" class="form-label">File Surat Permohonan</label>
+                                        <input class="form-control" type="file" id="formFile" accept=".pdf">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating-mb 3">
-                                        <label for="formFile" class="form-label">Foto KTP</label>
-                                        <input class="form-control" type="file" id="formFile" accept="/*">
+                                        <label for="formFile" class="form-label">FIle Proposal</label>
+                                        <input class="form-control" type="file" id="formFile" accept=".pdf">
                                     </div>
                                 </div>
                             </div>
@@ -202,6 +112,7 @@
     </main>
 @endsection
 @push('addon-script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script>
         $(function() {
             $.ajaxSetup({
@@ -330,6 +241,11 @@
                     })
                 });
             });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $('#datepicker').datepicker();
         });
     </script>
 @endpush

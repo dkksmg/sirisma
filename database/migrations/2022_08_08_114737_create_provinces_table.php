@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('id_provinsi');
             $table->string('nama_provinsi');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

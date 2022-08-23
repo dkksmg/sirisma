@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('status_permohonan');
             $table->timestamps();
             $table->foreign('id_applicant')->references('id_applicant')->on('applicants')->onDelete('cascade')->onUpdate('cascade');
+            $table->softDeletes();
         });
     }
 

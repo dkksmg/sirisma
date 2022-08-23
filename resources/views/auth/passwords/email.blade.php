@@ -32,7 +32,9 @@
                                         <div class="col-md-6">
                                             <input id="email" type="email"
                                                 class="form-control @error('email') is-invalid @enderror" name="email"
-                                                value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                                <?php if(isset(Auth::user()->name)):?> value="{{ Auth::user()->email }}" <?php else: ?>
+                                                value="{{ old('email') }}" <?php endif; ?> required
+                                                autocomplete="email" autofocus>
 
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">

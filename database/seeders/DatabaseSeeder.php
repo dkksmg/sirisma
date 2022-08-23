@@ -8,7 +8,10 @@ use App\Models\Province;
 use Illuminate\Database\Seeder;
 use Database\Seeders\AcehCitySeeder;
 use Database\Seeders\ProvinceSeeder;
+use Database\Seeders\ApplicantSeeder;
+use Database\Seeders\AcehVillageSeeder;
 use Database\Seeders\AcehDistrictSeeder;
+use Database\Seeders\EducationLevelSeeder;
 use Database\Seeders\AcehSubDistrictSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -33,5 +36,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AcehSubDistrictSeeder::class);
         $this->call(AcehVillageSeeder::class);
         $this->call(ApplicantSeeder::class);
+        $this->call(EducationSeeder::class);
+        $this->call(StatusSeeder::class);
     }
 }
