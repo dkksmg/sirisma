@@ -361,32 +361,50 @@
                     </div>
 
                     <div class="col-lg-8">
-                        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                        <form action="{{ route('simpan-pesan') }}" method="POST" class="php-email-form">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-6 form-group">
-                                    <input type="text" name="name" class="form-control" id="name"
+                                    <input type="text" name="nama_lengkap"
+                                        class="form-control @error('nama_lengkap') is-invalid @enderror" id="name"
                                         placeholder="Nama Lengkap" <?php if(isset(Auth::user()->name)):?> value="{{ Auth::user()->name }}"
-                                        <?php else: ?> value="" <?php endif ?> required>
+                                        <?php else: ?> value="{{ old('nama_lengkap') }}" <?php endif ?>>
+                                    @error('nama_lengkap')
+                                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="col-md-6 form-group mt-3 mt-md-0">
-                                    <input type="email" class="form-control" name="email" id="email"
-                                        placeholder="Alamat Email"<?php if(isset(Auth::user()->name)):?> value="{{ Auth::user()->email }}"
-                                        <?php else: ?> value="" <?php endif ?> required>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                        name="email" id="email" placeholder="Alamat Email"<?php if(isset(Auth::user()->name)):?>
+                                        value="{{ Auth::user()->email }}" <?php else: ?> value="{{ old('email') }}"
+                                        <?php endif ?>>
+                                    @error('email')
+                                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group mt-3">
-                                <input type="text" class="form-control" name="subject" id="subject"
-                                    placeholder="Subjek" required>
+                                <input type="text" class="form-control @error('subject_kontak') is-invalid @enderror"
+                                    name="subject_kontak" id="subject" placeholder="Subjek"
+                                    value="{{ old('subject_kontak') }}">
+                                @error('subject_kontak')
+                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group mt-3">
-                                <textarea class="form-control" name="message" placeholder="Pesan" required></textarea>
+                                <textarea class="form-control @error('pesan') is-invalid @enderror" name="pesan" placeholder="Pesan">{{ old('pesan') }}</textarea>
+                                @error('pesan')
+                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="my-3">
-                                <div class="loading">Loading</div>
-                                <div class="error-message"></div>
-                                <div class="sent-message">Your message has been sent. Thank you!</div>
+                                @if (session('success'))
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
                             </div>
-                            <div class="text-center"><button type="submit">Kirim</button></div>
+                            <div class="text-center"><button type="submit" class="btn btn-md">Kirim</button></div>
                         </form>
                     </div><!-- End Contact Form -->
 

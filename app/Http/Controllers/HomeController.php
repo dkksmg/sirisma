@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ContactRequest;
+use App\Models\Contact;
 
 class HomeController extends Controller
 {
@@ -10,8 +13,10 @@ class HomeController extends Controller
     {
         return view('pages.home');
     }
-    public function kontak()
+    public function store(ContactRequest $request)
     {
-        return view('pages.kontak');
+        $data = $request->all();
+        Contact::create($data);
+        return redirect()->route('home', ['#contact'])->with(['success' => 'Pesan Anda Berhasil Disimpan!']);
     }
 }

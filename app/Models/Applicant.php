@@ -10,7 +10,7 @@ class Applicant extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id_applicant';
-    protected $fillable = ['id_user', 'nik', 'nim', 'no_hp', 'alamat_ktp', 'alamat_domisili', 'provinsi_ktp', 'kotakab_ktp', 'kecamatan_ktp', 'kelurahan_ktp', 'provinsi_domisili', 'kotakab_domisili', 'kecamatan_domisili', 'kelurahan_domisili', 'status', 'jenjang', 'asal', 'program_studi', 'semester'];
+    protected $fillable = ['id_user', 'nik', 'nim', 'no_hp', 'alamat_ktp', 'alamat_domisili', 'provinsi_ktp', 'kotakab_ktp', 'kecamatan_ktp', 'kelurahan_ktp', 'provinsi_domisili', 'kotakab_domisili', 'kecamatan_domisili', 'kelurahan_domisili', 'status', 'jenjang', 'asal', 'program_studi', 'semester', 'file_ktp', 'file_ktm'];
     protected $table = 'applicants';
 
     public function user()

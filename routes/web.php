@@ -50,5 +50,18 @@ Auth::routes(['verify' => true]);
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/profile', [ApplicantController::class, 'index'])
-    ->middleware(['auth', 'verified'])->name('profile');
+Route::post('simpan-pesan', [HomeController::class, 'store'])->name('simpan-pesan');
+
+// Route::prefix('profile')
+//     ->middleware(['auth', 'verified'])
+//     ->group(function () {
+//         Route::get('/', [ApplicantController::class, 'index'])
+//             ->name('profile');
+//         Route::get('create', [ApplicantController::class, 'create'])
+//             ->name('profile-create');
+//         Route::get('update', [ApplicantController::class, 'update'])
+//             ->name('profile-update');
+//         Route::post('simpan-profile', [ApplicantController::class, 'store'])
+//             ->name('simpan-profile');
+//     });
+Route::resource('profile', ApplicantController::class)->middleware(['auth', 'verified']);

@@ -146,7 +146,6 @@
                 },
                 dataType: 'json',
                 success: function(response) {
-                    $('[name="semester_pemohon"]').val(response.semester).trigger('change');
                     $('[name="provinsi_ktp"]').val(response.provinsi_ktp).trigger('change');
                     $('[name="kotakab_ktp"]').val(response.kotakab_ktp).trigger('change');
                     $('[name="kecamatan_ktp"]').val(response.kecamatan_ktp).trigger(
