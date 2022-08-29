@@ -1,3 +1,21 @@
+{{-- <script type="text/javascript">
+    $(document).ready(function() {
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 8000
+        });
+
+        function pesansukses(status, message) {
+            console.log(status)
+            Toast.fire({
+                icon: status,
+                title: message
+            })
+        }
+    });
+</script> --}}
 <script type="text/javascript">
     $('textarea#alamat_ktp').html($('textarea#alamat_ktp').html().trim());
     $('textarea#alamat_domisili').html($('textarea#alamat_domisili').html().trim());

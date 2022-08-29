@@ -193,103 +193,37 @@
 
                         <div class="content px-xl-5">
                             <h3>Frequently Asked <strong>Questions</strong></h3>
-                            <p>
+                            {{-- <p>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                                 labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
-                            </p>
+                            </p> --}}
                         </div>
 
                         <div class="accordion accordion-flush px-xl-5" id="faqlist">
-
-                            <div class="accordion-item" data-aos="fade-up" data-aos-delay="200">
-                                <h3 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#faq-content-1">
-                                        <i class="bi bi-question-circle question-icon"></i>
-                                        Non consectetur a erat nam at lectus urna duis?
-                                    </button>
-                                </h3>
-                                <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                                    <div class="accordion-body">
-                                        Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet
-                                        non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor
-                                        purus non.
+                            @php
+                                $no = 1;
+                            @endphp
+                            @foreach ($faqs as $faq)
+                                <div class="accordion-item" data-aos="fade-up" data-aos-delay="200">
+                                    <h3 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#faq-content-{{ $no }}">
+                                            <i class="bi bi-question-circle question-icon"></i>
+                                            {{ $faq->judul_faq }}
+                                        </button>
+                                    </h3>
+                                    <div id="faq-content-{{ $no }}" class="accordion-collapse collapse"
+                                        data-bs-parent="#faqlist">
+                                        <div class="accordion-body">
+                                            {{ $faq->isi_faq }}
+                                        </div>
                                     </div>
                                 </div>
-                            </div><!-- # Faq item-->
-
-                            <div class="accordion-item" data-aos="fade-up" data-aos-delay="300">
-                                <h3 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#faq-content-2">
-                                        <i class="bi bi-question-circle question-icon"></i>
-                                        Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque?
-                                    </button>
-                                </h3>
-                                <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                                    <div class="accordion-body">
-                                        Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum
-                                        velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend
-                                        donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in
-                                        cursus turpis massa tincidunt dui.
-                                    </div>
-                                </div>
-                            </div><!-- # Faq item-->
-
-                            <div class="accordion-item" data-aos="fade-up" data-aos-delay="400">
-                                <h3 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#faq-content-3">
-                                        <i class="bi bi-question-circle question-icon"></i>
-                                        Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi?
-                                    </button>
-                                </h3>
-                                <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                                    <div class="accordion-body">
-                                        Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus
-                                        pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit.
-                                        Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis
-                                        tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
-                                    </div>
-                                </div>
-                            </div><!-- # Faq item-->
-
-                            <div class="accordion-item" data-aos="fade-up" data-aos-delay="500">
-                                <h3 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#faq-content-4">
-                                        <i class="bi bi-question-circle question-icon"></i>
-                                        Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla?
-                                    </button>
-                                </h3>
-                                <div id="faq-content-4" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                                    <div class="accordion-body">
-                                        <i class="bi bi-question-circle question-icon"></i>
-                                        Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum
-                                        velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend
-                                        donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in
-                                        cursus turpis massa tincidunt dui.
-                                    </div>
-                                </div>
-                            </div><!-- # Faq item-->
-
-                            <div class="accordion-item" data-aos="fade-up" data-aos-delay="600">
-                                <h3 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#faq-content-5">
-                                        <i class="bi bi-question-circle question-icon"></i>
-                                        Tempus quam pellentesque nec nam aliquam sem et tortor consequat?
-                                    </button>
-                                </h3>
-                                <div id="faq-content-5" class="accordion-collapse collapse" data-bs-parent="#faqlist">
-                                    <div class="accordion-body">
-                                        Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in
-                                        est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl
-                                        suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in
-                                    </div>
-                                </div>
-                            </div><!-- # Faq item-->
-
+                                @php
+                                    $no++;
+                                @endphp
+                                <!-- # Faq item-->
+                            @endforeach
                         </div>
 
                     </div>
@@ -307,8 +241,8 @@
             <div class="container">
                 <div class="section-header">
                     <h2>Kontak Kami</h2>
-                    <p>Ea vitae aspernatur deserunt voluptatem impedit deserunt magnam occaecati dssumenda quas ut ad
-                        dolores adipisci aliquam.</p>
+                    <p>Untuk pertanyaan, umpan balik, atau pertanyaan apa saja, silakan hubungi kami melalui formulir
+                        dibawah.</p>
                 </div>
 
             </div>
@@ -327,14 +261,14 @@
                     <div class="col-lg-4">
 
                         <div class="info">
-                            <h3>Get in touch</h3>
+                            {{-- <h3>Get in touch</h3>
                             <p>Et id eius voluptates atque nihil voluptatem enim in tempore minima sit ad mollitia commodi
-                                minus.</p>
+                                minus.</p> --}}
 
                             <div class="info-item d-flex">
                                 <i class="bi bi-geo-alt flex-shrink-0"></i>
                                 <div>
-                                    <h4>Location:</h4>
+                                    <h4>Lokasi:</h4>
                                     <p> Jl. Pandanaran No.79, Mugassari, Kec. Semarang Selatan, Kota Semarang, Jawa Tengah
                                         50249</p>
                                 </div>
@@ -344,7 +278,9 @@
                                 <i class="bi bi-envelope flex-shrink-0"></i>
                                 <div>
                                     <h4>Email:</h4>
-                                    <p>info@example.com</p>
+                                    <p><a href="mailto:infokes.dkksemarang@gmail.com" target="_blank"
+                                            class="text-decoration-none text-muted">infokes.dkksemarang@gmail.com</a>
+                                    </p>
                                 </div>
                             </div><!-- End Info Item -->
 
@@ -352,7 +288,10 @@
                                 <i class="bi bi-phone flex-shrink-0"></i>
                                 <div>
                                     <h4>Telp:</h4>
-                                    <p>(024) 8318070</p>
+                                    <p>
+                                        <a href="tel:0248318070" target="_blank"
+                                            class="text-decoration-none text-muted">(024) 8318070</a>
+                                    </p>
                                 </div>
                             </div><!-- End Info Item -->
 

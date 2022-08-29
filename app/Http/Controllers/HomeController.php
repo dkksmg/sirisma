@@ -6,12 +6,16 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactRequest;
 use App\Models\Contact;
+use App\Models\Faq;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('pages.home');
+        $faqs = Faq::all();
+        return view('pages.home', [
+            'faqs' => $faqs
+        ]);
     }
     public function store(ContactRequest $request)
     {

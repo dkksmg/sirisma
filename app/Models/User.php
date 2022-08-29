@@ -7,11 +7,12 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
     protected $table = 'users';
 
     /**
@@ -47,5 +48,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function applicant()
     {
         return $this->hasOne(Applicant::class);
+    }
+    public function application()
+    {
+        return $this->hasMany(Application::class);
     }
 }

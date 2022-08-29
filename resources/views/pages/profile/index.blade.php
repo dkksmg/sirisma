@@ -22,7 +22,7 @@
                                 <p class="text-muted mb-1">
                                     @if (isset($data->status) && isset($data->jenjang) && isset($data->program_studi))
                                         {{ $data->status }},
-                                        {{ $data->jenjang }}{{ $data->program_studi }}
+                                        {{ $data->jenjang . ' ' . $data->program_studi }}
                                     @else
                                         -
                                     @endif

@@ -1,0 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap");
+.time-status {
+  font-size: 11px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+table tr td {
+  font-size: 14px;
+  font-family: "Source Sans Pro", sans-serif;
+}/*# sourceMappingURL=style.css.map */

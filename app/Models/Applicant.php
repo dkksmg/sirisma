@@ -3,12 +3,19 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Village;
+use App\Models\District;
+use App\Models\Province;
+use App\Models\Application;
+use App\Models\SubDistrict;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Applicant extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $primaryKey = 'id_applicant';
     protected $fillable = ['id_user', 'nik', 'nim', 'no_hp', 'alamat_ktp', 'alamat_domisili', 'provinsi_ktp', 'kotakab_ktp', 'kecamatan_ktp', 'kelurahan_ktp', 'provinsi_domisili', 'kotakab_domisili', 'kecamatan_domisili', 'kelurahan_domisili', 'status', 'jenjang', 'asal', 'program_studi', 'semester', 'file_ktp', 'file_ktm'];
     protected $table = 'applicants';
@@ -48,5 +55,9 @@ class Applicant extends Model
     public function village_domisili()
     {
         return $this->belongsTo(Village::class, 'kelurahan_domisili', 'id_kel');
+    }
+    public function application()
+    {
+        return $this->hasMany(Application::class, 'id_applicant', 'id_applicant');
     }
 }

@@ -12,6 +12,7 @@
     @include('includes.footer')
     @include('includes.script')
     @stack('addon-script')
+    {{-- @include('sweetalert::alert') --}}
 </body>
 
 </html>

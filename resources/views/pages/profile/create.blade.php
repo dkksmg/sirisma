@@ -321,15 +321,17 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mt-5">
-                                        <img src="{{ Storage::url($data->file_ktp) }}" alt="foto-ktp"
-                                            class="img-fluid img-thumbnail rounded mx-auto d-block" width="75%"
-                                            height="75%"
+                                        <img @if (empty($data->file_ktp)) src="{{ Storage::url($data->file_ktp) }}"
+                                        @else src="{{ url('assets/img/no-photo.png') }}" @endif
+                                            alt="foto-ktp" class="img-fluid img-thumbnail rounded mx-auto d-block"
+                                            width="75%" height="75%"
                                             onerror="this.onerror=null; this.src='{{ url('assets/img/no-photo.png') }}'" />
                                     </div>
                                     <div class="col-md-6 mt-5">
-                                        <img src="{{ Storage::url($data->file_ktm) }}" alt="foto-ktm"
-                                            class="img-fluid img-thumbnail rounded mx-auto d-block" width="75%"
-                                            height="75%"
+                                        <img @if (empty($data->file_ktm)) src="{{ Storage::url($data->file_ktm) }}"
+                                        @else src="{{ url('assets/img/no-photo.png') }}" @endif
+                                            alt="foto-ktm" class="img-fluid img-thumbnail rounded mx-auto d-block"
+                                            width="75%" height="75%"
                                             onerror="this.onerror=null; this.src='{{ url('assets/img/no-photo.png') }}'" />
                                     </div>
                                 </div>
@@ -340,6 +342,12 @@
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                 </div>
+                @if (Session::has('error'))
+                    <div class="alert alert-danger">
+                        {{ Session::get('error') }}
+                    </div>
+                @endif
+
                 </form>
             </div>
 

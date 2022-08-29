@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Village;
 use App\Models\District;
 use App\Models\Province;
+use App\Models\Application;
 use App\Models\SubDistrict;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ApplicationController extends Controller
 {
@@ -19,15 +22,20 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        return view('pages.permohonan.list');
+        $id_user = Auth::user()->id;
+        // DB::enableQueryLog();
+        $applications = Application::with(['user', 'applicant'])->where('id_user', $id_user)->orderBy('status_permohonan', 'ASC')->orderBy('created_at', 'DESC')->get();
+        // dd(DB::getQueryLog());
+        $timenow = Carbon::now()->toDateTimeString();
+        return view(
+            'pages.permohonan.index',
+            [
+                'applications' => $applications,
+                'timenow' => $timenow
+            ]
+        );
     }
-    public function input()
-    {
-        $provinces = Province::all();
-        return view('pages.permohonan.tambah', [
-            'provinces' => $provinces,
-        ]);
-    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -36,7 +44,8 @@ class ApplicationController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('pages.permohonan.create');
     }
 
     /**
@@ -69,7 +78,7 @@ class ApplicationController extends Controller
      */
     public function edit($id)
     {
-        //
+        echo 'Edit View ' . $id;
     }
 
     /**
@@ -92,6 +101,12 @@ class ApplicationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Application::findOrFail($id);
+
+        if ($data->delete() == true)
+            return redirect()->route('permohonan.index')->with(['success' => 'Data berhasil dihapus!']);
+        else {
+            return redirect()->route('permohonan.index')->with(['error' => 'Data gagal dihapus!']);
+        }
     }
 }

@@ -36,7 +36,9 @@ class DatabaseSeeder extends Seeder
         $this->call(AcehSubDistrictSeeder::class);
         $this->call(AcehVillageSeeder::class);
         $this->call(ApplicantSeeder::class);
+        $this->call(ApplicationSeeder::class);
         $this->call(EducationSeeder::class);
         $this->call(StatusSeeder::class);
+        $this->call(FaqSeeder::class);
     }
 }

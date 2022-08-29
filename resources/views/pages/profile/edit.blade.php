@@ -9,8 +9,9 @@
             </div>
             <div class="container">
                 <div class="row justify-content-md-start">
-                    <form method="POST" action="{{ route('profile.update', $data->id_applicant) }}"
-                        enctype="multipart/form-data">
+                    <form id="form" action="{{ route('profile.update', $data->id_applicant) }}"
+                        enctype="multipart/form-data" method="post">
+                        @method('PUT')
                         @csrf
                         <div class="col-md-12">
                             <div class="container px-5 my-5">
@@ -300,7 +301,10 @@
                                                 class="form-label @error('file_ktp') is-invalid @enderror">Foto
                                                 KTP</label>
                                             <input class="form-control" type="file" id="formFile" accept="/*"
-                                                name="file_ktp">
+                                                name="file_ktp"
+                                                @if (!empty($data->file_ktp)) value="{{ $data->file_ktp }}"
+                                                @else
+                                                value="{{ old('file_ktp') }}" @endif>
                                             @error('file_ktp')
                                                 <div class="invalid-feedback" role="alert">{{ $message }}</div>
                                             @enderror
@@ -312,7 +316,10 @@
                                                 class="form-label @error('file_ktm') is-invalid @enderror">Foto KTM/ Kartu
                                                 Pelajar</label>
                                             <input class="form-control" type="file" id="formFile" accept="/*"
-                                                name="file_ktm">
+                                                name="file_ktm"
+                                                @if (!empty($data->file_ktm)) value="{{ $data->file_ktm }}"
+                                                @else
+                                                value="{{ old('file_ktm') }}" @endif>
                                             @error('file_ktm')
                                                 <div class="invalid-feedback" role="alert">{{ $message }}</div>
                                             @enderror
@@ -336,8 +343,8 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <a class="btn btn-secondary" href="{{ URL::previous() }}">Kembali</a>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <a class="btn btn-secondary" href="{{ route('profile.index') }}">Kembali</a>
+                            <button type="submit" id="simpan"class="btn btn-primary">Simpan</button>
                         </div>
                 </div>
                 </form>

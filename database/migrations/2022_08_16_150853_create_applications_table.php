@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id('id_application');
+            $table->integer('id_user');
             $table->foreignId('id_applicant');
-            $table->enum('jenis_permohonan', ['penelitian', 'pengambilan_data', 'magang']);
+            $table->enum('jenis_permohonan', ['Penelitian', 'Pengambilan_data', 'Magang']);
             $table->text('keperluan');
             $table->date('waktu_awal');
             $table->date('waktu_akhir');
@@ -24,7 +25,8 @@ return new class extends Migration
             $table->string('file_surat_pemohon');
             $table->string('file_proposal_pemohon');
             $table->string('file_surat_permohonan');
-            $table->string('status_permohonan');
+            $table->enum('status_permohonan', ['Draft', 'Kirim', 'Periksa', 'Setujui', 'Tolak']);
+            $table->timestamp('update_waktu_status');
             $table->timestamps();
             $table->foreign('id_applicant')->references('id_applicant')->on('applicants')->onDelete('cascade')->onUpdate('cascade');
             $table->softDeletes();
