@@ -6,11 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class EducationLevels extends Model
+class ApplicationType extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $primaryKey = 'id_pendidikan';
-    protected $fillable = ['level_pendidikan'];
+    protected $fillable = ['jenis_permohonan', 'status_opsi'];
     protected $hidden = [];
+
+
+    public function type()
+    {
+        return $this->hasOne(Application::class, 'id', 'jenis_permohonan');
+    }
 }

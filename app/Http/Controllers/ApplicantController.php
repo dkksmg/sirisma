@@ -8,19 +8,18 @@ use App\Models\Province;
 use App\Models\Applicant;
 use App\Models\SubDistrict;
 use Illuminate\Http\Request;
-use App\Models\EducationLevels;
 use App\Models\StatusApplicant;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ApplicantRequest;
+use Illuminate\Support\Facades\Storage;
+use App\Models\EducationLevelPenelitians;
 
 class ApplicantController extends Controller
 {
     public function index()
     {
         $provinces = Province::all();
-        $educations = EducationLevels::all()->sortByDesc('level_pendidikan');
+        $educations = EducationLevelPenelitians::all()->sortByDesc('level_pendidikan');
         $statuses = StatusApplicant::all()->sortBy('status_pemohon');
         $id_user = Auth::user()->id;
         // DB::enableQueryLog();
@@ -36,7 +35,7 @@ class ApplicantController extends Controller
     public function create()
     {
         $provinces = Province::all();
-        $educations = EducationLevels::all()->sortByDesc('level_pendidikan');
+        $educations = EducationLevelPenelitians::all()->sortByDesc('level_pendidikan');
         $statuses = StatusApplicant::all();
         $id_user = Auth::user()->id;
         $data = Applicant::with(['user', 'province_ktp', 'district_ktp', 'sub_district_ktp', 'village_ktp', 'province_domisili', 'district_domisili', 'sub_district_domisili', 'village_domisili'])->where('id_user', $id_user)->firstOrNew();
@@ -111,7 +110,6 @@ class ApplicantController extends Controller
                 'file_ktp'     => $file_ktp,
                 'file_ktm'     => $file_ktm,
             ];
-            // dd($data);
             Applicant::create($data);
             return redirect()->route('profile')->with(['success' => 'Data Anda berhasil di perbarui!']);
         } else {
@@ -122,9 +120,9 @@ class ApplicantController extends Controller
     public function edit($id)
     {
         $provinces = Province::all();
-        $educations = EducationLevels::all()->sortByDesc('level_pendidikan');
+        $educations = EducationLevelPenelitians::all()->sortByDesc('level_pendidikan');
         $statuses = StatusApplicant::all()->sortBy('status_pemohon');
-        $id_user = Auth::user()->id;
+        // $id_user = Auth::user()->id;
         // DB::enableQueryLog();
         $data = Applicant::with(['user', 'province_ktp', 'district_ktp', 'sub_district_ktp', 'village_ktp', 'province_domisili', 'district_domisili', 'sub_district_domisili', 'village_domisili'])->findOrFail($id);
         // dd(DB::getQueryLog());
@@ -137,44 +135,87 @@ class ApplicantController extends Controller
     }
     public function update(request $request, $id)
     {
-        $validasi = $this->validate($request, [
-            'nik_pemohon' => 'required|min:16|numeric',
-            'nim_pemohon' => 'required|min:3|alpha_num',
-            'nohp_pemohon' => 'required|min:10|numeric',
-            'jenjang_pemohon' => 'required',
-            'status_pemohon' => 'required',
-            'asal_pemohon' => 'required|max:50',
-            'progdi_pemohon' => 'required|max:20',
-            'semester_pemohon' => 'required|max:10|numeric',
-            'alamat_ktp' => 'required|max:255',
-            'alamat_domisili' => 'required|max:255',
-            'provinsi_ktp' => 'required',
-            'kotakab_ktp' => 'required',
-            'kecamatan_ktp' => 'required',
-            'keldesa_ktp' => 'required',
-            'provinsi_domisili' => 'required',
-            'kotakab_domisili' => 'required',
-            'kecamatan_domisili' => 'required',
-            'keldesa_domisili' => 'required',
-            'file_ktp'     => 'required|image|mimes:jpeg,jpg,png|max:512',
-            'file_ktm'     => 'required|image|mimes:jpeg,jpg,png|max:512'
-        ]);
-
+        $item = Applicant::findOrFail($id);
+        if (Storage::disk('local')->exists('public/' . $item->file_ktp)) {
+            $validasi = $this->validate($request, [
+                'nik_pemohon' => 'required|min:16|numeric',
+                'nim_pemohon' => 'required|min:3|alpha_num',
+                'nohp_pemohon' => 'required|min:10|numeric',
+                'jenjang_pemohon' => 'required',
+                'status_pemohon' => 'required',
+                'asal_pemohon' => 'required|max:50',
+                'progdi_pemohon' => 'required|max:20',
+                'semester_pemohon' => 'required|max:10|numeric',
+                'alamat_ktp' => 'required|max:255',
+                'alamat_domisili' => 'required|max:255',
+                'provinsi_ktp' => 'required',
+                'kotakab_ktp' => 'required',
+                'kecamatan_ktp' => 'required',
+                'keldesa_ktp' => 'required',
+                'provinsi_domisili' => 'required',
+                'kotakab_domisili' => 'required',
+                'kecamatan_domisili' => 'required',
+                'keldesa_domisili' => 'required',
+                'file_ktp'     => 'image|mimes:jpeg,jpg,png|max:512',
+                'file_ktm'     => 'image|mimes:jpeg,jpg,png|max:512'
+            ]);
+        } else {
+            $validasi = $this->validate($request, [
+                'nik_pemohon' => 'required|min:16|numeric',
+                'nim_pemohon' => 'required|min:3|alpha_num',
+                'nohp_pemohon' => 'required|min:10|numeric',
+                'jenjang_pemohon' => 'required',
+                'status_pemohon' => 'required',
+                'asal_pemohon' => 'required|max:50',
+                'progdi_pemohon' => 'required|max:20',
+                'semester_pemohon' => 'required|max:10|numeric',
+                'alamat_ktp' => 'required|max:255',
+                'alamat_domisili' => 'required|max:255',
+                'provinsi_ktp' => 'required',
+                'kotakab_ktp' => 'required',
+                'kecamatan_ktp' => 'required',
+                'keldesa_ktp' => 'required',
+                'provinsi_domisili' => 'required',
+                'kotakab_domisili' => 'required',
+                'kecamatan_domisili' => 'required',
+                'keldesa_domisili' => 'required',
+                'file_ktp'     => 'required|image|mimes:jpeg,jpg,png|max:512',
+                'file_ktm'     => 'required|image|mimes:jpeg,jpg,png|max:512'
+            ]);
+        }
         if ($validasi == true) {
-            $ktp_enc = md5(sha1(bcrypt($request->nik_pemohon . '' . $request->file('file_ktp'))));
-            $ktm_enc = md5(sha1(bcrypt($request->nik_pemohon . '' . $request->file('file_ktm'))));
-            $file_ext_ktp = $request->file('file_ktp')->guessExtension();
-            $file_ext_ktm = $request->file('file_ktm')->guessExtension();
-            $file_ktp =  $request->file('file_ktp')->storeAs(
-                'assets/upload/ktp',
-                'file-ktp-' . $ktp_enc . '.' . $file_ext_ktp,
-                'public'
-            );
-            $file_ktm = $request->file('file_ktm')->storeAs(
-                'assets/upload/ktm',
-                'file-ktm-' . $ktm_enc . '.' . $file_ext_ktm,
-                'public'
-            );
+            if ($request->file('file_ktp') == null) {
+                $file_ktp = $item->file_ktp;
+            } else {
+                $ktp_enc = md5(sha1(bcrypt($request->nik_pemohon . '' . $request->file('file_ktp'))));
+                $file_ext_ktp = $request->file('file_ktp')->guessExtension();
+                $file_ktp =  $request->file('file_ktp')->storeAs(
+                    'assets/upload/ktp',
+                    'file-ktp-' . $ktp_enc . '.' . $file_ext_ktp,
+                    'public'
+                );
+                try {
+                    Storage::disk('local')->delete('public/' . $item->file_ktp);
+                } catch (\Throwable $th) {
+                    return $th->getMessage();
+                }
+            }
+            if ($request->file('file_ktm') == null) {
+                $file_ktm = $item->file_ktm;
+            } else {
+                $ktm_enc = md5(sha1(bcrypt($request->nik_pemohon . '' . $request->file('file_ktm'))));
+                $file_ext_ktm = $request->file('file_ktm')->guessExtension();
+                $file_ktm = $request->file('file_ktm')->storeAs(
+                    'assets/upload/ktm',
+                    'file-ktm-' . $ktm_enc . '.' . $file_ext_ktm,
+                    'public'
+                );
+                try {
+                    Storage::disk('local')->delete('public/' . $item->file_ktm);
+                } catch (\Throwable $th) {
+                    return $th->getMessage();
+                }
+            }
             $data = [
                 'id_user' => Auth::user()->id,
                 'nik' => $request->nik_pemohon,
@@ -198,15 +239,18 @@ class ApplicantController extends Controller
                 'file_ktp'     => $file_ktp,
                 'file_ktm'     => $file_ktm,
             ];
-            // dd($data);
-            $item = Applicant::findOrFail($id);
             $item->update($data);
+            // dd($data);
 
             return redirect()->route('profile.index')->with(['success' => 'Data Anda berhasil di perbarui!']);
         } else {
 
             return redirect()->back()->with(['error' => 'Gagal menyimpan Data Anda']);
         }
+    }
+
+    public function imageprofile(request $request, $id)
+    {
     }
 
     public function getkotakab(request $request)

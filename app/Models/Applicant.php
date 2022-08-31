@@ -60,4 +60,8 @@ class Applicant extends Model
     {
         return $this->hasMany(Application::class, 'id_applicant', 'id_applicant');
     }
+    public function education()
+    {
+        return $this->belongsTo(EducationLevelPenelitians::class, 'jenjang', 'level_pendidikan');
+    }
 }

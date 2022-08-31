@@ -42,6 +42,7 @@ Route::prefix('data')
 
 Route::resource('permohonan', ApplicationController::class)->middleware(['auth', 'verified']);
 Route::resource('profile', ApplicantController::class)->middleware(['auth', 'verified']);
+Route::put('ganti-profil/{id}', [ApplicantController::class, 'imageprofile',])->name('imageprofile');
 Auth::routes(['verify' => true]);
 
 Route::get('/', [HomeController::class, 'index'])->name('home');

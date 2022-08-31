@@ -28,18 +28,16 @@
                                         <th class="text-center">Status</th>
                                         <th class="text-center">File Surat Pengantar</th>
                                         <th class="text-center">File Proposal</th>
+                                        <th class="text-center">Biaya</th>
                                         <th class="text-center">File Permohonan</th>
                                         <th class="text-center" width="110px">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php
-                                        $no = 1;
-                                    @endphp
                                     @foreach ($applications as $app)
                                         <tr>
-                                            <td class="text-center">{{ $no }}</td>
-                                            <td class="text-center">{{ $app->jenis_permohonan }}</td>
+                                            <td class="text-center">{{ $app->kode_permohonan }}</td>
+                                            <td class="text-center">{{ $app->type->jenis_permohonan }}</td>
                                             <td class="text-center">{{ $app->keperluan }}</td>
                                             <td class="text-center" width="auto">
                                                 {{ \Carbon\Carbon::create($app->waktu_awal)->translatedFormat('d F Y') . ' s/d ' . \Carbon\Carbon::create($app->waktu_akhir)->translatedFormat('d F Y') }}
@@ -91,6 +89,13 @@
                                                 </button>
                                             </td>
                                             <td class="text-center">
+                                                @if (!empty($app->biaya_permohonan))
+                                                    {{ 'Rp' . number_format($data->education->biaya, 0, ',', '.') }}
+                                                @else
+                                                    Rp0
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
                                                 @if ($app->status_permohonan == 'Setujui')
                                                     <button class="btn btn-md bi bi-file-earmark-pdf color-orange"
                                                         onClick="window.open('{{ Storage::url($app->file_surat_permohonan) }}','_blank', 'location=yes,height=800,width=700,scrollbars=yes,status=yes');">
@@ -138,9 +143,6 @@
                                             @endif
 
                                         </tr>
-                                        @php
-                                            $no++;
-                                        @endphp
                                     @endforeach
                                 </tbody>
                             </table>
@@ -150,6 +152,7 @@
             </div>
         </section>
     </main><!-- End #main -->
+    <div id="preloader"></div>
 @endsection
 @push('addon-script')
     <script>

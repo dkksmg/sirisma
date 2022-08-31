@@ -37,7 +37,7 @@ return new class extends Migration
             $table->string('program_studi');
             $table->string('semester');
             $table->string('file_ktp');
-            $table->string('file_foto');
+            $table->string('file_ktm');
             $table->timestamps();
             $table->softDeletes();
         });

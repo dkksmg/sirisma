@@ -14,10 +14,11 @@
                             <div class="card-body text-center">
                                 <label for="fileField">
                                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                                        alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                                        alt="avatar" class="rounded-circle img-fluid" style="width: 150px;"
+                                        data-bs-toggle="modal" data-bs-target="#fotoModal">
                                 </label>
-                                <input type="file" id="fileField" name="file-img" accept=".png, .jpg, .jpeg"
-                                    hidden="true">
+                                {{-- <input type="file" id="fileField" name="file-img" accept=".png, .jpg, .jpeg"
+                                    hidden="true"> --}}
                                 <h5 class="my-3">{{ Auth::user()->name }}</h5>
                                 <p class="text-muted mb-1">
                                     @if (isset($data->status) && isset($data->jenjang) && isset($data->program_studi))
@@ -46,12 +47,14 @@
                             <div class="card-body p-0">
                                 <ul class="list-group list-group-flush rounded-3">
                                     <li class="list-group-item d-flex justify-content-center align-items-center p-3">
+                                        <p>Foto KTP</p>
                                         <img src="{{ Storage::url($data->file_ktp) }}" alt="foto-ktp"
                                             class="img-fluid img-thumbnail rounded mx-auto d-block" width="50%"
                                             height="50%" data-bs-toggle="modal" data-bs-target="#imgKTP"
                                             onerror="this.onerror=null; this.src='{{ url('assets/img/no-photo.png') }}'">
                                     </li>
                                     <li class="list-group-item d-flex justify-content-center align-items-center p-3">
+                                        <p>Foto KTM</p>
                                         <img src="{{ Storage::url($data->file_ktm) }}" alt="foto-ktm"
                                             class="img-fluid img-thumbnail rounded mx-auto d-block" width="50%"
                                             height="50%" data-bs-toggle="modal" data-bs-target="#imgKTM"
@@ -290,4 +293,35 @@
             </div>
         </div>
     </main>
+    <!-- Modal -->
+    <div class="modal fade" id="fotoModal" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static"
+        data-bs-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ubah Foto Profil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                        class="rounded mx-auto d-block rounded mx-auto d-blockrounded-circle img-fluid img-thumbnail"
+                        width="200px" height="auto" />
+
+                    <form action="{{ route('imageprofile', $data->id_user) }}" method="post"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="input-group mb-3 mt-3">
+                            <input type="file" class="form-control form-control-sm" id="inputGroupFile01">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="preloader"></div>
 @endsection

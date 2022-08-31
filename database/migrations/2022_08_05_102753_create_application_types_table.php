@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('education_levels', function (Blueprint $table) {
-            $table->id('id_pendidikan');
-            $table->string('level_pendidikan');
+        Schema::create('application_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('jenis_permohonan');
+            $table->enum('status_opsi', ['y', 'n']);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('education_levels');
+        Schema::dropIfExists('application_types');
     }
 };

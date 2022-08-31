@@ -15,6 +15,7 @@
                     <div class="container px-5 my-5">
                         <form action="{{ route('permohonan.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
@@ -34,10 +35,17 @@
                                             id="jenis_permohonan" name="jenis_permohonan">
                                             <option value="">- Pilih Permohonan -</option>
                                             @foreach ($types as $type)
-                                                <option value="{{ $type->id }}"
-                                                    @if ($type->status_opsi == 'n') disabled @endif
-                                                    {{ $type->id == old('jenis_permohonan') ? 'selected' : '' }}>
-                                                    {{ $type->jenis_permohonan }}</option>
+                                                @if (!empty($app->jenis_permohonan))
+                                                    <option value="{{ $type->id }}"
+                                                        @if ($type->status_opsi == 'n') disabled @endif
+                                                        {{ $type->id == $app->jenis_permohonan ? 'selected' : '' }}>
+                                                        {{ $type->jenis_permohonan }}</option>
+                                                @else
+                                                    <option value="{{ $type->id }}"
+                                                        @if ($type->status_opsi == 'n') disabled @endif
+                                                        {{ $type->id == old('jenis_permohonan') ? 'selected' : '' }}>
+                                                        {{ $type->jenis_permohonan }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                         <label for="jenis_permohonan">Jenis Permohonan</label>
@@ -51,7 +59,13 @@
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <textarea class="form-control @error('keperluan_pemohon') is-invalid @enderror" id="keperluan_pemohon"
-                                            name="keperluan_pemohon" type="text" placeholder="Keperluan Permohon" style="height: 8rem">{{ old('keperluan_pemohon') }}</textarea>
+                                            name="keperluan_pemohon" type="text" placeholder="Keperluan Permohon" style="height: 8rem">
+                                             @if (!empty($app->keperluan))
+{{ $app->keperluan }}
+@else
+{{ old('keperluan_pemohon') }}
+@endif
+</textarea>
                                         <label for="keperluan_pemohon">Keperluan Permohon</label>
                                         @error('keperluan_pemohon')
                                             <div class="invalid-feedback" role="alert">{{ $message }}</div>
@@ -62,7 +76,13 @@
                                     <div class="form-floating mb-3">
                                         <textarea class="form-control @error('judul_penelitian') is-invalid @enderror" id="judul_penelitian"
                                             name="judul_penelitian" type="text" placeholder="Judul Rencana Penelitian" style="height: 8rem"
-                                            data-sb-validations="required">{{ old('judul_penelitian') }}</textarea>
+                                            data-sb-validations="required">
+@if (!empty($app->judul_rencana_penelitian))
+{{ $app->judul_rencana_penelitian }}
+@else
+{{ old('judul_penelitian') }}
+@endif
+</textarea>
                                         <label for="judul_penelitian">Judul Rencana Penelitian</label>
                                         @error('judul_penelitian')
                                             <div class="invalid-feedback" role="alert">{{ $message }}</div>
@@ -73,9 +93,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group mb-3 ">
-                                        <label for="datepicker-one" class="form-label ">Waktu Awal </label>
+                                        <label for="datepicker-one" class="form-label ">Waktu Awal Penelitian</label>
                                         <input type="text" class="form-control @error('waktu_awal') is-invalid @enderror"
-                                            id="datepicker-one" placeholder="Waktu Awal" name="waktu_awal" />
+                                            id="datepicker-one" placeholder="Waktu Awal Penelitian" name="waktu_awal"
+                                            @if (!empty($app->waktu_awal)) value="{{ \Carbon\Carbon::createFromFormat('Y-m-d', $app->waktu_awal)->format('d/m/Y') }}"
+                                            @else
+                                            value="{{ old('waktu_awal') }}" @endif />
                                         @error('waktu_awal')
                                             <div class="invalid-feedback" role="alert">{{ $message }}</div>
                                         @enderror
@@ -83,10 +106,13 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group mb-3 ">
-                                        <label for="datepicker-two" class="form-label ">Waktu Akhir </label>
+                                        <label for="datepicker-two" class="form-label ">Waktu Akhir Penelitian</label>
                                         <input type="text"
                                             class="form-control @error('waktu_akhir') is-invalid @enderror"
-                                            id="datepicker-two" placeholder="Waktu Akhir" name="waktu_akhir" />
+                                            id="datepicker-two" placeholder="Waktu Akhir Penelitian" name="waktu_akhir"
+                                            @if (!empty($app->waktu_akhir)) value="{{ \Carbon\Carbon::createFromFormat('Y-m-d', $app->waktu_akhir)->format('d/m/Y') }}"
+                                            @else
+                                            value="{{ old('waktu_akhir') }}" @endif />
                                         @error('waktu_akhir')
                                             <div class="invalid-feedback" role="alert">{{ $message }}</div>
                                         @enderror
@@ -130,6 +156,8 @@
 @push('addon-script')
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gijgo@1.9.13/js/gijgo.min.js"></script>
     <script type="text/javascript">
+        $('textarea#keperluan_pemohon').html($('textarea#keperluan_pemohon').html().trim());
+        $('textarea#judul_penelitian').html($('textarea#judul_penelitian').html().trim());
         $(function() {
             $('#datepicker-one').datepicker({
                 header: true,

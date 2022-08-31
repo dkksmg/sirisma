@@ -36,7 +36,7 @@ class ApplicantSeeder extends Seeder
         $applicant->program_studi = 'Teknik Informatika';
         $applicant->semester = '5';
         $applicant->file_ktp = 'Cikiwir';
-        $applicant->file_foto = 'Cikiwir';
+        $applicant->file_ktm = 'Cikiwir';
         $applicant->save();
     }
 }
