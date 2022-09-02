@@ -23,6 +23,7 @@ class ApplicationRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
             // 'nama_pemohon' => 'required|min:5|alpha',
             'jenis_permohonan' => 'required',

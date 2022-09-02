@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <main id="main" class="mb-md-5">
         <section id="hero-static" class="hero-static">

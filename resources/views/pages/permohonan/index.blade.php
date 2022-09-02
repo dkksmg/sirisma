@@ -43,7 +43,8 @@
                                                 {{ \Carbon\Carbon::create($app->waktu_awal)->translatedFormat('d F Y') . ' s/d ' . \Carbon\Carbon::create($app->waktu_akhir)->translatedFormat('d F Y') }}
                                             </td>
                                             <td class="text-center">
-                                                {{ \Carbon\Carbon::create($app->created_at)->translatedFormat('d F Y h:i:s') }}
+                                                {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $app->tanggal_permohonan)->format('d F Y H:i:s') }}
+                                                {{-- {{ $app->tanggal_permohonan }} --}}
                                             </td>
                                             <td class="text-center">
                                                 @if ($app->status_permohonan == 'Kirim')
@@ -53,7 +54,7 @@
                                                     <span class="time-status">{{ $app->update_waktu_status }}</span>
                                                 @elseif ($app->status_permohonan == 'Setujui')
                                                     <span class="btn btn-sm btn-success text-light mb-1">
-                                                        Disetujui
+                                                        Selesai
                                                     </span>
                                                     <br>
                                                     <span class="time-status">{{ $app->update_waktu_status }}</span>
@@ -159,15 +160,18 @@
         $(document).ready(function() {
             $('#example').DataTable({
                 paging: true,
-                stateSave: true,
-                pageLength: 5,
+                // order: [
+                //     [4, 'desc']
+                // ],
+                // stateSave: true,
+                pageLength: 10,
                 lengthMenu: [
                     [5, 10, 25, 50, -1],
                     [5, 10, 25, 50, 'All'],
                 ],
                 lengthChange: true,
                 searching: true,
-                ordering: true,
+                ordering: false,
                 info: true,
                 autoWidth: true,
                 responsive: true,

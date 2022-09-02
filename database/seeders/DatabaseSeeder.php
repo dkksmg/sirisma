@@ -36,6 +36,21 @@ class DatabaseSeeder extends Seeder
             'email' => 'ardianfirmansyah123@gmail.com',
             'password' => bcrypt('ardian123@'),
             'email_verified_at' => now(),
+            'role' => 'USER'
+        ]);
+        User::factory()->create([
+            'name' => 'Ardian Firmansyah',
+            'email' => 'ardianff@gmail.com',
+            'password' => bcrypt('ardian123@'),
+            'email_verified_at' => now(),
+            'role' => 'USER'
+        ]);
+        User::factory()->create([
+            'name' => 'Ardian',
+            'email' => 'contact.ardianff@gmail.com',
+            'password' => bcrypt('ardian123@'),
+            'email_verified_at' => now(),
+            'role' => 'ADMIN'
         ]);
         $this->call(ProvinceSeeder::class);
         $this->call(AcehDistrictSeeder::class);

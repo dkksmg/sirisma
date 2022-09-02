@@ -116,7 +116,7 @@
                                 </div>
                             </div>
                             <div class="text-center mt-5">
-                                <a class="btn btn-secondary" href="{{ URL::previous() }}">Kembali</a>
+                                <a class="btn btn-secondary" href="{{ route('permohonan.index') }}">Kembali</a>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                         </form>

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('waktu_awal');
             $table->date('waktu_akhir');
             $table->text('judul_rencana_penelitian');
+            $table->timestamp('tanggal_permohonan');
             $table->string('file_surat_pemohon');
             $table->string('file_proposal_pemohon');
             $table->string('file_surat_permohonan')->nullable();

@@ -6,14 +6,15 @@
     <main id="hero-static" class="hero-static">
         <div class="container">
             <div class="section-header">
-                <h2>Tambah Permohonan</h2>
+                <h2>Ubah Permohonan</h2>
             </div>
         </div>
         <div class="container">
             <div class="row justify-content-md-start">
                 <div class="col-md-12">
                     <div class="container px-5 my-5">
-                        <form action="{{ route('permohonan.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('permohonan.update', $app->id_application) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="row">

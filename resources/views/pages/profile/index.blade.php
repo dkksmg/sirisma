@@ -13,13 +13,16 @@
                         <div class="card mb-4">
                             <div class="card-body text-center">
                                 <label for="fileField">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                                        alt="avatar" class="rounded-circle img-fluid" style="width: 150px;"
-                                        data-bs-toggle="modal" data-bs-target="#fotoModal">
+                                    <img @if (empty($data->user->foto_profile)) src="{{ url('assets/img/man.png') }}"
+                                    @else src="{{ Storage::url($data->user->foto_profile) }}" @endif
+                                        alt="avatar" class="rounded-circle img-fluid" width="100px" height="100px"
+                                        data-bs-toggle="modal" data-bs-target="#fotoModal"
+                                        onerror="this.onerror=null; this.src='{{ url('assets/img/man.png') }}'">
                                 </label>
                                 {{-- <input type="file" id="fileField" name="file-img" accept=".png, .jpg, .jpeg"
                                     hidden="true"> --}}
-                                <h5 class="my-3">{{ Auth::user()->name }}</h5>
+                                <h5 class="my-3">{{ Auth::user()->name }}
+                                </h5>
                                 <p class="text-muted mb-1">
                                     @if (isset($data->status) && isset($data->jenjang) && isset($data->program_studi))
                                         {{ $data->status }},
@@ -278,7 +281,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Foto KTM/Kartu Pelajar</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Foto KTM</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -299,29 +302,59 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ubah Foto Profil</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Ubah Data Akun</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
-                        class="rounded mx-auto d-block rounded mx-auto d-blockrounded-circle img-fluid img-thumbnail"
-                        width="200px" height="auto" />
+                <form action="{{ route('imageprofile', Auth::user()->id) }}" method="post"
+                    enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-body">
+                        <img @if (empty($data->user->foto_profile)) src="{{ url('assets/img/man.png') }}"
+                        @else src="{{ Storage::url($data->user->foto_profile) }}" @endif
+                            alt="avatar"
+                            class="rounded mx-auto d-block rounded mx-auto d-blockrounded-circle img-fluid img-thumbnail"
+                            width="200px" height="auto"
+                            onerror="this.onerror=null; this.src='{{ url('assets/img/man.png') }}'" />
 
-                    <form action="{{ route('imageprofile', $data->id_user) }}" method="post"
-                        enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        <div class="input-group mb-3 mt-3">
-                            <input type="file" class="form-control form-control-sm" id="inputGroupFile01">
+                        <div class="input-group mb-3 mt-4">
+                            <span class="input-group-text" id="basic-addon1">Nama Lengkap</span>
+                            <input type="text" class="form-control @error('nama_pengguna') is-invalid @enderror"
+                                aria-describedby="basic-addon1" name="nama_pengguna"
+                                @if (!empty(Auth::user()->name)) value="{{ Auth::user()->name }}"
+                                @else
+                                    value="{{ old('nama_pengguna') }}" @endif>
+                            @error('nama_pengguna')
+                                <div class="invalid-feedback" role="alert">{{ $message }}</div>
+                            @enderror
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success">Simpan</button>
-                </div>
+                        <div class="input-group mb-3 mt-4">
+                            <span class="input-group-text" id="basic-addon1">Alamat Email</span>
+                            <input type="text" class="form-control @error('email_pengguna') is-invalid @enderror"
+                                aria-label="Email" aria-describedby="basic-addon1" name="email_pengguna"
+                                @if (!empty(Auth::user()->email)) value="{{ Auth::user()->email }}"
+                                @else
+                                    value="{{ old('email_pengguna') }}" @endif>
+                            @error('email_pengguna')
+                                <div class="invalid-feedback" role="alert">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="input-group mb-3">
+                            <label class="input-group-text" for="inputGroupFile01">Foto Profile</label>
+                            <input type="file" class="form-control @error('imageprofile') is-invalid @enderror"
+                                name="imageprofile" id="inputGroupFile01">
+                            @error('imageprofile')
+                                <div class="invalid-feedback" role="alert">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                </form>
             </div>
         </div>
+    </div>
     </div>
     <div id="preloader"></div>
 @endsection

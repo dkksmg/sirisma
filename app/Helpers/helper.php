@@ -4,7 +4,6 @@ function salam()
 {
     //ubah timezone menjadi jakarta
     date_default_timezone_set('Asia/Jakarta');
-
     //ambil jam dan menit
     $jam = date('H:i');
     // $salam = "alayekum";

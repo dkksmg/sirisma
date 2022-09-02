@@ -14,7 +14,7 @@ class Application extends Model
     protected $primaryKey = 'id_application';
     protected $fillable = [
         'id_user', 'kode_permohonan',
-        'id_applicant', 'jenis_permohonan', 'keperluan', 'waktu_awal', 'waktu_akhir', 'judul_rencana_penelitian', 'file_surat_pemohon', 'file_proposal_pemohon', 'file_surat_permohonan', 'biaya_permohonan', 'status_permohonan', 'update_waktu_status'
+        'id_applicant', 'jenis_permohonan', 'keperluan', 'waktu_awal', 'waktu_akhir', 'judul_rencana_penelitian', 'tanggal_permohonan', 'file_surat_pemohon', 'file_proposal_pemohon', 'file_surat_permohonan', 'biaya_permohonan', 'status_permohonan', 'update_waktu_status'
     ];
 
     public function applicant()

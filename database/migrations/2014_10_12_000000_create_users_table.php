@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('foto_profile')->nullable();
-            $table->enum('role', ['USER', 'ADMIN', 'SUPERADMIN'])->nullable();
+            $table->enum('role', ['USER', 'ADMIN', 'SUPERADMIN'])->default('USER');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -241,7 +241,8 @@
             <div class="container">
                 <div class="section-header">
                     <h2>Kontak Kami</h2>
-                    <p>Untuk pertanyaan, umpan balik, atau pertanyaan apa saja, silakan hubungi kami melalui formulir
+                    <p>Untuk pertanyaan serta umpan balik mengenai permohonan penelitian atau magang, silakan hubungi kami
+                        melalui formulir
                         dibawah.</p>
                 </div>
 

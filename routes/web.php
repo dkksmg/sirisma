@@ -6,6 +6,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\Admin\AuthAdminController;
+use App\Http\Controllers\Admin\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,7 @@ use App\Http\Controllers\ApplicationController;
 */
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::get('/login-admin', [AuthAdminController::class, 'index'])->name('login-admin');
 Route::prefix('data')
     ->middleware(['auth', 'verified'])
     ->group(function () {
@@ -38,6 +41,15 @@ Route::prefix('data')
             ApplicantController::class,
             'getdataedit',
         ])->name('getdataedit');
+    });
+
+// Admin
+Route::prefix('admin')
+    // ->namespace('Admin')
+    ->middleware(['auth', 'admin', 'verified'])
+    ->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])
+            ->name('dashboard');
     });
 
 Route::resource('permohonan', ApplicationController::class)->middleware(['auth', 'verified']);

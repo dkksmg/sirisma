@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Village;
 use App\Models\District;
 use App\Models\Province;
@@ -9,8 +10,10 @@ use App\Models\Applicant;
 use App\Models\SubDistrict;
 use Illuminate\Http\Request;
 use App\Models\StatusApplicant;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\Models\EducationLevelPenelitians;
 
@@ -25,6 +28,7 @@ class ApplicantController extends Controller
         // DB::enableQueryLog();
         $data = Applicant::with(['user', 'province_ktp', 'district_ktp', 'sub_district_ktp', 'village_ktp', 'province_domisili', 'district_domisili', 'sub_district_domisili', 'village_domisili'])->where('id_user', $id_user)->firstOrNew();
         // dd(DB::getQueryLog());
+
         return view('pages.profile.index', [
             'provinces' => $provinces,
             'educations' => $educations,
@@ -122,10 +126,7 @@ class ApplicantController extends Controller
         $provinces = Province::all();
         $educations = EducationLevelPenelitians::all()->sortByDesc('level_pendidikan');
         $statuses = StatusApplicant::all()->sortBy('status_pemohon');
-        // $id_user = Auth::user()->id;
-        // DB::enableQueryLog();
         $data = Applicant::with(['user', 'province_ktp', 'district_ktp', 'sub_district_ktp', 'village_ktp', 'province_domisili', 'district_domisili', 'sub_district_domisili', 'village_domisili'])->findOrFail($id);
-        // dd(DB::getQueryLog());
         return view('pages.profile.edit', [
             'provinces' => $provinces,
             'educations' => $educations,
@@ -251,6 +252,49 @@ class ApplicantController extends Controller
 
     public function imageprofile(request $request, $id)
     {
+        $name = Auth::user()->name;
+        $arr = explode(' ', trim($name));
+        $item = User::findOrFail($id);
+        if (Storage::disk('local')->exists('public/' . $item->foto_profile)) {
+            $this->validate($request, [
+                'nama_pengguna' => 'required|min:5',
+                'email_pengguna' => 'required|min:5|email:rfc,dns',
+                'imageprofile' => 'image|mimes:jpeg,jpg,png|max:3024'
+            ]);
+        } else {
+            $this->validate($request, [
+                'nama_pengguna' => 'required|min:5',
+                'email_pengguna' => 'required|min:5',
+                'imageprofile' => 'required|image|mimes:jpeg,jpg,png|max:3024'
+            ]);
+        }
+        if (!empty($request->file('imageprofile'))) {
+            $file = $request->file('imageprofile');
+            $filename = $arr[0] . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $img = Image::make($file);
+            if (Image::make($file)->width() > 720) {
+                $img->resize(720, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+            }
+            $img->save(public_path('storage/assets/upload/profile/') . $filename);
+            $image = 'assets/upload/profile/' . $img->basename;
+            try {
+                Storage::disk('local')->delete('public/' . $item->foto_profile);
+            } catch (\Throwable $th) {
+                return $th->getMessage();
+            }
+        } else {
+            $image = $item->foto_profile;
+        }
+
+        $data = [
+            'name' => $request->nama_pengguna,
+            'email' => $request->email_pengguna,
+            'foto_profile' => $image
+        ];
+        $item->update($data);
+        return redirect()->route('profile.index')->with(['success' => 'Foto Profile diupdate!']);
     }
 
     public function getkotakab(request $request)
