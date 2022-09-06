@@ -1,5 +1,8 @@
 <?php
 
+use Carbon\Carbon;
+use App\Models\Application;
+
 function salam()
 {
     //ubah timezone menjadi jakarta
@@ -24,7 +27,21 @@ function salam()
 }
 function rupiah($angka)
 {
-
     $hasil_rupiah = "Rp " . number_format($angka, 2, ',', '.');
     echo $hasil_rupiah;
+}
+function kodepermohonan()
+{
+    $now = Carbon::now();
+    $date_now = $now->year . $now->month . $now->day;
+    $cek = Application::count();
+    if ($cek == 0) {
+        $urut = 10001;
+        $nomer = '3374/' . $date_now . '/' . $urut;
+    } else {
+        $ambil = Application::all()->last();
+        $urut = (int)substr($ambil->kode_permohonan, -5) + 1;
+        $nomer = '3374/' . $date_now . '/' . $urut;
+    }
+    return $nomer;
 }

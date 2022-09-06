@@ -8,7 +8,7 @@
                     <h2>Verifikasi Alamat Email</h2>
                 </div>
             </div>
-            <div class="container">
+            <div class="container mt-3 mb-5">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="card">

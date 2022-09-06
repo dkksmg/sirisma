@@ -13,7 +13,7 @@
             <div class="row justify-content-md-start">
                 <div class="col-md-12">
                     <div class="container px-5 my-5">
-                        <form action="{{ route('permohonan.update', $app->id_application) }}" method="POST"
+                        <form action="{{ route('permohonan.update', $app->kode_permohonan) }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')

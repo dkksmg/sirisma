@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('keperluan');
             $table->date('waktu_awal');
             $table->date('waktu_akhir');
+            $table->text('lokasi_tujuan');
             $table->text('judul_rencana_penelitian');
             $table->timestamp('tanggal_permohonan');
             $table->string('file_surat_pemohon');

@@ -10,7 +10,14 @@
             <div class="container">
                 <div class="row justify-content-left mb-4">
                     <div class="col-md-3">
-                        <a class="btn btn-sm btn-success mb-3" href="{{ route('permohonan.create') }}">Tambah Permohonan</a>
+                        {{-- <p id="demo"></p> --}}
+                        @if (empty($data->id_user))
+                            <a class="btn btn-sm btn-success mb-3" id="btn-add">Tambah
+                                Permohonan</a>
+                        @else
+                            <a class="btn btn-sm btn-success mb-3" href="{{ route('permohonan.create') }}">Tambah
+                                Permohonan</a>
+                        @endif
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -28,7 +35,6 @@
                                         <th class="text-center">Status</th>
                                         <th class="text-center">File Surat Pengantar</th>
                                         <th class="text-center">File Proposal</th>
-                                        <th class="text-center">Biaya</th>
                                         <th class="text-center">File Permohonan</th>
                                         <th class="text-center" width="110px">Aksi</th>
                                     </tr>
@@ -90,13 +96,6 @@
                                                 </button>
                                             </td>
                                             <td class="text-center">
-                                                @if (!empty($app->biaya_permohonan))
-                                                    {{ 'Rp' . number_format($data->education->biaya, 0, ',', '.') }}
-                                                @else
-                                                    Rp0
-                                                @endif
-                                            </td>
-                                            <td class="text-center">
                                                 @if ($app->status_permohonan == 'Setujui')
                                                     <button class="btn btn-md bi bi-file-earmark-pdf color-orange"
                                                         onClick="window.open('{{ Storage::url($app->file_surat_permohonan) }}','_blank', 'location=yes,height=800,width=700,scrollbars=yes,status=yes');">
@@ -117,8 +116,14 @@
                                                     </td>
                                                 @else
                                                     <td class="text-center">
-                                                        <a href="{{ route('permohonan.edit', $app->id_application) }}"
-                                                            class="btn btn-secondary btn-sm">Sanggah</a>
+                                                        {{-- <a href="{{ route('sanggah-permohonan', $app->id_application) }}"
+                                                            class="btn btn-secondary btn-sm">Sanggah</a> --}}
+                                                        <button type="button" class="btn btn-secondary btn-sm"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#staticBackdrop{{ $app->id_application }}"
+                                                            data-id="{{ $app->kode_permohonan }}">
+                                                            Revisi
+                                                        </button>
                                                     </td>
                                                 @endif
                                             @elseif($app->status_permohonan == 'Kirim' or $app->status_permohonan == 'Periksa')
@@ -142,7 +147,6 @@
                                                     </form>
                                                 </td>
                                             @endif
-
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -153,10 +157,43 @@
             </div>
         </section>
     </main><!-- End #main -->
-    <div id="preloader"></div>
+    {{-- <div id="preloader"></div> --}}
+    @foreach ($applications as $app)
+        @if ($app->status_permohonan == 'Setujui')
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop{{ $app->id_application }}" data-bs-backdrop="static"
+                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Sanggah Permohonan</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Understood</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endforeach
 @endsection
 @push('addon-script')
     <script>
+        document.getElementById("btn-add").addEventListener("click", alertBtn);
+
+        function alertBtn() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Data profile Anda belum lengkap!',
+                footer: '<a href="{{ route('profile.index') }}"> Lengkapi disini </a>'
+            })
+        }
         $(document).ready(function() {
             $('#example').DataTable({
                 paging: true,
@@ -179,4 +216,5 @@
             });
         });
     </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endpush

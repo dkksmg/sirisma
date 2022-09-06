@@ -291,7 +291,8 @@ class ApplicantController extends Controller
         $data = [
             'name' => $request->nama_pengguna,
             'email' => $request->email_pengguna,
-            'foto_profile' => $image
+            'foto_profile' => $image,
+            'email_verified_at' => null,
         ];
         $item->update($data);
         return redirect()->route('profile.index')->with(['success' => 'Foto Profile diupdate!']);

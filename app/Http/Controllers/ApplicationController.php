@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ApplicationRequest;
+use App\Models\LokasiTujuan;
 use Illuminate\Support\Facades\Validator;
 
 class ApplicationController extends Controller
@@ -23,14 +24,13 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        $id_user = Auth::user()->id;
         // DB::enableQueryLog();
-        $applications = Application::with(['type'])->where('id_user', $id_user)->orderByRaw('tanggal_permohonan DESC')->get();
         // dd(DB::getQueryLog());
-        // dd($applications);
+        $id_user = Auth::user()->id;
+        $applications = Application::with(['type'])->where('id_user', $id_user)->orderByRaw('tanggal_permohonan DESC')->get();
         $data = Applicant::with(['user'])->findOrNew($id_user);
         $timenow = Carbon::now()->toDateTimeString();
-        // dd($applications);
+        // dd($data->id_user);
         return view(
             'pages.permohonan.index',
             [
@@ -49,10 +49,19 @@ class ApplicationController extends Controller
      */
     public function create()
     {
-        $types = ApplicationType::all();
-        return view('pages.permohonan.create', [
-            'types' => $types,
-        ]);
+        $id_user = Auth::user()->id;
+        $type = ApplicationType::all();
+        $lokasi = LokasiTujuan::all()->sortBy('lokasi_tujuan');
+        $data = Applicant::with(['user'])->findOrNew($id_user);
+        if ($data->id_user != null) {
+            return view('pages.permohonan.create', [
+                'types' => $type,
+                'data' => $data,
+                'lokasis' => $lokasi
+            ]);
+        } else {
+            abort(404);
+        }
     }
 
     /**
@@ -63,6 +72,7 @@ class ApplicationController extends Controller
      */
     public function store(request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'jenis_permohonan' => 'required',
             'keperluan_pemohon' => 'required|min:5',
@@ -108,14 +118,15 @@ class ApplicationController extends Controller
                 'public'
             );
             $data = [
-                'kode_permohonan' => 'A1',
+                'kode_permohonan' => kodepermohonan(),
                 'id_user' => Auth::user()->id,
-                'id_applicant' => '1',
+                'id_applicant' => $request->applicant,
                 'jenis_permohonan' => $request->jenis_permohonan,
                 'keperluan' => $request->keperluan_pemohon,
                 'judul_rencana_penelitian' => $request->judul_penelitian,
                 'waktu_awal' => Carbon::createFromFormat('d/m/Y', $request->waktu_awal)->format('Y-m-d'),
                 'waktu_akhir' => Carbon::createFromFormat('d/m/Y', $request->waktu_akhir)->format('Y-m-d'),
+                'lokasi_tujuan' => json_encode($request->lokasi),
                 'tanggal_permohonan' => Carbon::now()->format('Y-m-d h:i:s'),
                 'file_surat_pemohon'     => $file_pengantar,
                 'file_proposal_pemohon'     => $file_proposal,
@@ -179,7 +190,7 @@ class ApplicationController extends Controller
                 'file_proposal'     => 'file|mimes:pdf|max:2048'
             ]);
         } else {
-            $validasi = Validator::make($request->all(), [
+            $validator = Validator::make($request->all(), [
                 'jenis_permohonan' => 'required',
                 'keperluan_pemohon' => 'required|min:5',
                 'judul_penelitian' => 'required|min:5',
@@ -248,7 +259,7 @@ class ApplicationController extends Controller
             return redirect()->route('permohonan.index')->with(['warning' => 'Permohonan berhasil diubah!']);
         }
     }
-    public function sanggah($id)
+    public function sanggah(request $request, $id)
     {
         echo 'Sanggah View';
     }

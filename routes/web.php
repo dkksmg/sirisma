@@ -53,6 +53,7 @@ Route::prefix('admin')
     });
 
 Route::resource('permohonan', ApplicationController::class)->middleware(['auth', 'verified']);
+Route::put('sanggah-permohonan', [ApplicationController::class, 'sanggah'])->middleware(['auth', 'verified'])->name('sanggah-permohonan');
 Route::resource('profile', ApplicantController::class)->middleware(['auth', 'verified']);
 Route::put('ganti-profil/{id}', [ApplicantController::class, 'imageprofile',])->name('imageprofile');
 Auth::routes(['verify' => true]);
