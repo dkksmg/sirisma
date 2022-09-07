@@ -4,6 +4,7 @@
 <head>
     @include('includes.styles')
     @stack('addon-styles')
+    @livewireStyles
 </head>
 
 <body>
@@ -13,6 +14,7 @@
     @include('includes.script')
     @stack('addon-script')
     @include('sweetalert::alert')
+    @livewireScripts
 </body>
 
 </html>

@@ -258,14 +258,14 @@ class ApplicantController extends Controller
         if (Storage::disk('local')->exists('public/' . $item->foto_profile)) {
             $this->validate($request, [
                 'nama_pengguna' => 'required|min:5',
-                'email_pengguna' => 'required|min:5|email:rfc,dns',
-                'imageprofile' => 'image|mimes:jpeg,jpg,png|max:3024'
+                'email' => 'required|string|email:rfc,dns|max:255|unique:users,email,' . $item->id,
+                'imageprofile' => 'image|mimes:jpeg,jpg,png'
             ]);
         } else {
             $this->validate($request, [
                 'nama_pengguna' => 'required|min:5',
-                'email_pengguna' => 'required|min:5',
-                'imageprofile' => 'required|image|mimes:jpeg,jpg,png|max:3024'
+                'email' => 'required|string|email:rfc,dns|max:255|unique:users,email,' . $item->id,
+                'imageprofile' => 'required|image|mimes:jpeg,jpg,png'
             ]);
         }
         if (!empty($request->file('imageprofile'))) {
@@ -290,12 +290,13 @@ class ApplicantController extends Controller
 
         $data = [
             'name' => $request->nama_pengguna,
-            'email' => $request->email_pengguna,
+            'email' => $request->email,
             'foto_profile' => $image,
-            'email_verified_at' => null,
+            'email_verified_at' => $request->email == $item->email ? $item->email_verified_at : null,
         ];
+        // dd($data);
         $item->update($data);
-        return redirect()->route('profile.index')->with(['success' => 'Foto Profile diupdate!']);
+        return redirect()->route('profile.index')->with(['success' => 'Profile diupdate!']);
     }
 
     public function getkotakab(request $request)

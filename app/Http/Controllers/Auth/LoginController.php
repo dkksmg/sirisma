@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -37,4 +39,13 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    // protected function validator(array $data)
+    // {
+    //     return Validator::make($data, [
+    //         'email' => ['required', 'string', 'email:rfc,dns',],
+    //         'password' => ['required', 'string', 'min:8'],
+    //         'g-recaptcha-response' => 'required|captcha'
+    //     ]);
+    // }
 }

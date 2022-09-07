@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\AuthAdminController;
 use App\Http\Controllers\Admin\DashboardController;
 
@@ -21,6 +22,7 @@ use App\Http\Controllers\Admin\DashboardController;
 */
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::get('/reload-captcha', [RegisterController::class, 'reloadCaptcha'])->name('reloadCaptcha');
 Route::get('/login-admin', [AuthAdminController::class, 'index'])->name('login-admin');
 Route::prefix('data')
     ->middleware(['auth', 'verified'])

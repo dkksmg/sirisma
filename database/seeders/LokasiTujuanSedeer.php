@@ -17,7 +17,7 @@ class LokasiTujuanSedeer extends Seeder
     {
         $lokasis = [
             [
-                'lokasi_tujuan' => 'Dinas Kesehatan Kota Semarang',
+                'lokasi_tujuan' => 'Dinas Kesehatan',
                 'status' => 'y',
                 'created_at' => now(),
                 'updated_at' => now()
@@ -240,6 +240,18 @@ class LokasiTujuanSedeer extends Seeder
             ],
             [
                 'lokasi_tujuan' => 'Puskesmas Karanganyar',
+                'status' => 'y',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'lokasi_tujuan' => 'Instalasi Farmasi',
+                'status' => 'y',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'lokasi_tujuan' => 'Laboratorium Kesehatan',
                 'status' => 'y',
                 'created_at' => now(),
                 'updated_at' => now()

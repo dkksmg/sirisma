@@ -41,11 +41,11 @@
 @else
 @lang('Salam'),<br>
 {{-- {{ config('app.name') }} --}}
-Sub. Bagian Infokes
+Seksi Infokes DKK Semarang
 <br><br>
 <p style="font-size: 10px; font-weight: bold">Dinas Kesehatan Kota Semarang<br>
-    Jl. Pandanaran No.79, Mugassari, Kec. Semarang Selatan, Kota Semarang, Jawa Tengah 50249<br>
-    No. Telp : (024) 8318070</p>
+  Jl. Pandanaran No.79, Mugassari, Kec. Semarang Selatan, Kota Semarang, Jawa Tengah 50249<br>
+  No. Telp : (024) 8318070</p>
 @endif
 
 {{-- Subcopy --}}

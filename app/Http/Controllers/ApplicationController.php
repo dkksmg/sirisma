@@ -49,9 +49,9 @@ class ApplicationController extends Controller
      */
     public function create()
     {
-        $id_user = Auth::user()->id;
         $type = ApplicationType::all();
         $lokasi = LokasiTujuan::all()->sortBy('lokasi_tujuan');
+        $id_user = Auth::user()->id;
         $data = Applicant::with(['user'])->findOrNew($id_user);
         if ($data->id_user != null) {
             return view('pages.permohonan.create', [
@@ -75,30 +75,44 @@ class ApplicationController extends Controller
 
         $validator = Validator::make($request->all(), [
             'jenis_permohonan' => 'required',
+            'no_surat' => 'required|min:5|max:255|string',
+            'asal_surat' => 'required|min:5|max:255|string',
+            'lokasi_penelitian' => 'required',
+            'tgl_surat' => 'required',
             'keperluan_pemohon' => 'required|min:5',
             'judul_penelitian' => 'required|min:5',
             'waktu_awal' => 'required',
             'waktu_akhir' => 'required',
-            'file_pengantar'     => 'required|file|mimes:pdf|max:712',
+            'file_pengantar'     => 'required|file|mimes:pdf,jpg,png,jpeg|max:712',
             'file_proposal'     => 'required|file|mimes:pdf|max:3072'
         ], [
             'jenis_permohonan.required' => 'Jenis Permohonan Wajib dipilih',
+            'no_surat.required' => 'Nomor Surat Wajib diisi',
+            'no_surat.min' => 'Nomor Surat berisi mainimal 5 karakter',
+            'no_surat.max' => 'Nomor Surat berisi maksimal 255 karakter',
+            'asal_surat.required' => 'Asal Surat Wajib diisi',
+            'asal_surat.min' => 'Asal Surat berisi mainimal 5 karakter',
+            'asal_surat.max' => 'NAsal Surat berisi maksimal 255 karakter',
+            'lokasi_penelitian.required' => 'Lokasi Wajib diisi',
+            'tgl_surat.required' => 'Tanggal Surat Wajib diisi',
             'keperluan_pemohon.required' => 'Keperluan Pemohon Wajib diisi',
             'keperluan_pemohon.min' => 'Keperluan Pemohon berisi minimal 5 karakter',
-            'judul_penelitian.required' => 'Judul Penelitian Wajib diisi',
-            'judul_penelitian.min' => 'Keperluan Pemohon berisi minimal 5 karakter',
-            'waktu_awal.required' => 'Waktu Awal  Wajib diisi',
-            'waktu_akhir.required' => 'Waktu Akhir Wajib diisi',
-            'file_pengantar.required' => 'File Pengantar Wajib diisi',
-            'file_pengantar.mimes' => 'File Pengantar harus berupa file berformat pdf',
-            'file_pengantar.max' => 'File Pengantar harus tidak boleh lebih dari 700 KB',
-            'file_proposal.required' => 'File Pengantar Wajib diisi',
+            'judul_penelitian.required' => 'Form Jenis data atau Judul Penelitian Wajib diisi',
+            'judul_penelitian.min' => 'Form Jenis data atau Judul Penelitian berisi minimal 5 karakter',
+            'waktu_awal.required' => 'Tanggal Awal  Wajib diisi',
+            'waktu_akhir.required' => 'Tanggal Akhir Wajib diisi',
+            'file_pengantar.required' => 'File Surat Pengantar Wajib diisi',
+            'file_pengantar.mimes' => 'File Surat Pengantar harus berupa file berformat pdf',
+            'file_pengantar.max' => 'File Surat Pengantar harus tidak boleh lebih dari 700 KB',
+            'file_proposal.required' => 'File Proposal Wajib diisi',
             'file_proposal.mimes' => 'File Proposal harus berupa file berformat pdf',
             'file_proposal.max' => 'File Proposal harus tidak boleh lebih dari 3 MB',
         ]);
+
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->getMessageBag()->all()[0])->withInput();
         } else {
+
             $surat = $request->file('file_pengantar')->getClientOriginalName();
             $name_surat_original = pathinfo($surat, PATHINFO_FILENAME);
             $proposal = $request->file('file_proposal')->getClientOriginalName();
@@ -117,6 +131,13 @@ class ApplicationController extends Controller
                 $name_proposal_original . '-' . $proposal_penelitian_enc . '.' . $file_ext_proposal,
                 'public'
             );
+            $sumNamaPemohon = count($request->nama_pemohon);
+            for ($i = 0; $i < $sumNamaPemohon; $i++) {
+                $addApplicant = [
+                    'nama_pemohon' => $request->nama_pemohon[$i]
+                ];
+            }
+            dd($addApplicant);
             $data = [
                 'kode_permohonan' => kodepermohonan(),
                 'id_user' => Auth::user()->id,
@@ -186,8 +207,8 @@ class ApplicationController extends Controller
                 'judul_penelitian' => 'required|min:5',
                 'waktu_awal' => 'required',
                 'waktu_akhir' => 'required',
-                'file_pengantar'     => 'file|mimes:pdf|max:712',
-                'file_proposal'     => 'file|mimes:pdf|max:2048'
+                'file_pengantar'     => 'file|mimes:pdf,jpg,png,jpeg|max:712',
+                'file_proposal'     => 'file|mimes:pdf,jpg,png,jpeg|max:2048'
             ]);
         } else {
             $validator = Validator::make($request->all(), [
@@ -253,7 +274,6 @@ class ApplicationController extends Controller
                 'file_proposal_pemohon'     => $file_proposal,
                 'status_permohonan' => 'Kirim',
                 'update_waktu_status' => Carbon::now()->format('Y-m-d h:i:s'),
-
             ];
             $item->update($data);
             return redirect()->route('permohonan.index')->with(['warning' => 'Permohonan berhasil diubah!']);

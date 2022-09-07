@@ -12,8 +12,8 @@
                             Jl. Pandanaran No.79, Mugassari, Kec. Semarang Selatan, Kota Semarang, Jawa Tengah 50249
                             <br><br>
                             <strong>Telp:</strong> <a href="tel:0248318070" class="info">(024) 8318070</a><br>
-                            <strong>Email:</strong> <a href="mailto:info@example.com"
-                                class="info">info@example.com</a><br>
+                            <strong>Email:</strong> <a href="mailto:infokes.dkksemarang@gmail.com"
+                                class="info">infokes.dkksemarang@gmail.com</a><br>
                         </p>
                     </div>
                 </div>

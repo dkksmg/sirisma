@@ -30,7 +30,7 @@
                                         <th class="text-center">No Permohonan</th>
                                         <th class="text-center">Jenis Permohonan</th>
                                         <th class="text-center">Keperluan</th>
-                                        <th class="text-center">Waktu</th>
+                                        <th class="text-center">Tanggal</th>
                                         <th class="text-center">Tanggal Permohonan</th>
                                         <th class="text-center">Status</th>
                                         <th class="text-center">File Surat Pengantar</th>
@@ -46,11 +46,12 @@
                                             <td class="text-center">{{ $app->type->jenis_permohonan }}</td>
                                             <td class="text-center">{{ $app->keperluan }}</td>
                                             <td class="text-center" width="auto">
-                                                {{ \Carbon\Carbon::create($app->waktu_awal)->translatedFormat('d F Y') . ' s/d ' . \Carbon\Carbon::create($app->waktu_akhir)->translatedFormat('d F Y') }}
+                                                {{ \Carbon\Carbon::create($app->waktu_awal)->translatedFormat('d F Y') .
+                                                    ' s/d ' .
+                                                    \Carbon\Carbon::create($app->waktu_akhir)->translatedFormat('d F Y') }}
                                             </td>
                                             <td class="text-center">
                                                 {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $app->tanggal_permohonan)->format('d F Y H:i:s') }}
-                                                {{-- {{ $app->tanggal_permohonan }} --}}
                                             </td>
                                             <td class="text-center">
                                                 @if ($app->status_permohonan == 'Kirim')
@@ -117,7 +118,7 @@
                                                 @else
                                                     <td class="text-center">
                                                         {{-- <a href="{{ route('sanggah-permohonan', $app->id_application) }}"
-                                                            class="btn btn-secondary btn-sm">Sanggah</a> --}}
+                                            class="btn btn-secondary btn-sm">Sanggah</a> --}}
                                                         <button type="button" class="btn btn-secondary btn-sm"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#staticBackdrop{{ $app->id_application }}"
@@ -132,6 +133,10 @@
                                                 </td>
                                             @else
                                                 <td class="text-center">
+                                                    <a href="{{ route('permohonan.edit', $app->id_application) }}"
+                                                        class="btn btn-warning btn-sm ml-3"><i
+                                                            class="fa-solid fa-pen-to-square"
+                                                            title="Edit Permohonan {{ $app->keperluan }}"></i></a>
                                                     <a href="{{ route('permohonan.edit', $app->id_application) }}"
                                                         class="btn btn-warning btn-sm ml-3"><i
                                                             class="fa-solid fa-pen-to-square"
@@ -196,22 +201,22 @@
         }
         $(document).ready(function() {
             $('#example').DataTable({
-                paging: true,
+                // paging: true,
                 // order: [
                 //     [4, 'desc']
                 // ],
                 // stateSave: true,
-                pageLength: 10,
-                lengthMenu: [
-                    [5, 10, 25, 50, -1],
-                    [5, 10, 25, 50, 'All'],
-                ],
-                lengthChange: true,
-                searching: true,
-                ordering: false,
-                info: true,
-                autoWidth: true,
-                responsive: true,
+                // pageLength: 10,
+                // lengthMenu: [
+                //     [5, 10, 25, 50, -1],
+                //     [5, 10, 25, 50, 'All'],
+                // ],
+                // lengthChange: true,
+                // searching: true,
+                // ordering: true,
+                // info: true,
+                // autoWidth: true,
+                // responsive: true,
 
             });
         });

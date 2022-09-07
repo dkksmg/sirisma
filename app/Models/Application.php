@@ -29,6 +29,10 @@ class Application extends Model
     {
         return $this->belongsTo(ApplicationType::class, 'jenis_permohonan', 'id');
     }
+    public function addonapplicant()
+    {
+        return $this->hasMany(AddOnApplicant::class, 'kode_permohonan', 'kode_permohonan');
+    }
     public function getAutoNumberOptions()
     {
         return [

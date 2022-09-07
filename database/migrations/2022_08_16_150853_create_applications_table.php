@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id('id_application');
-            $table->string('kode_permohonan');
+            $table->string('kode_permohonan')->index();
             $table->integer('id_user');
             $table->foreignId('id_applicant');
             $table->foreignId('jenis_permohonan');
