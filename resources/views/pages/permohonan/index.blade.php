@@ -127,7 +127,14 @@
                                                         </button>
                                                     </td>
                                                 @endif
-                                            @elseif($app->status_permohonan == 'Kirim' or $app->status_permohonan == 'Periksa')
+                                            @elseif($app->status_permohonan == 'Kirim')
+                                                <td class="text-center">
+                                                    <a href="{{ route('permohonan.edit', $app->id_application) }}"
+                                                        class="btn btn-warning btn-sm ml-3"><i
+                                                            class="fa-solid fa-pen-to-square"
+                                                            title="Edit Permohonan {{ $app->keperluan }}"></i></a>
+                                                </td>
+                                            @elseif($app->status_permohonan == 'Periksa')
                                                 <td class="text-center">
                                                     -
                                                 </td>
@@ -201,22 +208,22 @@
         }
         $(document).ready(function() {
             $('#example').DataTable({
-                // paging: true,
-                // order: [
-                //     [4, 'desc']
-                // ],
-                // stateSave: true,
-                // pageLength: 10,
-                // lengthMenu: [
-                //     [5, 10, 25, 50, -1],
-                //     [5, 10, 25, 50, 'All'],
-                // ],
-                // lengthChange: true,
-                // searching: true,
-                // ordering: true,
-                // info: true,
-                // autoWidth: true,
-                // responsive: true,
+                paging: true,
+                order: [
+                    [4, 'desc']
+                ],
+                stateSave: true,
+                pageLength: 10,
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, 'All'],
+                ],
+                lengthChange: true,
+                searching: true,
+                ordering: true,
+                info: true,
+                autoWidth: true,
+                responsive: true,
 
             });
         });

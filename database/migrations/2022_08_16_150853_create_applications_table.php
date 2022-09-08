@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id('id_application');
             $table->string('kode_permohonan')->index();
             $table->integer('id_user');
-            $table->foreignId('id_applicant');
+            $table->foreignId('id_applicant')->index();
             $table->foreignId('jenis_permohonan');
             $table->text('keperluan');
             $table->date('waktu_awal');

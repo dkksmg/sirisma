@@ -11,10 +11,5 @@ class AddOnApplicant extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['kode_permohonan', 'nama_pemohon', 'nim_nik', 'no_hp'];
-
-    public function application()
-    {
-        return $this->belongsTo(Application::class);
-    }
+    protected $fillable = ['id_application', 'nama_pemohon', 'nim_pemohon', 'nik', 'no_hp'];
 }

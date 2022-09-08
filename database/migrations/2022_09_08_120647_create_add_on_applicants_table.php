@@ -13,15 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('addon_applicants', function (Blueprint $table) {
+        Schema::create('add_on_applicants', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_permohonan');
+            $table->foreignId('id_application');
+            // $table->foreignId('application_id_application');
             $table->string('nama_pemohon');
-            $table->string('nim_nik');
+            $table->string('nim_pemohon');
+            $table->string('nik');
             $table->string('no_hp');
-            $table->softDeletes();
             $table->timestamps();
-            $table->foreign('kode_permohonan')->references('kode_permohonan')->on('applications')->onDelete('cascade')->onUpdate('cascade');
+            $table->softDeletes();
+            $table->foreign('id_application')->references('id_application')->on('applications')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('many_applicants');
+        Schema::dropIfExists('add_on_applicants');
     }
 };

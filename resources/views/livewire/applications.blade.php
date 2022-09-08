@@ -1,10 +1,10 @@
 <div>
-    <form action="{{ route('permohonan.store') }}" method="POST">
+    <form action="{{ route('permohonan.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row">
             {{ Form::hidden('applicant', $data->id_applicant) }}
-            <div class="col-md-4">
-                <div class="form-floating mb-3 mt-2">
+            <div class="col-md-4" wire:key="UNIQUE_KEY">
+                <div class="form-floating mb-3 mt-2" wire:ignore>
                     <select class="form-select @error('jenis_permohonan') is-invalid @enderror" id="jenis_permohonan"
                         name="jenis_permohonan">
                         <option value="">- Pilih Permohonan -</option>
@@ -24,7 +24,7 @@
                 <div class="form-floating mb-3 mt-2">
                     <input class="form-control @error('no_surat') is-invalid @enderror" id="no_surat" type="text"
                         placeholder="Nomor Surat" name="no_surat" value="{{ old('no_surat') }}" />
-                    <label for="no_surat">Nomor Surat Permohonan</label>
+                    <label for="no_surat">Nomor Surat Pengantar Permohonan</label>
                     @error('no_surat')
                         <div class="invalid-feedback" role="alert">{{ $message }}</div>
                     @enderror
@@ -34,7 +34,7 @@
                 <div class="form-floating mb-3 mt-2">
                     <input class="form-control @error('asal_surat') is-invalid @enderror" id="asal_surat" type="text"
                         placeholder="Asal Surat" name="asal_surat" value="{{ old('asal_surat') }}" />
-                    <label for="asal_surat">Asal Surat Permohonan</label>
+                    <label for="asal_surat">Asal Surat Pengantar Permohonan</label>
                     @error('asal_surat')
                         <div class="invalid-feedback" role="alert">{{ $message }}</div>
                     @enderror
@@ -42,8 +42,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <div class="form-group mb-3 mt-2">
+            <div class="col-md-6" wire:key="UNIQUE_KEY">
+                <div class="form-group mb-3 mt-2" wire:ignore>
                     <label for="lokasi" class="form-label ">Lokasi</label>
                     <select id="lokasi"
                         class="js-example-basic-multiple js-states form-select @error('lokasi_penelitian') is-invalid @enderror"
@@ -51,14 +51,14 @@
                         @foreach ($lokasis as $lokasi)
                             <option value="{{ $lokasi->lokasi_tujuan }}"
                                 @if ($lokasi->status == 'n') disabled @endif
-                                {{ $lokasi->id == old('lokasi_penelitian') ? 'selected' : '' }}>
+                                {{ in_array($lokasi->lokasi_tujuan, old('lokasi_penelitian') ?: []) ? 'selected' : '' }}>
                                 {{ $lokasi->lokasi_tujuan }}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group mb-3 mt-2">
+            <div class="col-md-6" wire:key="UNIQUE_KEY">
+                <div class="form-group mb-3 mt-2" wire:ignore>
                     <label for="datepicker-three" class="form-label">Tanggal Surat Permohonan</label>
                     <input type="text" class="form-control @error('tgl_surat') is-invalid @enderror"
                         id="datepicker-three" placeholder="Tanggal Surat Permohonan" name="tgl_surat"
@@ -92,8 +92,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <div class="form-group mb-3 mt-2 ">
+            <div class="col-md-6" wire:key="UNIQUE_KEY">
+                <div class="form-group mb-3 mt-2" wire:ignore>
                     <label for="datepicker-one" class="form-label ">Tanggal Awal </label>
                     <input type="text" class="form-control @error('waktu_awal') is-invalid @enderror"
                         id="datepicker-one" placeholder="Tanggal Awal" name="waktu_awal"
@@ -103,8 +103,8 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group mb-3 mt-2 ">
+            <div class="col-md-6" wire:key="UNIQUE_KEY">
+                <div class="form-group mb-3 mt-2" wire:ignore>
                     <label for="datepicker-two" class="form-label ">Tanggal Akhir </label>
                     <input type="text" class="form-control @error('waktu_akhir') is-invalid @enderror"
                         id="datepicker-two" placeholder="Tanggal Akhir" name="waktu_akhir"
@@ -122,7 +122,7 @@
                     </label>
                     <input class="form-control @error('file_pengantar') is-invalid @enderror" type="file"
                         id="formFile" name="file_pengantar">
-                    <span style="font-size: 14px;color:red" class="mt-2">* Format file pdf, jpg, png maks
+                    <span style="font-size: 14px;color:red" class="mt-2">* Format file pdf maks
                         700kb</span>
                     @error('file_pengantar')
                         <div class="invalid-feedback" role="alert">{{ $message }}</div>
@@ -133,7 +133,7 @@
                 <div class="form-floating-mb 3">
                     <label for="formFile" class="form-label">Upload File Proposal Penelitian</label>
                     <input class="form-control @error('file_proposal') is-invalid @enderror" type="file"
-                        id="formFile" name="file_proposal" accept=".pdf">
+                        id="formFile" name="file_proposal">
                     <span style="font-size: 14px;color:red" class="mt-2">* Format file pdf maks 2Mb</span>
                     @error('file_proposal')
                         <div class="invalid-feedback" role="alert">{{ $message }}</div>
@@ -141,41 +141,50 @@
                 </div>
             </div>
         </div>
-
         <div class="card mt-5">
-            <div class="card-header">
-                Data Pemohon
+            <div class="card-header text-left">
+                <div class="badge bg-secondary text-light">
+                    <h6><strong>Jika Pemohon lebih dari satu silakan tambah data pemohon</strong></h6>
+                </div>
             </div>
-
             <div class="card-body">
-                <table class="table" id="products_table">
+                <table class="table" id="applicant_table">
                     <thead>
                         <tr>
                             <th>Nama</th>
-                            <th>NIM/NIK</th>
+                            <th>NIM</th>
+                            <th>NIK</th>
                             <th>Nomor HP (WA)</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($orderProducts as $index => $orderProduct)
+                        @foreach ($dataApplicants as $index => $dataApplicant)
                             <tr>
                                 <td>
-                                    <input type="text" name="orderProducts[{{ $index }}][quantity]"
-                                        class="form-control" wire:model="orderProducts.{{ $index }}.nama"
+                                    <input type="text" name="dataApplicants[{{ $index }}][nama_pemohon]"
+                                        class="form-control"
+                                        wire:model="dataApplicants.{{ $index }}.nama_pemohon"
                                         placeholder="Nama" />
                                 </td>
                                 <td>
-                                    <input type="number" name="orderProducts[{{ $index }}][quantity]"
-                                        class="form-control" wire:model="orderProducts.{{ $index }}.nim" />
+                                    <input type="text" name="dataApplicants[{{ $index }}][nim_pemohon]"
+                                        class="form-control" wire:model="dataApplicants.{{ $index }}.nim"
+                                        placeholder="NIM" />
                                 </td>
                                 <td>
-                                    <input type="number" name="orderProducts[{{ $index }}][quantity]"
-                                        class="form-control" wire:model="orderProducts.{{ $index }}.no_hp" />
+                                    <input type="number" name="dataApplicants[{{ $index }}][nik]"
+                                        class="form-control" wire:model="dataApplicants.{{ $index }}.nik"
+                                        placeholder="NIK" />
                                 </td>
                                 <td>
-                                    <a href="#"
-                                        wire:click.prevent="removeProduct({{ $index }})">Delete</a>
+                                    <input type="number" name="dataApplicants[{{ $index }}][no_hp]"
+                                        class="form-control" wire:model="dataApplicants.{{ $index }}.no_hp"
+                                        placeholder="Nomor HP(WA)" />
+                                </td>
+                                <td>
+                                    <a href="#" wire:click.prevent="removePemohon({{ $index }})"
+                                        class="btn btn-sm btn-outline-danger">Hapus</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -184,7 +193,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <button class="btn btn-sm btn-secondary" wire:click.prevent="addProduct">+ Tambah
+                        <button class="btn btn-sm btn-secondary" wire:click.prevent="addPemohon">Tambah
                             Pemohon</button>
                     </div>
                 </div>

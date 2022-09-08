@@ -1,10 +1,3 @@
-
-$(document).ready(function() {
-    $('.js-example-basic-multiple').select2({
-        placeholder: "Pilih Lokasi",
-        allowClear: true
-    });
-});
 $(function() {
     $('#datepicker-one').datepicker({
         header: true,

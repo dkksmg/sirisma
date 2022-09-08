@@ -25,4 +25,13 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gijgo@1.9.13/js/gijgo.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script type="text/javascript" src="{{ url('assets/js/function.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2({
+                placeholder: "Pilih Lokasi",
+                allowClear: true,
+                multiple: true
+            });
+        });
+    </script>
 @endpush

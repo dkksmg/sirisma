@@ -11,26 +11,27 @@ use Illuminate\Support\Facades\Auth;
 
 class Applications extends Component
 {
-    public $orderProducts = [];
-    public $allProducts = [];
+    public $dataApplicants = [];
+    // public $allProducts = [];
 
     public function mount()
     {
-        $this->allProducts = Product::all();
-        $this->orderProducts = [
-            ['product_id' => '', 'quantity' => 1]
+        $id_user = Auth::user()->id;
+        $user = Applicant::with('user')->findOrFail($id_user);
+        $this->dataApplicants = [
+            ['nama_pemohon' => $user->user->name, 'nim' => $user->nim, 'nik' => $user->nik, 'no_hp' => $user->no_hp]
         ];
     }
 
-    public function addProduct()
+    public function addPemohon()
     {
-        $this->orderProducts[] = ['nama' => '', 'nim' => '', 'no_hp' => ''];
+        $this->dataApplicants[] = ['nama_pemohon' => '', 'nim' => '', 'nik' => '', 'no_hp' => ''];
     }
 
-    public function removeProduct($index)
+    public function removePemohon($index)
     {
-        unset($this->orderProducts[$index]);
-        $this->orderProducts = array_values($this->orderProducts);
+        unset($this->dataApplicants[$index]);
+        $this->dataApplicants = array_values($this->dataApplicants);
     }
     public function render()
     {
@@ -38,6 +39,7 @@ class Applications extends Component
         $lokasi = LokasiTujuan::all()->sortBy('lokasi_tujuan');
         $id_user = Auth::user()->id;
         $data = Applicant::with(['user'])->findOrNew($id_user);
+        info($this->dataApplicants);
         return view('livewire.applications', [
             'types' => $type,
             'data' => $data,

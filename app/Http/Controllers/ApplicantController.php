@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\Models\EducationLevelPenelitians;
+use Illuminate\Support\Facades\Validator;
 
 class ApplicantController extends Controller
 {
@@ -243,10 +244,10 @@ class ApplicantController extends Controller
             $item->update($data);
             // dd($data);
 
-            return redirect()->route('profile.index')->with(['success' => 'Data Anda berhasil di perbarui!']);
+            return redirect()->route('profile.index')->withSuccess('Data Profile Anda berhasil di perbarui!');
         } else {
 
-            return redirect()->back()->with(['error' => 'Gagal menyimpan Data Anda']);
+            return redirect()->back()->with(['errors' => 'Gagal menyimpan Data Anda'])->withInput();
         }
     }
 
@@ -256,49 +257,69 @@ class ApplicantController extends Controller
         $arr = explode(' ', trim($name));
         $item = User::findOrFail($id);
         if (Storage::disk('local')->exists('public/' . $item->foto_profile)) {
-            $this->validate($request, [
+            $validator = Validator::make($request->all(), [
                 'nama_pengguna' => 'required|min:5',
                 'email' => 'required|string|email:rfc,dns|max:255|unique:users,email,' . $item->id,
                 'imageprofile' => 'image|mimes:jpeg,jpg,png'
+            ], [
+                'nama_pengguna.required' => 'Nama Pengguna wajib diisi',
+                'nama_pengguna.min' => 'Nama Pengguna minimal 5 karakter',
+                'email.required' => 'Alamat Email wajib diisi',
+                'email.email' => 'Email harus merupakan alamat email yang valid',
+                'email.unique' => 'Email sudah digunakan',
+                'imageprofile.mimes' => 'Foto Profil harus berformat jpeg,jpg,png',
+                'imageprofile.image' => 'Foto Profil harus berupa gambar',
             ]);
         } else {
-            $this->validate($request, [
+            $validator = Validator::make($request->all(), [
                 'nama_pengguna' => 'required|min:5',
                 'email' => 'required|string|email:rfc,dns|max:255|unique:users,email,' . $item->id,
                 'imageprofile' => 'required|image|mimes:jpeg,jpg,png'
+            ], [
+                'nama_pengguna.required' => 'Nama Pengguna wajib diisi',
+                'nama_pengguna.min' => 'Nama Pengguna minimal 5 karakter',
+                'email.required' => 'Alamat Email wajib diisi',
+                'email.email' => 'Email harus merupakan alamat email yang valid',
+                'email.unique' => 'Email sudah digunakan',
+                'imageprofile.required' => 'Foto Profil wajib diisi',
+                'imageprofile.image' => 'Foto Profil harus berupa gambar',
+                'imageprofile.mimes' => 'Foto Profil harus berformat jpeg,jpg,png',
             ]);
         }
-        if (!empty($request->file('imageprofile'))) {
-            $file = $request->file('imageprofile');
-            $filename = $arr[0] . '_' . time() . '.' . $file->getClientOriginalExtension();
-            $img = Image::make($file);
-            if (Image::make($file)->width() > 720) {
-                $img->resize(720, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
-            }
-            $img->save(public_path('storage/assets/upload/profile/') . $filename);
-            $image = 'assets/upload/profile/' . $img->basename;
-            try {
-                Storage::disk('local')->delete('public/' . $item->foto_profile);
-            } catch (\Throwable $th) {
-                return $th->getMessage();
-            }
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->getMessageBag()->all()[0])->withInput();
         } else {
-            $image = $item->foto_profile;
+            if (!empty($request->file('imageprofile'))) {
+                $file = $request->file('imageprofile');
+                $filename = $arr[0] . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $img = Image::make($file);
+                if (Image::make($file)->width() > 720) {
+                    $img->resize(720, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                }
+                $img->save(public_path('storage/assets/upload/profile/') . $filename);
+                $image = 'assets/upload/profile/' . $img->basename;
+                try {
+                    Storage::disk('local')->delete('public/' . $item->foto_profile);
+                } catch (\Throwable $th) {
+                    return $th->getMessage();
+                }
+            } else {
+                $image = $item->foto_profile;
+            }
+
+            $data = [
+                'name' => $request->nama_pengguna,
+                'email' => $request->email,
+                'foto_profile' => $image,
+                'email_verified_at' => $request->email == $item->email ? $item->email_verified_at : null,
+            ];
+            // dd($data);
+            $item->update($data);
+            return redirect()->route('profile.index')->withSuccess('Akun Profile diupdate!');
         }
-
-        $data = [
-            'name' => $request->nama_pengguna,
-            'email' => $request->email,
-            'foto_profile' => $image,
-            'email_verified_at' => $request->email == $item->email ? $item->email_verified_at : null,
-        ];
-        // dd($data);
-        $item->update($data);
-        return redirect()->route('profile.index')->with(['success' => 'Profile diupdate!']);
     }
-
     public function getkotakab(request $request)
     {
         $id_kota = $request->id_kota;
