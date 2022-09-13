@@ -11,7 +11,7 @@
                 <ul>
                     <li><a class="nav-link scrollto" href="{{ route('home') }}#">Home</a></li>
                     <li><a class="nav-link scrollto" href="{{ route('home') }}#syarat">Syarat Permohonan</a></li>
-                    <li><a class="nav-link scrollto" href="{{ route('home') }}#tata-cara">Tata Cara</a></li>
+                    <li><a class="nav-link scrollto" href="{{ route('home') }}#panduan">Panduan</a></li>
                     <li><a class="nav-link scrollto" href="{{ route('home') }}#faq">FAQs</a></li>
                     <li><a class="nav-link scrollto" href="{{ route('home') }}#contact">Kontak</a></li>
                     @guest()

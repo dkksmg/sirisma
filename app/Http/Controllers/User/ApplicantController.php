@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Village;
 use App\Models\District;
@@ -10,7 +11,6 @@ use App\Models\Applicant;
 use App\Models\SubDistrict;
 use Illuminate\Http\Request;
 use App\Models\StatusApplicant;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -115,6 +115,7 @@ class ApplicantController extends Controller
                 'file_ktp'     => $file_ktp,
                 'file_ktm'     => $file_ktm,
             ];
+
             Applicant::create($data);
             return redirect()->route('profile')->with(['success' => 'Data Anda berhasil di perbarui!']);
         } else {

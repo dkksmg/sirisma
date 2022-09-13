@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use Carbon\Carbon;
 use App\Models\Applicant;
 use App\Models\Application;
 use App\Models\LokasiTujuan;
 use Illuminate\Http\Request;
+use App\Models\AddOnApplicant;
 use App\Models\ApplicationType;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\LogSurat;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\ApplicationRequest;
-use App\Models\AddOnApplicant;
 use Illuminate\Support\Facades\Validator;
+
 
 class ApplicationController extends Controller
 {
@@ -28,16 +30,17 @@ class ApplicationController extends Controller
         // DB::enableQueryLog();
         // dd(DB::getQueryLog());
         $id_user = Auth::user()->id;
-        $applications = Application::with(['type'])->where('id_user', $id_user)->orderByRaw('tanggal_permohonan DESC')->get();
+        $applications = Application::with(['type', 'logsuratone'])->where('id_user', $id_user)->orderByRaw('tanggal_permohonan DESC')->get();
+        $logsurat = Application::with(['logsuratmany'])->where('id_user', $id_user)->orderByRaw('tanggal_permohonan DESC')->get();
         $data = Applicant::with(['user'])->findOrNew($id_user);
         $timenow = Carbon::now()->toDateTimeString();
-        // dd($data->id_user);
         return view(
-            'pages.permohonan.index',
+            'pages.user.permohonan.index',
             [
                 'applications' => $applications,
                 'timenow' => $timenow,
                 'data' => $data,
+                'logsurats' => $logsurat,
             ]
         );
     }
@@ -55,7 +58,7 @@ class ApplicationController extends Controller
         $id_user = Auth::user()->id;
         $data = Applicant::with(['user'])->findOrNew($id_user);
         if ($data->id_user != null) {
-            return view('pages.permohonan.create', [
+            return view('pages.user.permohonan.create', [
                 'types' => $type,
                 'data' => $data,
                 'lokasis' => $lokasi
@@ -143,64 +146,27 @@ class ApplicationController extends Controller
                 'lokasi_tujuan' => json_encode($request->lokasi_penelitian),
                 'tgl_surat' => Carbon::createFromFormat('d/m/Y', $request->tgl_surat)->format('Y-m-d'),
                 'keperluan' => $request->keperluan_pemohon,
-                'judul_rencana_penelitian' => $request->judul_penelitian,
-                'waktu_awal' => Carbon::createFromFormat('d/m/Y', $request->waktu_awal)->format('Y-m-d'),
-                'waktu_akhir' => Carbon::createFromFormat('d/m/Y', $request->waktu_akhir)->format('Y-m-d'),
-                'tanggal_permohonan' => Carbon::now()->format('Y-m-d h:i:s'),
+                'judul_atau_data' => $request->judul_penelitian,
+                'tgl_awal' => Carbon::createFromFormat('d/m/Y', $request->waktu_awal)->format('Y-m-d'),
+                'tgl_akhir' => Carbon::createFromFormat('d/m/Y', $request->waktu_akhir)->format('Y-m-d'),
+                'tanggal_permohonan' => Carbon::now()->format('Y-m-d H:i:s'),
                 'file_surat_pemohon'     => $file_pengantar,
                 'file_proposal_pemohon'     => $file_proposal,
-                'status_permohonan' => 'Kirim',
-                'update_waktu_status' => Carbon::now()->format('Y-m-d h:i:s'),
-
             ];
-            // dd($request->dataApplicants);
+            $log = [
+                'status_surat' => 'kirim',
+                'update_oleh' => Auth::user()->id,
+                'update_waktu' => Carbon::now()->format('Y-m-d H:i:s'),
+            ];
             $app = Application::create($data);
-            // foreach ($request->dataApplicants as $applicant) {
-            //     $arr = array(
-            //         'nama_pemohon' => $applicant['nama_pemohon'],
-            //         'nim' => $applicant['nim'],
-            //         'nik' => $applicant['nik'],
-            //         'no_hp' => $applicant['no_hp'],
-            //     );
-            // }
-            // dd($arr);
-
-            // $app->applicant->
-            // $applicantArr = [];
-            // $dataApp = [];
-            // $dataApplicant = $request->dataApplicants;
-            // for ($i = 0; $i < count($dataApplicant); $i++) {
-            //     $dataApp[] = [
-            //         'nama_pemohon' => $dataApplicant['nama_pemohon'][$i],
-            //         'nim' => $dataApplicant['nim_pemohon'][$i],
-            //         'nik' => $dataApplicant['nik'][$i],
-            //         'no_hp' => $dataApplicant['no_hp'][$i],
-            //     ];
-            // }
-            // DB::table('add_on_applicants')->insert($dataApp);
-            // $skillModels=[]
-            // foreach ($request->dataApplicants as $applicant) {
-            //     $app->addonapplicant()->saveMany([
-            //         ['nama_pemohon' => $applicant['nama_pemohon']],
-            //         ['nim' => $applicant['nim_pemohon']],
-            //         ['nik' => $applicant['nik']],
-            //         ['no_hp' => $applicant['no_hp']],
-            //     ]);
-            // }
             $appData = [];
             foreach ($request->dataApplicants as $applicant) {
                 $appData[] = new AddOnApplicant($applicant);
             }
+            $logsurat = [new LogSurat($log)];
+            $app->logsuratmany()->saveMany($logsurat);
             $app->addonapplicant()->saveMany($appData);
-            // $applicantArr[] = new Application($applicant);
-            // $app->addonapplicant()->attach([
-            //     'nama_pemohon' => $applicant['nama_pemohon'],
-            //     'nim' => $applicant['nim'],
-            //     'nik' => $applicant['nik'],
-            //     'no_hp' => $applicant['no_hp'],
-            // ]);
-            // }
-            // $app->addonapplicant()->createMany($applicantArr);
+
 
             return redirect()->route('permohonan.index')->with(['success' => 'Permohonan berhasil dikirim!']);
         }
@@ -214,7 +180,16 @@ class ApplicationController extends Controller
      */
     public function show($id)
     {
-        //
+        $types = ApplicationType::all();
+        $data = Application::with(['applicant', 'user', 'type'])->findOrFail($id);
+        $lokasi = LokasiTujuan::all()->sortBy('lokasi_tujuan');
+
+
+        return view('pages.user.permohonan.show', [
+            'types' => $types,
+            'data' => $data,
+            'lokasis' => $lokasi
+        ]);
     }
 
     /**
@@ -228,8 +203,7 @@ class ApplicationController extends Controller
         $types = ApplicationType::all();
         $app = Application::with(['applicant', 'user', 'type'])->findOrFail($id);
 
-        // dd($app);
-        return view('pages.permohonan.edit', [
+        return view('pages.user.permohonan.edit', [
             'types' => $types,
             'app' => $app,
         ]);

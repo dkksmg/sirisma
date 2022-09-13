@@ -1,14 +1,17 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CS\DashboardController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ApplicantController;
-use App\Http\Controllers\ApplicationController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Admin\AuthAdminController;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Kabid\DashboardController as KabidDashboardController;
+use App\Http\Controllers\Kasi\DashboardController as KasiDashboardController;
+use App\Http\Controllers\Petugas\DashboardController as PetugasDashboardController;
+use App\Http\Controllers\User\ApplicantController;
+use App\Http\Controllers\User\ApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +24,10 @@ use App\Http\Controllers\Admin\DashboardController;
 |
 */
 
-Route::get('/login', [AuthController::class, 'index'])->name('login');
+// Route::get('/login', [AuthController::class, 'index'])->name('login');
+// Route::get('/login-admin', [AuthAdminController::class, 'index'])->name('login-admin');
+
 Route::get('/reload-captcha', [RegisterController::class, 'reloadCaptcha'])->name('reloadCaptcha');
-Route::get('/login-admin', [AuthAdminController::class, 'index'])->name('login-admin');
 Route::prefix('data')
     ->middleware(['auth', 'verified'])
     ->group(function () {
@@ -45,17 +49,44 @@ Route::prefix('data')
         ])->name('getdataedit');
     });
 
-// Admin
-Route::prefix('admin')
-    // ->namespace('Admin')
-    ->middleware(['auth', 'admin', 'verified'])
+// CS
+Route::prefix('cs')
+    ->middleware(['auth', 'cs', 'verified'])
     ->group(function () {
         Route::get('/', [DashboardController::class, 'index'])
-            ->name('dashboard');
+            ->name('dashboard-cs');
+    });
+// Kabid
+Route::prefix('kabid')
+    ->middleware(['auth', 'kabid', 'verified'])
+    ->group(function () {
+        Route::get('/', [KabidDashboardController::class, 'index'])
+            ->name('dashboard-kabid');
+    });
+// Kasi
+Route::prefix('kasi')
+    ->middleware(['auth', 'kasi', 'verified'])
+    ->group(function () {
+        Route::get('/', [KasiDashboardController::class, 'index'])
+            ->name('dashboard-kasi');
+    });
+// petugas
+Route::prefix('petugas')
+    ->middleware(['auth', 'petugas', 'verified'])
+    ->group(function () {
+        Route::get('/', [PetugasDashboardController::class, 'index'])
+            ->name('dashboard-petugas');
+    });
+// admin
+Route::prefix('admin')
+    ->middleware(['auth', 'admin', 'verified'])
+    ->group(function () {
+        Route::get('/', [AdminDashboardController::class, 'index'])
+            ->name('dashboard-admin');
     });
 
 Route::resource('permohonan', ApplicationController::class)->middleware(['auth', 'verified']);
-Route::put('sanggah-permohonan', [ApplicationController::class, 'sanggah'])->middleware(['auth', 'verified'])->name('sanggah-permohonan');
+Route::post('revisi', [ApplicationController::class, 'revisi'])->middleware(['auth', 'verified'])->name('revisi');
 Route::resource('profile', ApplicantController::class)->middleware(['auth', 'verified']);
 Route::put('ganti-profil/{id}', [ApplicantController::class, 'imageprofile',])->name('imageprofile');
 Auth::routes(['verify' => true]);

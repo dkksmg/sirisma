@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Kabid;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class HomeAdminController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class HomeAdminController extends Controller
      */
     public function index()
     {
-        //
+        echo 'Dashboard Kabid';
     }
 
     /**

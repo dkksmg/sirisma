@@ -46,11 +46,39 @@ class DatabaseSeeder extends Seeder
             'role' => 'USER'
         ]);
         User::factory()->create([
-            'name' => 'Ardian',
+            'name' => 'Ardian CS',
             'email' => 'contact.ardianff@gmail.com',
             'password' => bcrypt('ardian123@'),
             'email_verified_at' => now(),
-            'role' => 'ADMIN'
+            'role' => 'CS'
+        ]);
+        User::factory()->create([
+            'name' => 'dr. Edy Noegroho',
+            'email' => 'testing@gmail.com',
+            'password' => bcrypt('edy12345@'),
+            'email_verified_at' => now(),
+            'role' => 'KABID'
+        ]);
+        User::factory()->create([
+            'name' => 'Hanif Pandu S',
+            'email' => '12345@gmail.com',
+            'password' => bcrypt('hanif12345@'),
+            'email_verified_at' => now(),
+            'role' => 'KASI'
+        ]);
+        User::factory()->create([
+            'name' => 'Agung P',
+            'email' => 'test123@gmail.com',
+            'password' => bcrypt('agung12345@'),
+            'email_verified_at' => now(),
+            'role' => 'PETUGAS'
+        ]);
+        User::factory()->create([
+            'name' => 'Ardian FM',
+            'email' => 'test12345@gmail.com',
+            'password' => bcrypt('ardian12345@'),
+            'email_verified_at' => now(),
+            'role' => 'SUPERADMIN'
         ]);
         $this->call(ProvinceSeeder::class);
         $this->call(AcehDistrictSeeder::class);
@@ -63,5 +91,7 @@ class DatabaseSeeder extends Seeder
         $this->call(StatusSeeder::class);
         $this->call(FaqSeeder::class);
         $this->call(LokasiTujuanSedeer::class);
+        $this->call(AddOnApplicantSeeder::class);
+        $this->call(LogSuratSeeder::class);
     }
 }

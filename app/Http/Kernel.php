@@ -2,7 +2,7 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\IsAdmin;
+use App\Http\Middleware\IsCS;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -65,7 +65,10 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'admin' => \App\Http\Middleware\IsAdmin::class,
+        'cs' => \App\Http\Middleware\IsCS::class,
+        'kabid' => \App\Http\Middleware\IsKabid::class,
+        'kasi' => \App\Http\Middleware\IsKasi::class,
+        'petugas' => \App\Http\Middleware\IsPetugas::class,
         'superadmin' => \App\Http\Middleware\IsSuperAdmin::class
     ];
 }

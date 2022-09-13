@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.app')
 @section('content')
     <main id="main">
         <!-- ======= Features Section ======= -->
@@ -94,13 +94,13 @@
         </section><!-- End Features Section -->
 
         <!-- ======= Pricing Section ======= -->
-        <section id="tata-cara" class="pricing">
+        <section id="panduan" class="pricing">
             <div class="container" data-aos="fade-up">
 
                 <div class="section-header">
-                    <h2>Our Pricing</h2>
-                    <p>Architecto nobis eos vel nam quidem vitae temporibus voluptates qui hic deserunt iusto omnis nam
-                        voluptas asperiores sequi tenetur dolores incidunt enim voluptatem magnam cumque fuga.</p>
+                    <h2>Panduan</h2>
+                    {{-- <p>Architecto nobis eos vel nam quidem vitae temporibus voluptates qui hic deserunt iusto omnis nam
+                        voluptas asperiores sequi tenetur dolores incidunt enim voluptatem magnam cumque fuga.</p> --}}
                 </div>
 
                 <div class="row gy-4">

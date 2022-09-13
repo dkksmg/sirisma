@@ -15,12 +15,15 @@ return new class extends Migration
     {
         Schema::create('log_surats', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_permohonan');
-            $table->string('status_surat');
-            $table->string('update_oleh');
+            $table->foreignId('id_application');
+            $table->enum('status_surat', ['draft', 'kirim', 'proses', 'setuju', 'sanggah', 'selesai', 'tolak']);
+            $table->foreignId('update_oleh');
             $table->dateTime('update_waktu');
+            $table->text('keterangan')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('id_application')->references('id_application')->on('applications')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('update_oleh')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

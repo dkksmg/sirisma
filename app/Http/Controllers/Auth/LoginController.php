@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::PERMOHONAN;
+    // protected $redirectTo = RouteServiceProvider::PERMOHONAN;
 
     /**
      * Create a new controller instance.
@@ -39,13 +39,20 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
-    // protected function validator(array $data)
-    // {
-    //     return Validator::make($data, [
-    //         'email' => ['required', 'string', 'email:rfc,dns',],
-    //         'password' => ['required', 'string', 'min:8'],
-    //         'g-recaptcha-response' => 'required|captcha'
-    //     ]);
-    // }
+    protected function redirectTo()
+    {
+        if (auth()->user()->role == 'CS') {
+            return route('dashboard-cs');
+        } else if (auth()->user()->role == 'KABID') {
+            return route('dashboard-kabid');
+        } else if (auth()->user()->role == 'KASI') {
+            return route('dashboard-kasi');
+        } else if (auth()->user()->role == 'PETUGAS') {
+            return route('dashboard-petugas');
+        } else if (auth()->user()->role == 'SUPERADMIN') {
+            return route('dashboard-admin');
+        } else {
+            return route('permohonan.index');
+        }
+    }
 }
