@@ -8,6 +8,7 @@
 
 <body>
     @include('includes.header')
+    @include('includes.description')
     @yield('content')
     @include('includes.footer')
     @include('includes.script')

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Kasi;
 
-use App\Http\Controllers\Controller;
+use App\Models\Contact;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
@@ -14,7 +15,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        echo 'Dashboard Kasi';
+        $message = Contact::all();
+        $countmessage = Contact::count();
+        return view('pages.kasi.index', [
+            'countmessage' => $countmessage,
+            'messages' => $message,
+        ]);
     }
 
     /**

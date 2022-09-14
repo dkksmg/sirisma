@@ -99,8 +99,6 @@
 
                 <div class="section-header">
                     <h2>Panduan</h2>
-                    {{-- <p>Architecto nobis eos vel nam quidem vitae temporibus voluptates qui hic deserunt iusto omnis nam
-                        voluptas asperiores sequi tenetur dolores incidunt enim voluptatem magnam cumque fuga.</p> --}}
                 </div>
 
                 <div class="row gy-4">
@@ -180,7 +178,8 @@
                 </div>
 
             </div>
-        </section><!-- End Pricing Section -->
+        </section>
+        <!-- End Pricing Section -->
 
         <!-- ======= F.A.Q Section ======= -->
         <section id="faq" class="faq">

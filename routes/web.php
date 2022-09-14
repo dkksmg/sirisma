@@ -5,7 +5,11 @@ use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CS\ApplicationCsController;
 use App\Http\Controllers\CS\DashboardController;
+use App\Http\Controllers\CS\NewApplicationCsController;
+use App\Http\Controllers\CS\ProccesedApplicationCsController;
+use App\Http\Controllers\CS\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Kabid\DashboardController as KabidDashboardController;
 use App\Http\Controllers\Kasi\DashboardController as KasiDashboardController;
@@ -23,9 +27,6 @@ use App\Http\Controllers\User\ApplicationController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Route::get('/login', [AuthController::class, 'index'])->name('login');
-// Route::get('/login-admin', [AuthAdminController::class, 'index'])->name('login-admin');
 
 Route::get('/reload-captcha', [RegisterController::class, 'reloadCaptcha'])->name('reloadCaptcha');
 Route::prefix('data')
@@ -55,6 +56,9 @@ Route::prefix('cs')
     ->group(function () {
         Route::get('/', [DashboardController::class, 'index'])
             ->name('dashboard-cs');
+        Route::resource('permohonan-baru', NewApplicationCsController::class);
+        Route::resource('permohonan-terproses', ProccesedApplicationCsController::class);
+        Route::resource('profile-cs', ProfileController::class);
     });
 // Kabid
 Route::prefix('kabid')

@@ -69,6 +69,6 @@ class Kernel extends HttpKernel
         'kabid' => \App\Http\Middleware\IsKabid::class,
         'kasi' => \App\Http\Middleware\IsKasi::class,
         'petugas' => \App\Http\Middleware\IsPetugas::class,
-        'superadmin' => \App\Http\Middleware\IsSuperAdmin::class
+        'admin' => \App\Http\Middleware\IsSuperAdmin::class
     ];
 }

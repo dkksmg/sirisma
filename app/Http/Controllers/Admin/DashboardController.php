@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Contact;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        echo 'Login Admin';
+        $message = Contact::all();
+        $countmessage = Contact::count();
+        return view('pages.admin.index', [
+            'countmessage' => $countmessage,
+            'messages' => $message,
+        ]);
     }
 }

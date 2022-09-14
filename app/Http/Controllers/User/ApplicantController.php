@@ -20,17 +20,38 @@ use Illuminate\Support\Facades\Validator;
 
 class ApplicantController extends Controller
 {
+    public function __construct()
+    {
+        $this->isAuthorized();
+    }
+
+    public function isAuthorized()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->role == 'CS') {
+                return redirect()->route('dashboard-cs');
+            } else if (Auth::user()->role == 'KABID') {
+                return redirect()->route('dashboard-kabid');
+            } else if (Auth::user()->role == 'KASI') {
+                return redirect()->route('dashboard-kasi');
+            } else if (Auth::user()->role == 'PETUGAS') {
+                return redirect()->route('dashboard-petugas');
+            } else if (Auth::user()->role == 'SUPERADMIN') {
+                return redirect()->route('dashboard-admin');
+            }
+        });
+    }
     public function index()
     {
         $provinces = Province::all();
         $educations = EducationLevelPenelitians::all()->sortByDesc('level_pendidikan');
         $statuses = StatusApplicant::all()->sortBy('status_pemohon');
         $id_user = Auth::user()->id;
-        // DB::enableQueryLog();
         $data = Applicant::with(['user', 'province_ktp', 'district_ktp', 'sub_district_ktp', 'village_ktp', 'province_domisili', 'district_domisili', 'sub_district_domisili', 'village_domisili'])->where('id_user', $id_user)->firstOrNew();
+        // DB::enableQueryLog();
         // dd(DB::getQueryLog());
 
-        return view('pages.profile.index', [
+        return view('pages.user.profile.index', [
             'provinces' => $provinces,
             'educations' => $educations,
             'statuses' => $statuses,
@@ -45,7 +66,7 @@ class ApplicantController extends Controller
         $id_user = Auth::user()->id;
         $data = Applicant::with(['user', 'province_ktp', 'district_ktp', 'sub_district_ktp', 'village_ktp', 'province_domisili', 'district_domisili', 'sub_district_domisili', 'village_domisili'])->where('id_user', $id_user)->firstOrNew();
 
-        return view('pages.profile.create', [
+        return view('pages.user.profile.create', [
             'provinces' => $provinces,
             'educations' => $educations,
             'statuses' => $statuses,
@@ -129,7 +150,7 @@ class ApplicantController extends Controller
         $educations = EducationLevelPenelitians::all()->sortByDesc('level_pendidikan');
         $statuses = StatusApplicant::all()->sortBy('status_pemohon');
         $data = Applicant::with(['user', 'province_ktp', 'district_ktp', 'sub_district_ktp', 'village_ktp', 'province_domisili', 'district_domisili', 'sub_district_domisili', 'village_domisili'])->findOrFail($id);
-        return view('pages.profile.edit', [
+        return view('pages.user.profile.edit', [
             'provinces' => $provinces,
             'educations' => $educations,
             'statuses' => $statuses,

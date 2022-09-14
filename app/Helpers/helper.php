@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use App\Models\Application;
+use Illuminate\Support\Facades\Auth;
 
 function salam()
 {

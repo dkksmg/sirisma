@@ -2,8 +2,16 @@
 
 namespace App\Http\Controllers\CS;
 
-use App\Http\Controllers\Controller;
+use App\Models\Contact;
+use App\Models\Application;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
+use Termwind\Components\Dd;
 
 class DashboardController extends Controller
 {
@@ -14,7 +22,21 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        echo 'Dashboard CS';
+        // DB::enableQueryLog();
+        $penelitianBaru = Application::withCount(['logsuratone' => function ($query) {
+            $query->where('status_surat', 'kirim');
+        }])->get();
+        // $penelitianBaru = Application::count();
+        // dd(DB::getQueryLog());
+        $message = Contact::all()->sortByDesc('created_at');
+        $countmessage = Contact::count();
+        $id = Auth::user()->id;
+        $dataUser = User::findOrFail($id);
+        return view('pages.cs.index', [
+            'countmessage' => $countmessage,
+            'messages' => $message,
+            'dataUser' => $dataUser,
+        ]);
     }
 
     /**

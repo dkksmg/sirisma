@@ -19,7 +19,12 @@
                         <li><a class="nav-link scrollto" href="{{ route('register') }}">Register</a></li>
                     @endguest
                     @auth()
-                        <li><a class="nav-link scrollto" href="{{ route('permohonan.index') }}">Permohonan</a></li>
+                        @if (Auth::user()->role != 'USER')
+                            <li><a class="nav-link scrollto" href="{{ route('permohonan.index') }}">Data Permohonan</a>
+                            </li>
+                        @else
+                            <li><a class="nav-link scrollto" href="{{ route('permohonan.index') }}">Permohonan</a></li>
+                        @endif
                         <li class="dropdown"><a href="#"><span>{{ salam() }},
                                     {{ Auth::user()->name }}</span> <i
                                     class="bi bi-chevron-down dropdown-indicator"></i></a>

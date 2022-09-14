@@ -20,6 +20,27 @@ use Illuminate\Support\Facades\Validator;
 
 class ApplicationController extends Controller
 {
+    public function __construct()
+    {
+        $this->isAuthorized();
+    }
+
+    public function isAuthorized()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->role == 'CS') {
+                return redirect()->route('dashboard-cs');
+            } else if (Auth::user()->role == 'KABID') {
+                return redirect()->route('dashboard-kabid');
+            } else if (Auth::user()->role == 'KASI') {
+                return redirect()->route('dashboard-kasi');
+            } else if (Auth::user()->role == 'PETUGAS') {
+                return redirect()->route('dashboard-petugas');
+            } else if (Auth::user()->role == 'SUPERADMIN') {
+                return redirect()->route('dashboard-admin');
+            }
+        });
+    }
     /**
      * Display a listing of the resource.
      *
