@@ -33,15 +33,38 @@ var ctx = document.getElementById("myBarChart");
 var myBarChart = new Chart(ctx, {
     type: "bar",
     data: {
-        labels: ["January", "February", "March", "April", "May", "June"],
-        datasets: [{
-            label: "Revenue",
+        labels: ["Januari", "Februari", "Maret", "April", "Mei", "Juni","Juli", "September", "Oktober", "November", "Desember"],
+        datasets: [
+        {
+            label: "Jumlah Permohonan Penelitian",
             backgroundColor: "rgba(0, 97, 242, 1)",
             hoverBackgroundColor: "rgba(0, 97, 242, 0.9)",
             borderColor: "#4e73df",
-            data: [4215, 5312, 6251, 7841, 9821, 14984],
+            data: [4215, 5312, 6251, 7841, 9821, 14984,0,0,0,0,0,0],
             maxBarThickness: 25
-        }]
+        },{
+            label: "Jumlah Permohonan Pengambilan Data",
+            backgroundColor: "rgba(88, 0, 232, 1)",
+            hoverBackgroundColor: "rgba(88, 0, 232, 0.9)",
+            borderColor: "#fff",
+            data: [1500, 1200, 500, 200, 300, 1345,0,0,0,0,0,0],
+            maxBarThickness: 25
+        },{
+            label: "Jumlah Permohonan Survey Awal/Studi Pendahuluan",
+            backgroundColor: "rgba(0, 172, 105, 1)",
+            hoverBackgroundColor: "rgba(0, 172, 105, 0.9)",
+            borderColor: "#fff",
+            data: [1500, 12300, 13500, 20000, 3450000, 134500,0,0,0,0,0,0],
+            maxBarThickness: 25
+        },{
+            label: "Jumlah Permohonan Magang/PKL",
+            backgroundColor: "rgba(244, 161, 0, 1)",
+            hoverBackgroundColor: "rgba(244, 161, 0, 0.9)",
+            borderColor: "#4e73df",
+            data: [1500000, 1230000, 13500, 2000000, 3450000, 134500,0,0,0,0,0,0],
+            maxBarThickness: 25
+        }
+    ]
     },
     options: {
         maintainAspectRatio: false,
@@ -72,9 +95,8 @@ var myBarChart = new Chart(ctx, {
                     max: 15000,
                     maxTicksLimit: 5,
                     padding: 10,
-                    // Include a dollar sign in the ticks
                     callback: function(value, index, values) {
-                        return "$" + number_format(value);
+                        return  value;
                     }
                 },
                 gridLines: {
@@ -105,7 +127,7 @@ var myBarChart = new Chart(ctx, {
                 label: function(tooltipItem, chart) {
                     var datasetLabel =
                         chart.datasets[tooltipItem.datasetIndex].label || "";
-                    return datasetLabel + ": $" + number_format(tooltipItem.yLabel);
+                    return datasetLabel + ": " + (tooltipItem.yLabel);
                 }
             }
         }

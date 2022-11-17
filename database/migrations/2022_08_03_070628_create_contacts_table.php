@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('subject_kontak');
             $table->text('pesan');
+            $table->text('balasan')->nullable();
+            $table->integer('oleh')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

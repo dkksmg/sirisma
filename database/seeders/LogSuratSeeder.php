@@ -18,11 +18,11 @@ class LogSuratSeeder extends Seeder
     {
         $logs = [
             [
-                'id_application' => '1', 'status_surat' => 'kirim', 'update_oleh' => '1', 'update_waktu' => now(), 'keterangan' => '', 'created_at' => now(), 'updated_at' => now(),
+                'id_application' => '1', 'status_surat' => 'kirim', 'update_oleh' => '1', 'update_waktu' => now(), 'keterangan' => '', 'role' => 'USER', 'created_at' => now(), 'updated_at' => now(),
             ],
-            // [
-            //     'id_application' => '2', 'status_surat' => 'kirim', 'update_oleh' => '1', 'update_waktu' => now(), 'keterangan' => '', 'created_at' => now(), 'updated_at' => now(),
-            // ],
+            [
+                'id_application' => '2', 'status_surat' => 'kirim', 'update_oleh' => '2', 'update_waktu' => now(), 'keterangan' => '', 'role' => 'USER', 'created_at' => now(), 'updated_at' => now(),
+            ],
             // [
             //     'id_application' => '1', 'status_surat' => 'proses', 'update_oleh' => '3', 'update_waktu' => now(-2), 'keterangan' => 'sesuai', 'created_at' => now(), 'updated_at' => now(),
             // ],

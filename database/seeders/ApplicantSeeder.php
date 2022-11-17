@@ -38,5 +38,29 @@ class ApplicantSeeder extends Seeder
         $applicant->file_ktp = 'Cikiwir';
         $applicant->file_ktm = 'Cikiwir';
         $applicant->save();
+
+        $applicantTwo = new Applicant;
+        $applicantTwo->id_user = "2";
+        $applicantTwo->nik = '2039239829382';
+        $applicantTwo->nim = '3928392893892';
+        $applicantTwo->no_hp = '0821928192';
+        $applicantTwo->alamat_ktp = 'Semarang Indah';
+        $applicantTwo->alamat_domisili = 'Semarang Indah';
+        $applicantTwo->provinsi_ktp = '1';
+        $applicantTwo->kotakab_ktp = '1';
+        $applicantTwo->kecamatan_ktp = '1';
+        $applicantTwo->kelurahan_ktp = '1';
+        $applicantTwo->provinsi_domisili = '1';
+        $applicantTwo->kotakab_domisili = '1';
+        $applicantTwo->kecamatan_domisili = '1';
+        $applicantTwo->kelurahan_domisili = '1';
+        $applicantTwo->status = 'Mahasiswa';
+        $applicantTwo->jenjang = 'S1';
+        $applicantTwo->asal = 'Universitas Dian Nuswantoro';
+        $applicantTwo->program_studi = 'Teknik Informatika';
+        $applicantTwo->semester = '5';
+        $applicantTwo->file_ktp = 'Cikiwir';
+        $applicantTwo->file_ktm = 'Cikiwir';
+        $applicantTwo->save();
     }
 }

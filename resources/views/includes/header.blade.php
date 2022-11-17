@@ -32,7 +32,7 @@
                                 <li><a href="{{ url('/profile') }}">Profile</a></li>
                                 <li>
                                     {{-- <a href="" class="">Keluar</a> --}}
-                                    <form action="{{ route('logout') }}" method="POST">
+                                    <form action="{{ route('logout') }}" method="POST" class="">
                                         @csrf
                                         <button type="submit" class="btn-out">Keluar</button>
                                     </form>

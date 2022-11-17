@@ -30,8 +30,14 @@ return new class extends Migration
             $table->timestamp('tanggal_permohonan');
             $table->string('file_surat_pemohon');
             $table->string('file_proposal_pemohon');
+            $table->string('nomor_agenda')->nullable();
+            $table->date('tgl_agenda')->nullable();
             $table->string('file_surat_permohonan')->nullable();
             $table->string('biaya_permohonan')->nullable();
+            $table->enum('status_surat', ['draft', 'kirim', 'proses', 'setuju', 'sanggah', 'selesai', 'tolak'])->nullable();
+            $table->string('update_oleh')->nullable();
+            $table->string('role')->nullable();
+            $table->dateTime('update_waktu_status')->nullable();
             $table->timestamps();
             $table->foreign('id_applicant')->references('id_applicant')->on('applicants')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('jenis_permohonan')->references('id')->on('application_types')->onDelete('cascade')->onUpdate('cascade');

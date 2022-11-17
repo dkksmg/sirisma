@@ -37,7 +37,7 @@
                                     <!-- Profile picture image-->
                                     <img class="img-account-profile rounded-circle mb-2"
                                         src="{{ Storage::url($dataUser->foto_profile) }}"
-                                        onerror="this.onerror=null; this.src='{{ url('backend/assets/img/illustrations/profiles/profile-1.png') }}'"
+                                        onerror="this.onerror=null; this.src='{{ url('backend/assets/img/illustrations/profiles/profile-2.png') }}'"
                                         alt="Profil Image" />
                                     <!-- Profile picture help block-->
                                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 3 MB</div>
@@ -103,8 +103,4 @@
     </div>
 @endsection
 @push('addon-script')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="{{ url('backend/assets/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ url('backend/assets/demo/chart-bar-demo.js') }}"></script>
-    <script src="{{ url('backend/assets/demo/chart-pie-demo.js') }}"></script>
 @endpush

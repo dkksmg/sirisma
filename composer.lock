@@ -4,8 +4,56 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41588e4e9148d14b6433e99a1c00ac93",
+    "content-hash": "ce6fa6c6fa48746488b060f3aba3e80c",
     "packages": [
+        {
+            "name": "ajcastro/insert-update-many",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ajcastro/insert-update-many.git",
+                "reference": "7932748e587c06926946d34540a2c425a52be65d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ajcastro/insert-update-many/zipball/7932748e587c06926946d34540a2c425a52be65d",
+                "reference": "7932748e587c06926946d34540a2c425a52be65d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "AjCastro\\InsertUpdateMany\\ServiceProvider"
+                    ],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AjCastro\\InsertUpdateMany\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arjon Jason Castro",
+                    "email": "ajcastro29@gmail.com"
+                }
+            ],
+            "description": "Laravel's batch insert or batch update for collection of eloquent models.",
+            "support": {
+                "issues": "https://github.com/ajcastro/insert-update-many/issues",
+                "source": "https://github.com/ajcastro/insert-update-many/tree/v0.1.0"
+            },
+            "time": "2019-07-12T14:08:35+00:00"
+        },
         {
             "name": "alfa6661/laravel-autonumber",
             "version": "1.2.5",
@@ -1948,6 +1996,62 @@
                 }
             ],
             "time": "2022-08-08T13:52:53+00:00"
+        },
+        {
+            "name": "mavinoo/laravel-batch",
+            "version": "v2.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mavinoo/laravelBatch.git",
+                "reference": "126f077dec4ecabb67331694e71bf28b427daa60"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mavinoo/laravelBatch/zipball/126f077dec4ecabb67331694e71bf28b427daa60",
+                "reference": "126f077dec4ecabb67331694e71bf28b427daa60",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.3@dev"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mavinoo\\Batch\\BatchServiceProvider"
+                    ],
+                    "aliases": {
+                        "Batch": "Mavinoo\\Batch\\BatchFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Common/Helpers.php"
+                ],
+                "psr-4": {
+                    "Mavinoo\\Batch\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mohammad Ghanbari",
+                    "email": "mavin.developer@gmail.com"
+                }
+            ],
+            "description": "Insert and update batch (bulk) in laravel",
+            "support": {
+                "issues": "https://github.com/mavinoo/laravelBatch/issues",
+                "source": "https://github.com/mavinoo/laravelBatch/tree/v2.3.4"
+            },
+            "time": "2022-04-20T12:04:23+00:00"
         },
         {
             "name": "mews/captcha",
@@ -8155,7 +8259,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.0.2"
+        "php": "^7.1|^8.0"
     },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"

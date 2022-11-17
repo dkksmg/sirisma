@@ -15,7 +15,7 @@
             <div class="row justify-content-md-start">
                 <div class="col-md-12">
                     <div class="container px-5 my-5">
-                        @livewire('applications')
+                        @livewire('permohonan.add')
                     </div>
                 </div>
             </div>
@@ -34,6 +34,10 @@
                 multiple: true
             });
         });
+
+        function alertPemohon() {
+            alert('Data Pemohon ke-1 dapat diubah melalui halaman profile');
+        }
     </script>
     @livewireScripts
 @endpush

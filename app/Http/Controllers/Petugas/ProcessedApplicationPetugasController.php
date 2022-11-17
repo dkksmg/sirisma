@@ -1,16 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\CS;
+namespace App\Http\Controllers\Petugas;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ProccesedApplicationCsController extends Controller
+class ProcessedApplicationPetugasController extends Controller
 {
-    public function __construct()
-    {
-        // cek_login();
-    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +14,7 @@ class ProccesedApplicationCsController extends Controller
      */
     public function index()
     {
-        echo 'Preview Terproses';
+        //
     }
 
     /**

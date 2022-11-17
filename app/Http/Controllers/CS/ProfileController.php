@@ -5,11 +5,12 @@ namespace App\Http\Controllers\CS;
 use App\Models\User;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Intervention\Image\Facades\Image;
 
 
 class ProfileController extends Controller
@@ -25,10 +26,42 @@ class ProfileController extends Controller
         $message = Contact::all();
         $id = Auth::user()->id;
         $dataUser = User::findOrFail($id);
+        $penelitianBaru = DB::table('applications as one')
+            ->select('*')
+            ->join('users as us', 'one.id_user', '=', 'us.id')
+            ->join('log_surats as two', 'one.id_application', '=', 'two.id_application')
+            ->join(
+                DB::raw('(select t.id_application, MAX(created_at) as maxt from log_surats t group by t.id_application) t'),
+                function ($join) {
+                    $join->on('t.id_application', '=', 'two.id_application');
+                    $join->on('two.created_at', '=', 'maxt');
+                }
+            )
+            ->where(['two.status_surat' => 'kirim', 'two.role' => 'USER'])
+            ->whereNull('one.deleted_at')
+            ->orWhere(['two.status_surat' => 'ubah', 'two.role' => 'USER'])
+            ->whereNull('one.deleted_at')
+            ->get();
+        $penelitianProses = DB::table('applications as one')
+            ->select('*')
+            ->join('log_surats as two', 'one.id_application', '=', 'two.id_application')
+            ->join(
+                DB::raw('(select t.id_application, MAX(created_at) as maxt from log_surats t group by t.id_application) t'),
+                function ($join) {
+                    $join->on('t.id_application', '=', 'two.id_application');
+                    $join->on('two.created_at', '=', 'maxt');
+                }
+            )
+            ->where(['two.status_surat' => 'proses', 'two.role' => 'CS'])
+            ->whereNull('one.deleted_at')
+            ->count();
         return view('pages.cs.profile.index', [
             'countmessage' => $countmessage,
             'messages' => $message,
             'dataUser' => $dataUser,
+            'penelitianBaru' => $penelitianBaru,
+            'penelitianBaruSidebar' => $penelitianBaru->count(),
+            'penelitianProses' => $penelitianProses,
 
         ]);
     }
@@ -146,9 +179,8 @@ class ProfileController extends Controller
                 'name' => $request->nama_lengkap,
                 'email' => $request->email,
                 'foto_profile' => $image,
-                'email_verified_at' => $request->email == $item->email ? $item->email_verified_at : null,
+                'email_verified_at' => $request->email != $item->email ? $item->email_verified_at : null,
             ];
-            // dd($data);
             $item->update($data);
             return redirect()->route('profile-cs.index')->withSuccess('Akun Profile diupdate!');
         }

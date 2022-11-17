@@ -10,52 +10,64 @@
                         <a class="nav-link d-sm-none" href="#!">
                             <div class="nav-link-icon"><i data-feather="bell"></i></div>
                             Permohonan
-                            <span class="badge bg-warning-soft text-warning ms-auto">4 New!</span>
+                            <span
+                                class="badge bg-danger-soft text-danger ms-auto animate__animated animate__swing animate__infinite infinite">4
+                                New!</span>
                         </a>
                         <!-- Sidenav Link (Messages)-->
                         <!-- * * Note: * * Visible only on and above the sm breakpoint-->
                         <a class="nav-link d-sm-none" href="#!">
                             <div class="nav-link-icon"><i data-feather="mail"></i></div>
                             Pesan
-                            <span class="badge bg-success-soft text-success ms-auto">2 New!</span>
+                            <span
+                                class="badge bg-warning-soft text-warning ms-auto animate__animated animate__swing animate__infinite infinite">2
+                                New!</span>
                         </a>
                         <!-- Sidenav Menu Heading (Core)-->
                         <div class="sidenav-menu-heading"></div>
                         <!-- Sidenav Accordion (Dashboard)-->
-                        <a class="nav-link collapsed" href="{{ route('dashboard-cs') }}">
+                        <a class="nav-link collapsed" href="{{ route('dashboard-admin') }}">
                             <div class="nav-link-icon"><i data-feather="activity"></i></div>
                             Dashboard
                         </a>
                         <!-- Sidenav Heading (Pemrohonan)-->
-                        <div class="sidenav-menu-heading">Permohonan</div>
-                        <!-- Sidenav Accordion (Permohonan)-->
+                        <div class="sidenav-menu-heading">Master</div>
                         <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
                             data-bs-target="#collapseApps" aria-expanded="false" aria-controls="collapseApps">
-                            <div class="nav-link-icon"><i data-feather="globe"></i></div>
-                            Penelitian
+                            <div class="nav-link-icon"><i class="fa-duotone fa-sitemap"></i></div>
+                            Konten
                             <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseApps" data-bs-parent="#accordionSidenav">
                             <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavAppsMenu">
-                                <a class="nav-link " href="{{ route('permohonan-baru.index') }}">
-                                    Baru
+                                <a class="nav-link " href="#">
+                                    FAQs
                                 </a>
-                                <a class="nav-link" href="{{ route('permohonan-terproses.index') }}">
-                                    Terproses
+                                <a class="nav-link " href="#">
+                                    Penelitian
+                                </a>
+                                <a class="nav-link" href="#">
+                                    Magang
                                 </a>
                             </nav>
                         </div>
-                        <!-- Sidenav Accordion (Flows)-->
+
+                        <div class="sidenav-menu-heading">Pengguna</div>
                         <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse"
-                            data-bs-target="#collapseFlows" aria-expanded="false" aria-controls="collapseFlows">
-                            <div class="nav-link-icon"><i data-feather="repeat"></i></div>
-                            Magang
+                            data-bs-target="#users" aria-expanded="false" aria-controls="users">
+                            <div class="nav-link-icon"><i class="fa-solid fa-users-medical"></i></div>
+                            Users
                             <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseFlows" data-bs-parent="#accordionSidenav">
-                            <nav class="sidenav-menu-nested nav">
-                                <a class="nav-link" href="#">Baru</a>
-                                <a class="nav-link" href="#">Terproses</a>
+                        <div class="collapse {{ (Request::segment(2) == 'users' ? 'show' : '' || Request::segment(2) == 'pengguna') ? 'show' : '' }}"
+                            id="users" data-bs-parent="#accordionSidenav">
+                            <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavAppsMenu">
+                                <a class="nav-link " href="{{ route('users.index') }}">
+                                    Pemohon
+                                </a>
+                                <a class="nav-link" href="{{ route('pengguna') }}">
+                                    Pengguna
+                                </a>
                             </nav>
                         </div>
                     </div>

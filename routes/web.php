@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\ProfileAdminController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -9,11 +11,22 @@ use App\Http\Controllers\CS\ApplicationCsController;
 use App\Http\Controllers\CS\DashboardController;
 use App\Http\Controllers\CS\NewApplicationCsController;
 use App\Http\Controllers\CS\ProccesedApplicationCsController;
+use App\Http\Controllers\CS\ProcessedApplicationCsController;
 use App\Http\Controllers\CS\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Kabid\DashboardController as KabidDashboardController;
+use App\Http\Controllers\Kabid\NewApplicationKabidController;
+use App\Http\Controllers\Kabid\ProccesedApplicationKabidController;
+use App\Http\Controllers\Kabid\ProcessedApplicationKabidController;
+use App\Http\Controllers\Kabid\ProfileKabidController;
 use App\Http\Controllers\Kasi\DashboardController as KasiDashboardController;
+use App\Http\Controllers\Kasi\NewApplicationKasiController;
+use App\Http\Controllers\Kasi\ProcessedApplicationKasiController;
+use App\Http\Controllers\Kasi\ProfileKasiController;
 use App\Http\Controllers\Petugas\DashboardController as PetugasDashboardController;
+use App\Http\Controllers\Petugas\NewApplicationPetugasController;
+use App\Http\Controllers\Petugas\ProcessedApplicationPetugasController;
+use App\Http\Controllers\Petugas\ProfilePetugasController;
 use App\Http\Controllers\User\ApplicantController;
 use App\Http\Controllers\User\ApplicationController;
 
@@ -56,8 +69,8 @@ Route::prefix('cs')
     ->group(function () {
         Route::get('/', [DashboardController::class, 'index'])
             ->name('dashboard-cs');
-        Route::resource('permohonan-baru', NewApplicationCsController::class);
-        Route::resource('permohonan-terproses', ProccesedApplicationCsController::class);
+        Route::resource('penelitian-baru-cs', NewApplicationCsController::class);
+        Route::resource('penelitian-terproses-cs', ProcessedApplicationCsController::class);
         Route::resource('profile-cs', ProfileController::class);
     });
 // Kabid
@@ -66,6 +79,10 @@ Route::prefix('kabid')
     ->group(function () {
         Route::get('/', [KabidDashboardController::class, 'index'])
             ->name('dashboard-kabid');
+        Route::resource('penelitian-baru-kabid', NewApplicationKabidController::class);
+        Route::resource('penelitian-terproses-kabid', ProcessedApplicationKabidController::class);
+        Route::resource('profile-kabid', ProfileKabidController::class);
+        Route::get('profile-pemohon-kabid/{id}', [NewApplicationPetugasController::class, 'profile_pemohon'])->name('profile-pemohon-kabid');
     });
 // Kasi
 Route::prefix('kasi')
@@ -73,6 +90,10 @@ Route::prefix('kasi')
     ->group(function () {
         Route::get('/', [KasiDashboardController::class, 'index'])
             ->name('dashboard-kasi');
+        Route::resource('penelitian-baru-kasi', NewApplicationKasiController::class);
+        Route::resource('penelitian-terproses-kasi', ProcessedApplicationKasiController::class);
+        Route::get('profile-pemohon-kasi/{id}', [NewApplicationPetugasController::class, 'profile_pemohon'])->name('profile-pemohon-kasi');
+        Route::resource('profile-kasi', ProfileKasiController::class);
     });
 // petugas
 Route::prefix('petugas')
@@ -80,6 +101,12 @@ Route::prefix('petugas')
     ->group(function () {
         Route::get('/', [PetugasDashboardController::class, 'index'])
             ->name('dashboard-petugas');
+        Route::resource('penelitian-baru-petugas', NewApplicationPetugasController::class);
+        Route::resource('penelitian-terproses-petugas', ProcessedApplicationPetugasController::class);
+        Route::resource('profile-petugas', ProfilePetugasController::class);
+        Route::get('profile-pemohon-petugas/{id}', [NewApplicationPetugasController::class, 'profile_pemohon'])->name('profile-pemohon-petugas');
+        Route::get('generate-penelitian/{id}', [NewApplicationPetugasController::class, 'generate_penelitian'])->name('generate-penelitian');
+        Route::put('simpan-surat/{id}', [NewApplicationPetugasController::class, 'simpan_surat_penelitian'])->name('simpan-surat');
     });
 // admin
 Route::prefix('admin')
@@ -87,9 +114,15 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('/', [AdminDashboardController::class, 'index'])
             ->name('dashboard-admin');
+        Route::resource('profile-admin', ProfileAdminController::class);
+        Route::resource('users', UserController::class);
+        Route::get('restore-user/{id}', [UserController::class, 'restore'])->name('restore-user');
+        Route::put('verif-email/{id}', [UserController::class, 'verifemail'])->name('verif-email');
+        Route::get('pengguna', [UserController::class, 'pengguna'])->name('pengguna');
     });
 
 Route::resource('permohonan', ApplicationController::class)->middleware(['auth', 'verified']);
+// Route::get('/permohonan/edit/{id}',  \App\Http\Livewire\Permohonan\Edit::class)->middleware(['auth', 'verified'])->name('permohonan-user.edit');
 Route::post('revisi', [ApplicationController::class, 'revisi'])->middleware(['auth', 'verified'])->name('revisi');
 Route::resource('profile', ApplicantController::class)->middleware(['auth', 'verified']);
 Route::put('ganti-profil/{id}', [ApplicantController::class, 'imageprofile',])->name('imageprofile');

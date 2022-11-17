@@ -14,7 +14,9 @@
             <div class="container">
                 <div class="row justify-content-left mb-4">
                     <div class="col-md-3">
-                        @if (empty($data->id_user) or empty($data->nik) or empty($data->file_ktp))
+                        @if (empty($data->id_user) or
+                            empty($data->nik) or
+                            empty(Storage::disk('local')->exists('public/' . $data->file_ktp)))
                             <a class="btn btn-sm btn-success mb-3" id="btn-add">Tambah
                                 Permohonan</a>
                         @else
@@ -33,10 +35,10 @@
                                         <th class="text-center">No Permohonan</th>
                                         <th class="text-center">Jenis Permohonan</th>
                                         <th class="text-center">Keperluan</th>
-                                        <th class="text-center">Tanggal</th>
+                                        <th class="text-center">Tanggal Pelaksanaan</th>
                                         <th class="text-center">Tanggal Permohonan</th>
                                         <th class="text-center">Status</th>
-                                        <th class="text-center">File Surat Pengantar</th>
+                                        <th class="text-center">File Surat Permohonan</th>
                                         <th class="text-center">File Proposal</th>
                                         <th class="text-center">File Permohonan</th>
                                         <th class="text-center" width="auto">Aksi</th>
@@ -49,9 +51,9 @@
                                             <td class="text-center">{{ $app->type->jenis_permohonan }}</td>
                                             <td class="text-center">{{ $app->keperluan }}</td>
                                             <td class="text-center" width="auto">
-                                                {{ \Carbon\Carbon::create($app->waktu_awal)->translatedFormat('d F Y') .
+                                                {{ \Carbon\Carbon::create($app->tgl_awal)->translatedFormat('d F Y') .
                                                     ' s/d ' .
-                                                    \Carbon\Carbon::create($app->waktu_akhir)->translatedFormat('d F Y') }}
+                                                    \Carbon\Carbon::create($app->tgl_akhir)->translatedFormat('d F Y') }}
                                             </td>
                                             <td class="text-center">
                                                 {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $app->tanggal_permohonan)->format('d F Y') }}
@@ -61,6 +63,14 @@
                                                     <span class="btn btn-sm btn-warning text-light mb-1"
                                                         title="Lihat detail status" data-bs-toggle="modal"
                                                         data-bs-target="#statusModal{{ $app->id_application }}">Dikirim
+                                                    </span>
+                                                    <br>
+                                                    <span
+                                                        class="time-status">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $app->logsuratone->update_waktu)->format('d-m-Y H:i:s') }}</span>
+                                                @elseif ($app->logsuratone->status_surat == 'ubah')
+                                                    <span class="btn btn-sm btn-warning text-light mb-1"
+                                                        title="Lihat detail status" data-bs-toggle="modal"
+                                                        data-bs-target="#statusModal{{ $app->id_application }}">Diubah
                                                     </span>
                                                     <br>
                                                     <span
@@ -101,6 +111,15 @@
                                                     <br>
                                                     <span
                                                         class="time-status">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $app->logsuratone->update_waktu)->format('d-m-Y H:i:s') }}</span>
+                                                @elseif ($app->logsuratone->status_surat == 'sesuai')
+                                                    <span class="btn btn-sm btn-success text-light mb-1"
+                                                        title="Lihat detail status" data-bs-toggle="modal"
+                                                        data-bs-target="#statusModal{{ $app->id_application }}">
+                                                        Sesuai
+                                                    </span>
+                                                    <br>
+                                                    <span
+                                                        class="time-status">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $app->logsuratone->update_waktu)->format('d-m-Y H:i:s') }}</span>
                                                 @else
                                                     <span class="btn btn-sm btn-danger text-light mb-1"
                                                         title="Lihat detail status" data-bs-toggle="modal"
@@ -113,7 +132,6 @@
                                                 @endif
                                             </td>
                                             <td class="text-center">
-
                                                 <button class="btn btn-md bi bi-file-earmark-pdf color-orange"
                                                     onClick="window.open('{{ Storage::url($app->file_surat_pemohon) }}','_blank', 'location=yes,height=800,width=700,scrollbars=yes,status=yes');">
                                                 </button>
@@ -166,6 +184,7 @@
                                                     </table>
                                                 </td>
                                             @elseif($app->logsuratone->status_surat == 'kirim' ||
+                                                $app->logsuratone->status_surat == 'ubah' ||
                                                 $app->logsuratone->status_surat == 'draft' ||
                                                 $app->logsuratone->status_surat == 'tolak')
                                                 <td class="text-center">
@@ -239,6 +258,8 @@
                                                         <h3>
                                                             @if ($log->status_surat == 'kirim')
                                                                 <span class="badge bg-warning">Dikirim</span>
+                                                            @elseif ($log->status_surat == 'ubah')
+                                                                <span class="badge bg-warning">Diubah</span>
                                                             @elseif ($log->status_surat == 'proses')
                                                                 <span class="badge bg-info">
                                                                     Diproses
@@ -251,6 +272,8 @@
                                                                 <span class="badge bg-secondary">Draft</span>
                                                             @elseif ($log->status_surat == 'selesai')
                                                                 <span class="badge bg-success">Selesai</span>
+                                                            @elseif ($log->status_surat == 'sesuai')
+                                                                <span class="badge bg-success">Sesuai</span>
                                                             @elseif ($log->status_surat == 'tolak')
                                                                 <span class="badge bg-danger">Ditolak</span>
                                                             @endif

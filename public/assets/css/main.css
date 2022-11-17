@@ -1059,7 +1059,7 @@ section {
 --------------------------------------------------------------*/
 .hero-static {
     width: 100%;
-    min-height: 50vh;
+    min-height: 60vh;
     background: url("../img/hero-bg.png") center center;
     background-size: cover;
     position: relative;
@@ -3158,6 +3158,8 @@ section {
 .footer {
     color: var(--color-white);
     font-size: 14px;
+    height: 40px;
+    margin-top: 150px;
 }
 
 .footer .footer-content {
@@ -3334,3 +3336,9 @@ section {
     text-decoration: none;
     background-color: none;
 }
+/* #footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+} */

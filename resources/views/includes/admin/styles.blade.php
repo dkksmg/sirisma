@@ -13,4 +13,5 @@
 <!-- Custom fonts for this template-->
 <link href="{{ url('backend/css/styles.css') }}" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
-</script>
+<link href="https://site-assets.fontawesome.com/releases/v6.2.0/css/all.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />

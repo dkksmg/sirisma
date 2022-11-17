@@ -187,8 +187,9 @@ return [
          */
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Alfa6661\AutoNumber\AutoNumberServiceProvider::class,
+        // Alfa6661\AutoNumber\AutoNumberServiceProvider::class,
         Mews\Captcha\CaptchaServiceProvider::class,
+        Mavinoo\Batch\BatchServiceProvider::class,
         // Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
         /*
          * Application Service Providers...
@@ -212,11 +213,13 @@ return [
     |
     */
 
+
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
+        'Batch' => Mavinoo\Batch\BatchFacade::class,
         // 'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
     ])->toArray(),
 

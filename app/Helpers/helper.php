@@ -10,8 +10,6 @@ function salam()
     date_default_timezone_set('Asia/Jakarta');
     //ambil jam dan menit
     $jam = date('H:i');
-    // $salam = "alayekum";
-    //atur salam menggunakan IF
     if ($jam >= '00:00' && $jam < '11:00') {
         $salam = 'Pagi';
     } elseif ($jam >= '11:00' && $jam < '15:00') {

@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('content')
-    <main id="main">
+    @include('includes.description')
+
+    <main id="main" class="mb-5">
         <!-- ======= Features Section ======= -->
         <section id="syarat" class="features">
             <div class="container" data-aos="fade-up">

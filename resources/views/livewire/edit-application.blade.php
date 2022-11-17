@@ -21,8 +21,11 @@
             </div> --}}
             <div class="col-md-4">
                 <div class="form-floating mb-3 mt-2">
+                    {{-- @php
+                        dd($app);
+                    @endphp --}}
                     <input class="form-control @error('no_surat') is-invalid @enderror" id="no_surat" type="text"
-                        placeholder="Nomor Surat" name="no_surat" value="{{ old('no_surat') }}" />
+                        placeholder="Nomor Surat" name="no_surat" value="" />
                     <label for="no_surat">Nomor Surat Pengantar Permohonan</label>
                     @error('no_surat')
                         <div class="invalid-feedback" role="alert">{{ $message }}</div>

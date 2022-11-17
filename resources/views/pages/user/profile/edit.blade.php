@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <main id="hero-static" class="hero-static">
-        <section style="background-color: #eee;">
+        <section>
             <div class="container">
                 <div class="section-header">
                     <h2>Perbarui Data Diri</h2>

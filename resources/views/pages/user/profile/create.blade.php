@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <main id="hero-static" class="hero-static">
-        <section style="background-color: #eee;">
+        <section>
             <div class="container">
                 <div class="section-header">
                     <h2>Perbarui Data Diri</h2>
@@ -192,17 +192,10 @@
                                                 id="provinsi_ktp" name="provinsi_ktp">
                                                 <option value="">- Pilih Provinsi -</option>
                                                 @foreach ($provinces as $province)
-                                                    {{-- @if (isset($data->provinsi_ktp))
-                                            <option value="{{ $province->id_provinsi }}"
-                                                {{ $province->id_provinsi == $data->provinsi_ktp ? 'selected' : '' }}>
-                                                {{ $province->nama_provinsi }}
-                                            </option>
-                                        @else --}}
                                                     <option value="{{ $province->id_provinsi }}"
                                                         {{ $province->id_provinsi == old('provinsi_ktp') ? 'selected' : '' }}>
                                                         {{ $province->nama_provinsi }}
                                                     </option>
-                                                    {{-- @endif --}}
                                                 @endforeach
                                             </select>
                                             <label for="provinsi_ktp">Provinsi Sesuai KTP</label>
@@ -211,22 +204,22 @@
                                             @enderror
                                         </div>
                                         <div class="form-floating mb-3">
-                                            <select class="form-select @error('kecamatan_ktp') is-invalid @enderror"
-                                                id="kecamatan_ktp" name="kecamatan_ktp">
+                                            <select class="form-select @error('kotakab_ktp') is-invalid @enderror"
+                                                id="kotakab_ktp" name="kotakab_ktp">
                                             </select>
-                                            <label for="kecamatan_ktp">Kecamatan Sesuai KTP</label>
-                                            @error('kecamatan_ktp')
+                                            <label for="kotakab_ktp">Kota/Kab Sesuai KTP</label>
+                                            @error('kotakab_ktp')
                                                 <div class="invalid-feedback" role="alert">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-floating mb-3">
-                                            <select class="form-select @error('kotakab_ktp') is-invalid @enderror"
-                                                id="kotakab_ktp" name="kotakab_ktp">
+                                            <select class="form-select @error('kecamatan_ktp') is-invalid @enderror"
+                                                id="kecamatan_ktp" name="kecamatan_ktp">
                                             </select>
-                                            <label for="kotakab_ktp">Kota/Kab Sesuai KTP</label>
-                                            @error('kotakab_ktp')
+                                            <label for="kecamatan_ktp">Kecamatan Sesuai KTP</label>
+                                            @error('kecamatan_ktp')
                                                 <div class="invalid-feedback" role="alert">{{ $message }}</div>
                                             @enderror
                                         </div>
@@ -246,17 +239,10 @@
                                                 id="provinsi_domisili" name="provinsi_domisili">
                                                 <option value="">- Pilih Provinsi -</option>
                                                 @foreach ($provinces as $province)
-                                                    {{-- @if (isset($data->provinsi_domisili))
-                                            <option value="{{ $province->id_provinsi }}"
-                                                {{ $province->id_provinsi == $data->provinsi_domisili ? 'selected' : '' }}>
-                                                {{ $province->nama_provinsi }}
-                                            </option>
-                                        @else --}}
                                                     <option value="{{ $province->id_provinsi }}"
                                                         {{ $province->id_provinsi == old('provinsi_domisili') ? 'selected' : '' }}>
                                                         {{ $province->nama_provinsi }}
                                                     </option>
-                                                    {{-- @endif --}}
                                                 @endforeach
                                             </select>
                                             <label for="provinsi_domisili">Provinsi Domisili</label>
@@ -265,22 +251,22 @@
                                             @enderror
                                         </div>
                                         <div class="form-floating mb-3">
-                                            <select class="form-select @error('kecamatan_domisili') is-invalid @enderror"
-                                                id="kecamatan_domisili" name="kecamatan_domisili">
+                                            <select class="form-select @error('kotakab_domisili') is-invalid @enderror"
+                                                id="kotakab_domisili" name="kotakab_domisili">
                                             </select>
-                                            <label for="kecamatan_domisili">Kecamatan Domisili</label>
-                                            @error('kecamatan_domisili')
+                                            <label for="kotakab_domisili">Kota/Kab Domisili</label>
+                                            @error('kotakab_domisili')
                                                 <div class="invalid-feedback" role="alert">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-floating mb-3">
-                                            <select class="form-select @error('kotakab_domisili') is-invalid @enderror"
-                                                id="kotakab_domisili" name="kotakab_domisili">
+                                            <select class="form-select @error('kecamatan_domisili') is-invalid @enderror"
+                                                id="kecamatan_domisili" name="kecamatan_domisili">
                                             </select>
-                                            <label for="kotakab_domisili">Kota/Kab Domisili</label>
-                                            @error('kotakab_domisili')
+                                            <label for="kecamatan_domisili">Kecamatan Domisili</label>
+                                            @error('kecamatan_domisili')
                                                 <div class="invalid-feedback" role="alert">{{ $message }}</div>
                                             @enderror
                                         </div>

@@ -4,7 +4,8 @@
         <div class="row">
             {{ Form::hidden('applicant', $data->id_applicant) }}
             <div class="col-md-4" wire:key="UNIQUE_KEY">
-                <div class="form-floating mb-3 mt-2" wire:ignore>
+                <div class="form-group mb-3 mt-2" wire:ignore>
+                    <label for="jenis_permohonan">Jenis Permohonan</label>
                     <select class="form-select @error('jenis_permohonan') is-invalid @enderror" id="jenis_permohonan"
                         name="jenis_permohonan">
                         <option value="">- Pilih Permohonan -</option>
@@ -14,27 +15,27 @@
                                 {{ $type->jenis_permohonan }}</option>
                         @endforeach
                     </select>
-                    <label for="jenis_permohonan">Jenis Permohonan</label>
                     @error('jenis_permohonan')
                         <div class="invalid-feedback" role="alert">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="form-floating mb-3 mt-2">
+                <div class="form-group mb-3 mt-2">
+                    <label for="no_surat">Nomor Surat Permohonan</label>
                     <input class="form-control @error('no_surat') is-invalid @enderror" id="no_surat" type="text"
-                        placeholder="Nomor Surat" name="no_surat" value="{{ old('no_surat') }}" />
-                    <label for="no_surat">Nomor Surat Pengantar Permohonan</label>
+                        placeholder="58/UDN/BM.R0/VIII/2022" name="no_surat" value="{{ old('no_surat') }}" />
                     @error('no_surat')
                         <div class="invalid-feedback" role="alert">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="form-floating mb-3 mt-2">
+                <div class="form-group mb-3 mt-2">
+                    <label for="asal_surat">Asal Surat Permohonan</label>
                     <input class="form-control @error('asal_surat') is-invalid @enderror" id="asal_surat" type="text"
-                        placeholder="Asal Surat" name="asal_surat" value="{{ old('asal_surat') }}" />
-                    <label for="asal_surat">Asal Surat Pengantar Permohonan</label>
+                        placeholder="Fakultas Kesehatan Universitas Dian Nuswantoro" name="asal_surat"
+                        value="{{ old('asal_surat') }}" />
                     @error('asal_surat')
                         <div class="invalid-feedback" role="alert">{{ $message }}</div>
                     @enderror
@@ -72,7 +73,7 @@
                 <div class="form-floating mb-3 mt-2">
                     <textarea class="form-control @error('keperluan_pemohon') is-invalid @enderror" id="keperluan_pemohon"
                         name="keperluan_pemohon" type="text" placeholder="Keperluan Permohon" style="height: 8rem">{{ old('keperluan_pemohon') }}</textarea>
-                    <label for="keperluan_pemohon">Keperluan Pemohon</label>
+                    <label for="keperluan_pemohon">Jenis data yang dibutuhkan</label>
                     @error('keperluan_pemohon')
                         <div class="invalid-feedback" role="alert">{{ $message }}</div>
                     @enderror
@@ -83,7 +84,7 @@
                     <textarea class="form-control @error('judul_penelitian') is-invalid @enderror" id="judul_penelitian"
                         name="judul_penelitian" type="text" placeholder="Judul Rencana Penelitian" style="height: 8rem"
                         data-sb-validations="required">{{ old('judul_penelitian') }}</textarea>
-                    <label for="judul_penelitian">Isikan jenis data yang dimaksud/rencana judul
+                    <label for="judul_penelitian">Rencana judul
                         penelitian</label>
                     @error('judul_penelitian')
                         <div class="invalid-feedback" role="alert">{{ $message }}</div>
@@ -94,9 +95,9 @@
         <div class="row">
             <div class="col-md-6" wire:key="UNIQUE_KEY">
                 <div class="form-group mb-3 mt-2" wire:ignore>
-                    <label for="datepicker-one" class="form-label ">Tanggal Awal </label>
+                    <label for="datepicker-one" class="form-label ">Tanggal Pelaksanaan Awal </label>
                     <input type="text" class="form-control @error('waktu_awal') is-invalid @enderror"
-                        id="datepicker-one" placeholder="Tanggal Awal" name="waktu_awal"
+                        id="datepicker-one" placeholder="Tanggal Pelaksanaan Awal" name="waktu_awal"
                         value="{{ old('waktu_awal') }}" />
                     @error('waktu_awal')
                         <div class="invalid-feedback" role="alert">{{ $message }}</div>
@@ -105,9 +106,9 @@
             </div>
             <div class="col-md-6" wire:key="UNIQUE_KEY">
                 <div class="form-group mb-3 mt-2" wire:ignore>
-                    <label for="datepicker-two" class="form-label ">Tanggal Akhir </label>
+                    <label for="datepicker-two" class="form-label ">Tanggal Pelaksanaan Akhir </label>
                     <input type="text" class="form-control @error('waktu_akhir') is-invalid @enderror"
-                        id="datepicker-two" placeholder="Tanggal Akhir" name="waktu_akhir"
+                        id="datepicker-two" placeholder="Tanggal Pelaksanaan Akhir" name="waktu_akhir"
                         value="{{ old('waktu_akhir') }}" />
                     @error('waktu_akhir')
                         <div class="invalid-feedback" role="alert">{{ $message }}</div>

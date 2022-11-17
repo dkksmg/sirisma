@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('title', 'Administrator')
+@section('title', 'Admin')
 @section('content')
     <div id="layoutSidenav_content">
         <main>
@@ -24,7 +24,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1">
                                         <div class="small fw-bold text-primary mb-1">Penelitian (Baru)</div>
-                                        <div class="h5">1</div>
+                                        <div class="h5">{{ $penelitianBaruView }}</div>
                                     </div>
                                     <div class="ms-2"><i class="fas fa-book fa-2x text-gray-200"></i></div>
                                 </div>
@@ -38,7 +38,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1">
                                         <div class="small fw-bold text-secondary mb-1">Penelitian (Terproses)</div>
-                                        <div class="h5">0</div>
+                                        <div class="h5">{{ $penelitianProsesView }}</div>
                                     </div>
                                     <div class="ms-2"><i class="fas fa-building-columns fa-2x text-gray-200"></i></div>
                                 </div>
@@ -68,7 +68,91 @@
                                         <div class="small fw-bold text-info mb-1">Magang (Terproses)</div>
                                         <div class="h5">0</div>
                                     </div>
-                                    <div class="ms-2"><i class="fas fa-users fa-2x text-gray-200"></i></div>
+                                    <div class="ms-2"><i class="fa-solid fa-user-graduate fa-2x text-gray-200"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <!-- Dashboard info widget 4-->
+                        <div class="card border-start-lg border-start-warning h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-grow-1">
+                                        <div class="small fw-bold text-warning mb-1">Pemohon</div>
+                                        <div class="h5">{{ $pemohon }}</div>
+                                    </div>
+                                    <div class="ms-2"><i class="fa-regular fa-users-gear fa-2x text-gray-200"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <!-- Dashboard info widget 4-->
+                        <div class="card border-start-lg border-start-warning h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-grow-1">
+                                        <div class="small fw-bold text-warning mb-1">CS</div>
+                                        <div class="h5">{{ $cs }}</div>
+                                    </div>
+                                    <div class="ms-2"><i class="fa-regular fa-users-gear fa-2x text-gray-200"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <!-- Dashboard info widget 4-->
+                        <div class="card border-start-lg border-start-warning h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-grow-1">
+                                        <div class="small fw-bold text-warning mb-1">KABID</div>
+                                        <div class="h5">{{ $kabid }}</div>
+                                    </div>
+                                    <div class="ms-2"><i class="fa-regular fa-users-gear fa-2x text-gray-200"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <!-- Dashboard info widget 4-->
+                        <div class="card border-start-lg border-start-warning h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-grow-1">
+                                        <div class="small fw-bold text-warning mb-1">KASI</div>
+                                        <div class="h5">{{ $kasi }}</div>
+                                    </div>
+                                    <div class="ms-2"><i class="fa-regular fa-users-gear fa-2x text-gray-200"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <!-- Dashboard info widget 4-->
+                        <div class="card border-start-lg border-start-warning h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-grow-1">
+                                        <div class="small fw-bold text-warning mb-1">Petugas</div>
+                                        <div class="h5">{{ $petugas }}</div>
+                                    </div>
+                                    <div class="ms-2"><i class="fa-regular fa-users-gear fa-2x text-gray-200"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <!-- Dashboard info widget 4-->
+                        <div class="card border-start-lg border-start-warning h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-grow-1">
+                                        <div class="small fw-bold text-warning mb-1">Admin</div>
+                                        <div class="h5">{{ $admin }}</div>
+                                    </div>
+                                    <div class="ms-2"><i class="fa-regular fa-users-gear fa-2x text-gray-200"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -78,9 +162,40 @@
                     <div class="col-lg-12 mb-4">
                         <!-- Area chart example-->
                         <div class="card mb-4">
-                            <div class="card-header">Grafik Permohonan</div>
+                            <div class="card-header">Grafik Permohonan Tiap Bulan Dalam Setahun</div>
                             <div class="card-body">
                                 <div class="chart-area"><canvas id="myAreaChart" width="100%" height="30"></canvas>
+                                </div>
+                                <div class="list-group list-group-flush mt-3 mx-3">
+                                    <div
+                                        class="list-group-item
+                                    d-flex align-items-center justify-content-between small px-0 py-2">
+                                        <div class="me-3">
+                                            <i class="fas fa-circle fa-sm me-1 text-blue"></i>
+                                            Penelitian
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="list-group-item d-flex align-items-center justify-content-between small px-0 py-2">
+                                        <div class="me-3">
+                                            <i class="fas fa-circle fa-sm me-1 text-purple"></i>
+                                            Pengambilan Data
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="list-group-item d-flex align-items-center justify-content-between small px-0 py-2">
+                                        <div class="me-3">
+                                            <i class="fas fa-circle fa-sm me-1 text-green"></i>
+                                            Survey Awal/Studi Pendahuluan
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="list-group-item d-flex align-items-center justify-content-between small px-0 py-2">
+                                        <div class="me-3">
+                                            <i class="fas fa-circle fa-sm me-1 text-yellow"></i>
+                                            Magang/PKL
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -88,25 +203,50 @@
                             <div class="col-lg-6">
                                 <!-- Bar chart example-->
                                 <div class="card h-100">
-                                    <div class="card-header">Sales Reporting</div>
+                                    <div class="card-header">Jumlah Permohonan Bulan
+                                        {{ \Carbon\Carbon::now()->translatedFormat('F') }}</div>
                                     <div class="card-body d-flex flex-column justify-content-center">
                                         <div class="chart-bar"><canvas id="myBarChart" width="100%"
-                                                height="30"></canvas></div>
-                                    </div>
-                                    <div class="card-footer position-relative">
-                                        <a class="stretched-link" href="#!">
-                                            <div class="text-xs d-flex align-items-center justify-content-between">
-                                                View More Reports
-                                                <i class="fas fa-long-arrow-alt-right"></i>
+                                                height="30"></canvas>
+                                        </div>
+                                        <div class="list-group list-group-flush mt-3 mx-3">
+                                            <div
+                                                class="list-group-item
+                                            d-flex align-items-center justify-content-between small px-0 py-2">
+                                                <div class="me-3">
+                                                    <i class="fas fa-circle fa-sm me-1 text-blue"></i>
+                                                    Penelitian
+                                                </div>
                                             </div>
-                                        </a>
+                                            <div
+                                                class="list-group-item d-flex align-items-center justify-content-between small px-0 py-2">
+                                                <div class="me-3">
+                                                    <i class="fas fa-circle fa-sm me-1 text-purple"></i>
+                                                    Pengambilan Data
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="list-group-item d-flex align-items-center justify-content-between small px-0 py-2">
+                                                <div class="me-3">
+                                                    <i class="fas fa-circle fa-sm me-1 text-green"></i>
+                                                    Survey Awal/Studi Pendahuluan
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="list-group-item d-flex align-items-center justify-content-between small px-0 py-2">
+                                                <div class="me-3">
+                                                    <i class="fas fa-circle fa-sm me-1 text-yellow"></i>
+                                                    Magang/PKL
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <!-- Pie chart example-->
                                 <div class="card h-100">
-                                    <div class="card-header">Traffic Sources</div>
+                                    <div class="card-header">Presentase Permohonan Keseluruhan</div>
                                     <div class="card-body">
                                         <div class="chart-pie mb-4"><canvas id="myPieChart" width="100%"
                                                 height="50"></canvas></div>
@@ -115,25 +255,33 @@
                                                 class="list-group-item d-flex align-items-center justify-content-between small px-0 py-2">
                                                 <div class="me-3">
                                                     <i class="fas fa-circle fa-sm me-1 text-blue"></i>
-                                                    Direct
+                                                    Penelitian
                                                 </div>
-                                                <div class="fw-500 text-dark">55%</div>
+                                                <div class="fw-500 text-dark">{{ round($totalPenelitian, 2) }}%</div>
                                             </div>
                                             <div
                                                 class="list-group-item d-flex align-items-center justify-content-between small px-0 py-2">
                                                 <div class="me-3">
                                                     <i class="fas fa-circle fa-sm me-1 text-purple"></i>
-                                                    Social
+                                                    Pengambilan Data
                                                 </div>
-                                                <div class="fw-500 text-dark">15%</div>
+                                                <div class="fw-500 text-dark">{{ round($totalPengambilanData, 2) }}%</div>
                                             </div>
                                             <div
                                                 class="list-group-item d-flex align-items-center justify-content-between small px-0 py-2">
                                                 <div class="me-3">
                                                     <i class="fas fa-circle fa-sm me-1 text-green"></i>
-                                                    Referral
+                                                    Survey Awal/Studi Pendahuluan
                                                 </div>
-                                                <div class="fw-500 text-dark">30%</div>
+                                                <div class="fw-500 text-dark">{{ round($totalSurveyAwal, 2) }}%</div>
+                                            </div>
+                                            <div
+                                                class="list-group-item d-flex align-items-center justify-content-between small px-0 py-2">
+                                                <div class="me-3">
+                                                    <i class="fas fa-circle fa-sm me-1 text-yellow"></i>
+                                                    Magang/PKL
+                                                </div>
+                                                <div class="fw-500 text-dark">{{ round($totalMagang, 2) }}%</div>
                                             </div>
                                         </div>
                                     </div>
@@ -144,6 +292,7 @@
                 </div>
             </div>
         </main>
+
         @include('includes.cs.footer')
     </div>
 @endsection
@@ -175,4 +324,19 @@
         }
         setInterval(showTime, 500);
     </script>
+    <script>
+        var datachartpie = {{ $chartPermohonan }};
+        var barpenelitian = {{ $barpenelitian }};
+        var barpengambilandata = {{ $barpengambilandata }};
+        var barsurveyawal = {{ $barsurveyawal }};
+        var barmagang = {{ $barmagang }};
+        var areapenelitian = {{ $areapenelitian }};
+        var areapengambilandata = {{ $areapengambilandata }};
+        var areasurvey = {{ $areasurvey }};
+        var areamagang = {{ $areamagang }};
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="{{ url('backend/js/chart-pie.js') }}"></script>
+    <script src="{{ url('backend/js/chart-bar.js') }}"></script>
+    <script src="{{ url('backend/js/chart-area.js') }}"></script>
 @endpush

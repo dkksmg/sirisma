@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Petugas;
 
+use App\Models\User;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -17,9 +20,46 @@ class DashboardController extends Controller
     {
         $message = Contact::all();
         $countmessage = Contact::count();
+        $id = Auth::user()->id;
+        $dataUser = User::findOrFail($id);
+        $penelitianBaru = DB::table('applications as one')
+            ->select('*')
+            ->join('users as us', 'one.id_user', '=', 'us.id')
+            ->join('log_surats as two', 'one.id_application', '=', 'two.id_application')
+            ->join(
+                DB::raw('(select t.id_application, MAX(created_at) as maxt from log_surats t group by t.id_application) t'),
+                function ($join) {
+                    $join->on('t.id_application', '=', 'two.id_application');
+                    $join->on('two.created_at', '=', 'maxt');
+                }
+            )
+            ->where(['two.status_surat' => 'proses', 'two.role' => 'KASI'])
+            ->whereNull('one.deleted_at')
+            ->get();
+        $penelitianProses = DB::table('applications as one')
+            ->select('*')
+            ->join('users as us', 'one.id_user', '=', 'us.id')
+            ->join('log_surats as two', 'one.id_application', '=', 'two.id_application')
+            ->join(
+                DB::raw('(select t.id_application, MAX(created_at) as maxt from log_surats t group by t.id_application) t'),
+                function ($join) {
+                    $join->on('t.id_application', '=', 'two.id_application');
+                    $join->on('two.created_at', '=', 'maxt');
+                }
+            )
+            ->where(['two.status_surat' => 'proses', 'two.role' => 'PETUGAS'])
+            ->orWhere(['two.status_surat' => 'sesuai', 'two.role' => 'PETUGAS'])
+            ->whereNull('one.deleted_at')
+            ->count();
         return view('pages.petugas.index', [
             'countmessage' => $countmessage,
             'messages' => $message,
+            'dataUser' => $dataUser,
+            'penelitianBaruSidebar' => $penelitianBaru->count(),
+            'penelitianBaru' => $penelitianBaru,
+            'penelitianProses' => $penelitianProses,
+            'penelitianBaruDashboard' => $penelitianBaru->count(),
+            'penelitianProsesDashboard' => $penelitianProses,
         ]);
     }
 

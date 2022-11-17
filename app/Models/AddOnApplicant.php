@@ -12,4 +12,9 @@ class AddOnApplicant extends Model
     use SoftDeletes;
 
     protected $fillable = ['id_application', 'nama_pemohon', 'nim_pemohon', 'nik', 'no_hp'];
+
+    public function application()
+    {
+        return $this->belongsTo(Application::class, 'id_application', 'id_application');
+    }
 }

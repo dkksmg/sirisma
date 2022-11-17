@@ -17,7 +17,7 @@ class Applications extends Component
     public function mount()
     {
         $id_user = Auth::user()->id;
-        $user = Applicant::with('user')->findOrFail($id_user);
+        $user = Applicant::with(['user'])->where('id_user', $id_user)->first();
         $this->dataApplicants = [
             ['nama_pemohon' => $user->user->name, 'nim' => $user->nim, 'nik' => $user->nik, 'no_hp' => $user->no_hp]
         ];
@@ -38,7 +38,7 @@ class Applications extends Component
         $type = ApplicationType::all();
         $lokasi = LokasiTujuan::all()->sortBy('lokasi_tujuan');
         $id_user = Auth::user()->id;
-        $data = Applicant::with(['user'])->findOrNew($id_user);
+        $data = Applicant::with(['user'])->where('id_user', $id_user)->first();
         info($this->dataApplicants);
         return view('livewire.applications', [
             'types' => $type,

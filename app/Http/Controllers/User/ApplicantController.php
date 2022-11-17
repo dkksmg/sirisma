@@ -38,6 +38,8 @@ class ApplicantController extends Controller
                 return redirect()->route('dashboard-petugas');
             } else if (Auth::user()->role == 'SUPERADMIN') {
                 return redirect()->route('dashboard-admin');
+            } else if (Auth::user()->role == 'USER') {
+                return $next($request);
             }
         });
     }
@@ -47,7 +49,7 @@ class ApplicantController extends Controller
         $educations = EducationLevelPenelitians::all()->sortByDesc('level_pendidikan');
         $statuses = StatusApplicant::all()->sortBy('status_pemohon');
         $id_user = Auth::user()->id;
-        $data = Applicant::with(['user', 'province_ktp', 'district_ktp', 'sub_district_ktp', 'village_ktp', 'province_domisili', 'district_domisili', 'sub_district_domisili', 'village_domisili'])->where('id_user', $id_user)->firstOrNew();
+        $data = Applicant::with(['user', 'province_ktp', 'district_ktp', 'sub_district_ktp', 'village_ktp', 'province_domisili', 'district_domisili', 'sub_district_domisili', 'village_domisili'])->where('id_user', $id_user)->firstOrFail();
         // DB::enableQueryLog();
         // dd(DB::getQueryLog());
 
@@ -64,7 +66,7 @@ class ApplicantController extends Controller
         $educations = EducationLevelPenelitians::all()->sortByDesc('level_pendidikan');
         $statuses = StatusApplicant::all();
         $id_user = Auth::user()->id;
-        $data = Applicant::with(['user', 'province_ktp', 'district_ktp', 'sub_district_ktp', 'village_ktp', 'province_domisili', 'district_domisili', 'sub_district_domisili', 'village_domisili'])->where('id_user', $id_user)->firstOrNew();
+        $data = Applicant::with(['user', 'province_ktp', 'district_ktp', 'sub_district_ktp', 'village_ktp', 'province_domisili', 'district_domisili', 'sub_district_domisili', 'village_domisili'])->where('id_user', $id_user)->firstOrFail();
 
         return view('pages.user.profile.create', [
             'provinces' => $provinces,
@@ -77,7 +79,7 @@ class ApplicantController extends Controller
     {
         $validasi = $this->validate($request, [
             'nik_pemohon' => 'required|min:16|numeric',
-            'nim_pemohon' => 'required|min:3|alpha_num',
+            'nim_pemohon' => 'required|min:3|string',
             'nohp_pemohon' => 'required|min:10|numeric',
             'jenjang_pemohon' => 'required',
             'status_pemohon' => 'required',
@@ -138,7 +140,7 @@ class ApplicantController extends Controller
             ];
 
             Applicant::create($data);
-            return redirect()->route('profile')->with(['success' => 'Data Anda berhasil di perbarui!']);
+            return redirect()->route('profile.index')->with(['success' => 'Data Anda berhasil di perbarui!']);
         } else {
 
             return redirect()->back()->with(['error' => 'Gagal menyimpan Data Anda']);
@@ -163,7 +165,7 @@ class ApplicantController extends Controller
         if (Storage::disk('local')->exists('public/' . $item->file_ktp)) {
             $validasi = $this->validate($request, [
                 'nik_pemohon' => 'required|min:16|numeric',
-                'nim_pemohon' => 'required|min:3|alpha_num',
+                'nim_pemohon' => 'required|min:3|string',
                 'nohp_pemohon' => 'required|min:10|numeric',
                 'jenjang_pemohon' => 'required',
                 'status_pemohon' => 'required',
@@ -335,7 +337,7 @@ class ApplicantController extends Controller
                 'name' => $request->nama_pengguna,
                 'email' => $request->email,
                 'foto_profile' => $image,
-                'email_verified_at' => $request->email == $item->email ? $item->email_verified_at : null,
+                'email_verified_at' => $request->email != $item->email ? $item->email_verified_at : null,
             ];
             // dd($data);
             $item->update($data);

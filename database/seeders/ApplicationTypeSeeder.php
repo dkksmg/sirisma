@@ -17,8 +17,9 @@ class ApplicationTypeSeeder extends Seeder
     {
         $types = [
             ['jenis_permohonan' => 'Penelitian', 'status_opsi' => 'y', 'created_at' => now(), 'updated_at' => now()],
+            ['jenis_permohonan' => 'Pengambilan Data', 'status_opsi' => 'y', 'created_at' => now(), 'updated_at' => now()],
+            ['jenis_permohonan' => 'Survey Awal/Studi Pendahuluan', 'status_opsi' => 'y', 'created_at' => now(), 'updated_at' => now()],
             ['jenis_permohonan' => 'Magang', 'status_opsi' => 'n', 'created_at' => now(), 'updated_at' => now()],
-            ['jenis_permohonan' => 'Pengambilan Data', 'status_opsi' => 'n', 'created_at' => now(), 'updated_at' => now()],
         ];
 
         foreach ($types as $type) {

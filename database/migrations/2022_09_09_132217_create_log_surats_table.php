@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('log_surats', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_application');
-            $table->enum('status_surat', ['draft', 'kirim', 'proses', 'setuju', 'sanggah', 'selesai', 'tolak']);
+            $table->enum('status_surat', ['draft', 'kirim', 'proses', 'setuju', 'sanggah', 'selesai', 'tolak', 'sesuai', 'ubah']);
             $table->foreignId('update_oleh');
             $table->dateTime('update_waktu');
             $table->text('keterangan')->nullable();
+            $table->string('role');
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('id_application')->references('id_application')->on('applications')->onDelete('cascade')->onUpdate('cascade');

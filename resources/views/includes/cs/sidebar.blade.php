@@ -3,20 +3,22 @@
                 <div class="sidenav-menu">
                     <div class="nav accordion" id="accordionSidenav">
                         <div class="sidenav-menu-heading">Notifikasi</div>
-                        <a class="nav-link" href="#!">
+                        <a class="nav-link" href="{{ route('penelitian-baru-cs.index') }}">
                             <div class="nav-link-icon"><i data-feather="bell"></i></div>
                             Permohonan
-                            {{-- @if ($countmessage != 0)
-                                <span class="badge bg-warning-soft text-warning ms-auto">
-                                    {{ $countmessage . ' New!' }}
+                            @if ($penelitianBaruSidebar != 0)
+                                <span
+                                    class="badge bg-danger-soft text-danger ms-auto animate__animated animate__swing animate__infinite infinite">
+                                    {{ $penelitianBaruSidebar . ' New!' }}
                                 </span>
-                            @endif --}}
+                            @endif
                         </a>
                         <a class="nav-link" href="#!">
                             <div class="nav-link-icon"><i data-feather="mail"></i></div>
                             Pesan
                             @if ($countmessage != 0)
-                                <span class="badge bg-success-soft text-success ms-auto">
+                                <span
+                                    class="badge bg-warning-soft text-warning ms-auto animate__animated animate__swing animate__infinite infinite">
                                     {{ $countmessage . ' New!' }}
                                 </span>
                             @endif
@@ -37,12 +39,13 @@
                             Penelitian
                             <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseApps" data-bs-parent="#accordionSidenav">
+                        <div class="collapse {{ (Request::segment(2) == 'penelitian-baru-cs' ? 'show' : '' || Request::segment(2) == 'penelitian-terproses-cs') ? 'show' : '' }}"
+                            id="collapseApps" data-bs-parent="#accordionSidenav">
                             <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavAppsMenu">
-                                <a class="nav-link " href="{{ route('permohonan-baru.index') }}">
+                                <a class="nav-link " href="{{ route('penelitian-baru-cs.index') }}">
                                     Baru
                                 </a>
-                                <a class="nav-link" href="{{ route('permohonan-terproses.index') }}">
+                                <a class="nav-link" href="{{ route('penelitian-terproses-cs.index') }}">
                                     Terproses
                                 </a>
                             </nav>

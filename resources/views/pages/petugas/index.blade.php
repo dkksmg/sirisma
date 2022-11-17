@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('title', 'Petugas')
+@section('title', 'PETUGAS')
 @section('content')
     <div id="layoutSidenav_content">
         <main>
@@ -24,7 +24,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1">
                                         <div class="small fw-bold text-primary mb-1">Penelitian (Baru)</div>
-                                        <div class="h5">1</div>
+                                        <div class="h5">{{ $penelitianBaruDashboard }}</div>
                                     </div>
                                     <div class="ms-2"><i class="fas fa-book fa-2x text-gray-200"></i></div>
                                 </div>
@@ -38,7 +38,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1">
                                         <div class="small fw-bold text-secondary mb-1">Penelitian (Terproses)</div>
-                                        <div class="h5">0</div>
+                                        <div class="h5">{{ $penelitianProsesDashboard }}</div>
                                     </div>
                                     <div class="ms-2"><i class="fas fa-building-columns fa-2x text-gray-200"></i></div>
                                 </div>
@@ -51,8 +51,8 @@
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1">
-                                        <div class="small fw-bold text-success mb-1">Magang (Baru)</div>
-                                        <div class="h5">0</div>
+                                        <div class="small fw-bold text-success mb-1">Pesan (Baru)</div>
+                                        <div class="h5">{{ $countmessage }}</div>
                                     </div>
                                     <div class="ms-2"><i class="fas fa-bars-progress fa-2x text-gray-200"></i></div>
                                 </div>
@@ -65,10 +65,10 @@
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-grow-1">
-                                        <div class="small fw-bold text-info mb-1">Magang (Terproses)</div>
-                                        <div class="h5">0</div>
+                                        <div class="small fw-bold text-info mb-1">Pesan (Terproses)</div>
+                                        <div class="h5">{{ $countmessage }}</div>
                                     </div>
-                                    <div class="ms-2"><i class="fas fa-users fa-2x text-gray-200"></i></div>
+                                    <div class="ms-2"><i class="fa-solid fa-user-graduate fa-2x text-gray-200"></i></div>
                                 </div>
                             </div>
                         </div>
@@ -175,4 +175,8 @@
         }
         setInterval(showTime, 500);
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="{{ url('backend/assets/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ url('backend/assets/demo/chart-bar-demo.js') }}"></script>
+    <script src="{{ url('backend/assets/demo/chart-pie-demo.js') }}"></script>
 @endpush

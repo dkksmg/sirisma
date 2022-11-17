@@ -54,7 +54,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email:rfc,dns', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'captcha' => ['required|captcha']
+            'captcha' => ['required', 'captcha']
         ], [
             'name.required' => 'Nama Lengkap wajib diisi',
             'name.max' => 'Nama Lengkap berisi maksimal 255 karakter',
