@@ -5,7 +5,7 @@
 <meta name="author" content="Dinas Kesehatan Kota Semarang">
 <meta name="generator" content="Hugo 0.101.0">
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<title>Sistem Informasi Permohonan Izin Riset/Penelitian dan Magang DKK Semarang</title>
+<title>{{ config('app.name') }}</title>
 <!-- Favicons -->
 <link rel="shortcut icon" href="{{ url('assets/img/favicon.png') }}" type="image/x-icon" />
 <!-- Google Fonts -->

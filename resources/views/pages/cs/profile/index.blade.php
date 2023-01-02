@@ -24,7 +24,8 @@
                     <a class="nav-link active ms-0" href="">Profile</a>
                 </nav>
                 <hr class="mt-0 mb-4" />
-                <form action={{ route('profile-cs.update', $dataUser->id) }} enctype="multipart/form-data" method="post">
+                <form action={{ route('cs.profile-update', Crypt::encrypt($dataUser->id)) }} enctype="multipart/form-data"
+                    method="post">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -36,7 +37,7 @@
                                 <div class="card-body text-center">
                                     <!-- Profile picture image-->
                                     <img class="img-account-profile rounded-circle mb-2"
-                                        src="{{ Storage::url($dataUser->foto_profile) }}"
+                                        src="{{ Storage::url($dataUser->foto_profil) }}"
                                         onerror="this.onerror=null; this.src='{{ url('backend/assets/img/illustrations/profiles/profile-2.png') }}'"
                                         alt="Profil Image" />
                                     <!-- Profile picture help block-->
@@ -47,7 +48,8 @@
                                     <!-- Profile picture upload button-->
 
                                     <div class="card mb-4 mb-xl-0 mt-3">
-                                        <input class="btn btn-primary" type="file" name="imageprofile" />
+                                        <input class="btn btn-primary" type="file" name="imageprofile"
+                                            accept="image/png, image/jpeg" />
                                     </div>
                                 </div>
                             </div>

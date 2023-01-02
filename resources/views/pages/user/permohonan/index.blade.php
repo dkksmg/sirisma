@@ -175,7 +175,7 @@
                                                     <table>
                                                         <tr>
                                                             <th class="text-center"><a
-                                                                    href="{{ route('permohonan.show', $app->id_application) }}"
+                                                                    href="{{ route('permohonan.show', Crypt::encrypt($app->id_application)) }}"
                                                                     class="btn btn-info btn-sm ml-3"><i
                                                                         class="fa-sharp fa-solid fa-eye"
                                                                         title="Lihat Permohonan {{ $app->keperluan }}"></i></a>

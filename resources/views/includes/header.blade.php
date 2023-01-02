@@ -29,7 +29,7 @@
                                     {{ Auth::user()->name }}</span> <i
                                     class="bi bi-chevron-down dropdown-indicator"></i></a>
                             <ul>
-                                <li><a href="{{ url('/profile') }}">Profile</a></li>
+                                <li><a href="{{ route('profile.index') }}">Profile</a></li>
                                 <li>
                                     {{-- <a href="" class="">Keluar</a> --}}
                                     <form action="{{ route('logout') }}" method="POST" class="">

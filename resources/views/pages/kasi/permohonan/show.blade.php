@@ -184,7 +184,7 @@
                                                                                         <th>
                                                                                             <button
                                                                                                 class="btn btn-sm btn-warning"
-                                                                                                onClick="window.open('{{ route('profile-pemohon-kasi', $data->id_application) }}','_blank', 'location=yes,height=800,width=700,scrollbars=yes,status=yes');">
+                                                                                                onClick="window.open('{{ route('kasi.profile-pemohon', Crypt::encrypt($data->id_application)) }}','_blank', 'location=yes,height=800,width=700,scrollbars=yes,status=yes');">
                                                                                                 Pemohon</button>
                                                                                         </th>
                                                                                     </tr>
@@ -200,7 +200,7 @@
                                                 <div class="row">
                                                     <div class="col-md-6 d-flex justify-content-center">
                                                         <div class="mb-3">
-                                                            <a href="{{ route('penelitian-baru-kasi.index') }}"
+                                                            <a href="{{ route('kasi.penelitian-baru') }}"
                                                                 class="btn btn-md btn-secondary">Kembali</a>
                                                         </div>
                                                     </div>

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\CS;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -120,7 +122,7 @@ class ProfileController extends Controller
     {
         $name = Auth::user()->name;
         $arr = explode(' ', trim($name));
-        $item = User::findOrFail($id);
+        $item = User::findOrFail(Crypt::decrypt($id));
         if (Storage::disk('local')->exists('public/' . $item->foto_profile)) {
             $validator = Validator::make($request->all(), [
                 'nama_lengkap' => 'required|min:5',
@@ -158,7 +160,7 @@ class ProfileController extends Controller
         } else {
             if (!empty($request->file('imageprofile'))) {
                 $file = $request->file('imageprofile');
-                $filename = $arr[0] . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $filename = str_replace(' ', '_', $name) . '_' . Carbon::now()->format('d-m-y') . '_' . time() . '.' . $file->getClientOriginalExtension();
                 $img = Image::make($file);
                 if (Image::make($file)->width() > 720) {
                     $img->resize(720, null, function ($constraint) {
@@ -179,10 +181,11 @@ class ProfileController extends Controller
                 'name' => $request->nama_lengkap,
                 'email' => $request->email,
                 'foto_profile' => $image,
-                'email_verified_at' => $request->email != $item->email ? $item->email_verified_at : null,
+                'email_verified_at' => $request->email == $item->email ? $item->email_verified_at : null,
             ];
+            // dd($data);
             $item->update($data);
-            return redirect()->route('profile-cs.index')->withSuccess('Akun Profile diupdate!');
+            return redirect()->route('cs.profile')->withSuccess('Akun Profile diupdate!');
         }
     }
 

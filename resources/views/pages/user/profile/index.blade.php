@@ -40,7 +40,7 @@
                                 </p>
                                 <div class="d-flex justify-content-center mb-2">
                                     <a href="{{ route('password.request') }}" class="btn btn-danger">Ubah Password</a>
-                                    <a @if (empty($data->id_user)) href="{{ route('profile.create') }}" @else href="{{ route('profile.edit', $data->id_applicant) }}" @endif
+                                    <a @if (empty($data->id_user)) href="{{ route('profile.create') }}" @else href="{{ route('profile.edit', Crypt::encrypt($data->id_applicant)) }}" @endif
                                         class="btn btn-outline-warning ms-1">Perbarui
                                         Data Diri</a>
                                 </div>

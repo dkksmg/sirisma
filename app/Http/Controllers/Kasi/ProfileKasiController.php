@@ -7,7 +7,9 @@ use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -116,8 +118,8 @@ class ProfileKasiController extends Controller
     public function update(Request $request, $id)
     {
         $name = Auth::user()->name;
-        $arr = explode(' ', trim($name));
-        $item = User::findOrFail($id);
+        // $arr = explode(' ', trim($name));
+        $item = User::findOrFail(Crypt::decrypt($id));
         if (Storage::disk('local')->exists('public/' . $item->foto_profile)) {
             $validator = Validator::make($request->all(), [
                 'nama_lengkap' => 'required|min:5',
@@ -155,7 +157,7 @@ class ProfileKasiController extends Controller
         } else {
             if (!empty($request->file('imageprofile'))) {
                 $file = $request->file('imageprofile');
-                $filename = $arr[0] . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $filename = str_replace(' ', '_', $name) . '_' . Carbon::now()->format('d-m-y') . '_' . time() . '.' . $file->getClientOriginalExtension();
                 $img = Image::make($file);
                 if (Image::make($file)->width() > 720) {
                     $img->resize(720, null, function ($constraint) {
@@ -176,11 +178,11 @@ class ProfileKasiController extends Controller
                 'name' => $request->nama_lengkap,
                 'email' => $request->email,
                 'foto_profile' => $image,
-                'email_verified_at' => $request->email != $item->email ? $item->email_verified_at : null,
+                'email_verified_at' => $request->email == $item->email ? $item->email_verified_at : null,
             ];
             // dd($data);
             $item->update($data);
-            return redirect()->route('profile-kasi.index')->withSuccess('Akun Profile diupdate!');
+            return redirect()->back()->withSuccess('Akun Profile diupdate!');
         }
     }
 

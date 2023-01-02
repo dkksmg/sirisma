@@ -14,6 +14,7 @@ use App\Models\ApplicationType;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -30,15 +31,15 @@ class ApplicationController extends Controller
     {
         $this->middleware(function ($request, $next) {
             if (Auth::user()->role == 'CS') {
-                return redirect()->route('dashboard-cs');
+                return redirect()->route('cs.dashboard');
             } else if (Auth::user()->role == 'KABID') {
-                return redirect()->route('dashboard-kabid');
+                return redirect()->route('kabid.dashboard');
             } else if (Auth::user()->role == 'KASI') {
-                return redirect()->route('dashboard-kasi');
+                return redirect()->route('kasi.dashboard');
             } else if (Auth::user()->role == 'PETUGAS') {
-                return redirect()->route('dashboard-petugas');
+                return redirect()->route('petugas.dashboard');
             } else if (Auth::user()->role == 'SUPERADMIN') {
-                return redirect()->route('dashboard-admin');
+                return redirect()->route('admin.dashboard');
             } else if (Auth::user()->role == 'USER') {
                 return $next($request);
             }
@@ -201,7 +202,7 @@ class ApplicationController extends Controller
     public function show($id)
     {
         $types = ApplicationType::all();
-        $data = Application::with(['applicant', 'user', 'type', 'addonapplicant'])->findOrFail($id);
+        $data = Application::with(['applicant', 'user', 'type', 'addonapplicant'])->findOrFail(Crypt::decrypt($id));
         $lokasi = LokasiTujuan::all()->sortBy('lokasi_tujuan');
         return view('pages.user.permohonan.show', [
             'types' => $types,

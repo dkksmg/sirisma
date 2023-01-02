@@ -184,7 +184,7 @@
         <div class="modal fade" id="staticBackdrop{{ $agenda->id_application }}" data-bs-backdrop="static"
             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
-                <form action="{{ route('penelitian-baru-cs.update', $agenda->id_application) }}" method="post">
+                <form action="{{ route('cs.penelitian-baru.update', $agenda->id_application) }}" method="post">
                     @csrf
                     @method('PUT')
                     <div class="modal-content">

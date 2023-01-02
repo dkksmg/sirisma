@@ -169,7 +169,7 @@ class UserController extends Controller
         } else {
             if (!empty($request->file('imageprofile'))) {
                 $file = $request->file('imageprofile');
-                $filename = $arr[0] . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $filename = str_replace(' ', '_', $name) . '_' . Carbon::now()->format('d-m-y') . '_' . time() . '.' . $file->getClientOriginalExtension();
                 $img = Image::make($file);
                 if (Image::make($file)->width() > 720) {
                     $img->resize(720, null, function ($constraint) {

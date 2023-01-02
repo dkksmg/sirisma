@@ -3,7 +3,7 @@
     <!-- Sidenav Toggle Button-->
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i
             data-feather="menu"></i></button>
-    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="{{ route('dashboard-admin') }}">
+    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="{{ route('admin.dashboard') }}">
         {{-- <img src="{{ url('assets/img/pemkot.png') }}" height="50px" width="auto" alt="icon sirisma" /> --}}
         SIRISMA</a>
     <!-- Navbar Items-->

@@ -26,7 +26,7 @@
                         <!-- Sidenav Menu Heading (Core)-->
                         <div class="sidenav-menu-heading"></div>
                         <!-- Sidenav Accordion (Dashboard)-->
-                        <a class="nav-link collapsed" href="{{ route('dashboard-admin') }}">
+                        <a class="nav-link collapsed" href="{{ route('admin.dashboard') }}">
                             <div class="nav-link-icon"><i data-feather="activity"></i></div>
                             Dashboard
                         </a>

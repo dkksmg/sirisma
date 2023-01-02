@@ -3,7 +3,7 @@
     <!-- Sidenav Toggle Button-->
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i
             data-feather="menu"></i></button>
-    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="{{ route('dashboard-cs') }}">
+    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="{{ route('kabid.dashboard') }}">
         {{-- <img src="{{ url('assets/img/pemkot.png') }}" height="50px" width="auto" alt="icon sirisma" /> --}}
         SIRISMA</a>
     <!-- Navbar Items-->
@@ -28,7 +28,7 @@
                 </h6>
                 @foreach ($penelitianBaru as $penelitian)
                     <a class="dropdown-item dropdown-notifications-item"
-                        href="{{ route('penelitian-baru-kabid.index') }}#permohonan{{ $penelitian->id_application }}">
+                        href="{{ route('kabid.penelitian-baru') }}#permohonan{{ $penelitian->id_application }}">
                         <div class="dropdown-notifications-item-icon"><i data-feather="activity"></i></div>
                         <div class="dropdown-notifications-item-content">
                             <div class="dropdown-notifications-item-content-details">
@@ -39,8 +39,8 @@
                         </div>
                     </a>
                 @endforeach
-                <a class="dropdown-item dropdown-notifications-footer"
-                    href="{{ route('penelitian-baru-kabid.index') }}">View All Alerts</a>
+                <a class="dropdown-item dropdown-notifications-footer" href="{{ route('kabid.penelitian-baru') }}">View
+                    All Alerts</a>
             </div>
         </li>
         <!-- Messages Dropdown-->
@@ -97,7 +97,7 @@
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('profile-kabid.index') }}">
+                <a class="dropdown-item" href="{{ route('kabid.profile') }}">
                     <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                     Profil
                 </a>

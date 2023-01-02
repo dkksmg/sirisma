@@ -144,10 +144,10 @@ class NewApplicationCsController extends Controller
                 $logsurat = [new LogSurat($log)];
                 $item->logsuratmany()->saveMany($logsurat);
                 $item->update($data);
-                return redirect()->route('penelitian-baru-cs.index')->with(['success' => 'Data Agenda Terdisposisi!']);
+                return redirect()->route('cs.penelitian-baru')->with(['success' => 'Data Agenda Terdisposisi!']);
             } else {
                 $item->update($data);
-                return redirect()->route('penelitian-baru-cs.index')->with(['success' => 'Data Agenda Tersimpan!']);
+                return redirect()->route('cs.penelitian-baru')->with(['success' => 'Data Agenda Tersimpan!']);
             }
         }
     }

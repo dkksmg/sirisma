@@ -24,6 +24,7 @@ use App\Http\Controllers\Kasi\NewApplicationKasiController;
 use App\Http\Controllers\Kasi\ProcessedApplicationKasiController;
 use App\Http\Controllers\Kasi\ProfileKasiController;
 use App\Http\Controllers\Petugas\DashboardController as PetugasDashboardController;
+use App\Http\Controllers\Petugas\MessagesController;
 use App\Http\Controllers\Petugas\NewApplicationPetugasController;
 use App\Http\Controllers\Petugas\ProcessedApplicationPetugasController;
 use App\Http\Controllers\Petugas\ProfilePetugasController;
@@ -68,43 +69,62 @@ Route::prefix('cs')
     ->middleware(['auth', 'cs', 'verified'])
     ->group(function () {
         Route::get('/', [DashboardController::class, 'index'])
-            ->name('dashboard-cs');
-        Route::resource('penelitian-baru-cs', NewApplicationCsController::class);
-        Route::resource('penelitian-terproses-cs', ProcessedApplicationCsController::class);
-        Route::resource('profile-cs', ProfileController::class);
+            ->name('cs.dashboard');
+        Route::get('penelitian-baru', [NewApplicationCsController::class, 'index'])->name('cs.penelitian-baru');
+        Route::post('penelitian-baru', [NewApplicationCsController::class, 'store'])->name('cs.penelitian-baru.store');
+        Route::get('penelitian-baru/edit/{id}', [NewApplicationCsController::class, 'edit'])->name('cs.penelitian-baru.edit');
+        Route::put('penelitian-baru/update/{id}', [NewApplicationCsController::class, 'update'])->name('cs.penelitian-baru.update');
+        Route::get('profile', [ProfileController::class, 'index'])->name('cs.profile');
+        Route::put('profile/{id}', [ProfileController::class, 'update'])->name('cs.profile-update');
+        Route::get('penelitian-terproses', [ProcessedApplicationCsController::class, 'index'])->name('cs.penelitian-terproses');
     });
 // Kabid
 Route::prefix('kabid')
     ->middleware(['auth', 'kabid', 'verified'])
     ->group(function () {
         Route::get('/', [KabidDashboardController::class, 'index'])
-            ->name('dashboard-kabid');
-        Route::resource('penelitian-baru-kabid', NewApplicationKabidController::class);
-        Route::resource('penelitian-terproses-kabid', ProcessedApplicationKabidController::class);
-        Route::resource('profile-kabid', ProfileKabidController::class);
-        Route::get('profile-pemohon-kabid/{id}', [NewApplicationPetugasController::class, 'profile_pemohon'])->name('profile-pemohon-kabid');
+            ->name('kabid.dashboard');
+        Route::get('penelitian-baru', [NewApplicationKabidController::class, 'index'])->name('kabid.penelitian-baru');
+        Route::put('penelitian-baru/{id}', [NewApplicationKabidController::class, 'update'])->name('kabid.penelitian-baru-update');
+        Route::get('lihat-penelitian/{id}', [NewApplicationKabidController::class, 'show'])->name('kabid.lihat-penelitian');
+        Route::get('penelitian-terproses', [ProcessedApplicationKabidController::class, 'index'])->name('kabid.penelitian-terproses');
+        Route::get('profile', [ProfileKabidController::class, 'index'])->name('kabid.profile');
+        Route::put('profile/{id}', [ProfileKabidController::class, 'update'])->name('kabid.profile-update');
+        Route::get('profile-pemohon/{id}', [NewApplicationPetugasController::class, 'profile_pemohon'])->name('kabid.profile-pemohon');
     });
 // Kasi
 Route::prefix('kasi')
     ->middleware(['auth', 'kasi', 'verified'])
     ->group(function () {
         Route::get('/', [KasiDashboardController::class, 'index'])
-            ->name('dashboard-kasi');
-        Route::resource('penelitian-baru-kasi', NewApplicationKasiController::class);
-        Route::resource('penelitian-terproses-kasi', ProcessedApplicationKasiController::class);
-        Route::get('profile-pemohon-kasi/{id}', [NewApplicationPetugasController::class, 'profile_pemohon'])->name('profile-pemohon-kasi');
-        Route::resource('profile-kasi', ProfileKasiController::class);
+            ->name('kasi.dashboard');
+        Route::get('penelitian-baru', [NewApplicationKasiController::class, 'index'])->name('kasi.penelitian-baru');
+        Route::put('penelitian-baru/{id}', [NewApplicationKasiController::class, 'update'])->name('kasi.penelitian-baru-update');
+        Route::get('lihat-penelitian/{id}', [NewApplicationKasiController::class, 'show'])->name('kasi.lihat-penelitian');
+        Route::get('penelitian-terproses', [ProcessedApplicationKasiController::class, 'index'])->name('kasi.penelitian-terproses');
+        Route::get('profile-pemohon/{id}', [NewApplicationPetugasController::class, 'profile_pemohon'])->name('kasi.profile-pemohon');
+        Route::get('profile', [ProfileKasiController::class, 'index'])->name('kasi.profile');
+        Route::put('profile/{id}', [ProfileKasiController::class, 'update'])->name('kasi.profile-update');
     });
 // petugas
 Route::prefix('petugas')
     ->middleware(['auth', 'petugas', 'verified'])
     ->group(function () {
         Route::get('/', [PetugasDashboardController::class, 'index'])
-            ->name('dashboard-petugas');
+            ->name('petugas.dashboard');
+        Route::get('penelitian-baru', [NewApplicationPetugasController::class, 'index'])->name('petugas.penelitian-baru');
+        Route::put('penelitian-baru/{id}', [NewApplicationPetugasController::class, 'update'])->name('petugas.penelitian-baru-update');
         Route::resource('penelitian-baru-petugas', NewApplicationPetugasController::class);
         Route::resource('penelitian-terproses-petugas', ProcessedApplicationPetugasController::class);
+        Route::get('penelitian-terproses', [ProcessedApplicationPetugasController::class, 'index'])->name('petugas.penelitian-terproses');
         Route::resource('profile-petugas', ProfilePetugasController::class);
         Route::get('profile-pemohon-petugas/{id}', [NewApplicationPetugasController::class, 'profile_pemohon'])->name('profile-pemohon-petugas');
+
+        Route::get('profile-pemohon/{id}', [NewApplicationPetugasController::class, 'profile_pemohon'])->name('petugas.profile-pemohon');
+        Route::get('profile', [ProfilePetugasController::class, 'index'])->name('petugas.profile');
+        Route::put('profile/{id}', [ProfilePetugasController::class, 'update'])->name('petugas.profile-update');
+
+        Route::get('pesan', [MessagesController::class, 'index'])->name('petugas.pesan');
         Route::get('generate-penelitian/{id}', [NewApplicationPetugasController::class, 'generate_penelitian'])->name('generate-penelitian');
         Route::put('simpan-surat/{id}', [NewApplicationPetugasController::class, 'simpan_surat_penelitian'])->name('simpan-surat');
     });
@@ -113,7 +133,7 @@ Route::prefix('admin')
     ->middleware(['auth', 'admin', 'verified'])
     ->group(function () {
         Route::get('/', [AdminDashboardController::class, 'index'])
-            ->name('dashboard-admin');
+            ->name('admin.dashboard');
         Route::resource('profile-admin', ProfileAdminController::class);
         Route::resource('users', UserController::class);
         Route::get('restore-user/{id}', [UserController::class, 'restore'])->name('restore-user');
@@ -121,11 +141,15 @@ Route::prefix('admin')
         Route::get('pengguna', [UserController::class, 'pengguna'])->name('pengguna');
     });
 
-Route::resource('permohonan', ApplicationController::class)->middleware(['auth', 'verified']);
+Route::prefix('pemohon')
+    ->middleware(['auth', 'verified'])
+    ->group(function () {
+        Route::resource('permohonan', ApplicationController::class);
+        Route::post('revisi', [ApplicationController::class, 'revisi'])->name('revisi');
+        Route::resource('profile', ApplicantController::class);
+        Route::put('ganti-profil/{id}', [ApplicantController::class, 'imageprofile',])->name('imageprofile');
+    });
 // Route::get('/permohonan/edit/{id}',  \App\Http\Livewire\Permohonan\Edit::class)->middleware(['auth', 'verified'])->name('permohonan-user.edit');
-Route::post('revisi', [ApplicationController::class, 'revisi'])->middleware(['auth', 'verified'])->name('revisi');
-Route::resource('profile', ApplicantController::class)->middleware(['auth', 'verified']);
-Route::put('ganti-profil/{id}', [ApplicantController::class, 'imageprofile',])->name('imageprofile');
 Auth::routes(['verify' => true]);
 
 Route::get('/', [HomeController::class, 'index'])->name('home');

@@ -11,8 +11,10 @@ use App\Models\Applicant;
 use App\Models\SubDistrict;
 use Illuminate\Http\Request;
 use App\Models\StatusApplicant;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\Models\EducationLevelPenelitians;
@@ -29,15 +31,15 @@ class ApplicantController extends Controller
     {
         $this->middleware(function ($request, $next) {
             if (Auth::user()->role == 'CS') {
-                return redirect()->route('dashboard-cs');
+                return redirect()->route('cs.dashboard');
             } else if (Auth::user()->role == 'KABID') {
-                return redirect()->route('dashboard-kabid');
+                return redirect()->route('kabid.dashboard');
             } else if (Auth::user()->role == 'KASI') {
-                return redirect()->route('dashboard-kasi');
+                return redirect()->route('kasi.dashboard');
             } else if (Auth::user()->role == 'PETUGAS') {
-                return redirect()->route('dashboard-petugas');
+                return redirect()->route('petugas.dashboard');
             } else if (Auth::user()->role == 'SUPERADMIN') {
-                return redirect()->route('dashboard-admin');
+                return redirect()->route('admin.dashboard');
             } else if (Auth::user()->role == 'USER') {
                 return $next($request);
             }
@@ -151,7 +153,7 @@ class ApplicantController extends Controller
         $provinces = Province::all();
         $educations = EducationLevelPenelitians::all()->sortByDesc('level_pendidikan');
         $statuses = StatusApplicant::all()->sortBy('status_pemohon');
-        $data = Applicant::with(['user', 'province_ktp', 'district_ktp', 'sub_district_ktp', 'village_ktp', 'province_domisili', 'district_domisili', 'sub_district_domisili', 'village_domisili'])->findOrFail($id);
+        $data = Applicant::with(['user', 'province_ktp', 'district_ktp', 'sub_district_ktp', 'village_ktp', 'province_domisili', 'district_domisili', 'sub_district_domisili', 'village_domisili'])->findOrFail(Crypt::decrypt($id));
         return view('pages.user.profile.edit', [
             'provinces' => $provinces,
             'educations' => $educations,
@@ -315,7 +317,7 @@ class ApplicantController extends Controller
         } else {
             if (!empty($request->file('imageprofile'))) {
                 $file = $request->file('imageprofile');
-                $filename = $arr[0] . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $filename = str_replace(' ', '_', $name) . '_' . Carbon::now()->format('d-m-y') . '_' . time() . '.' . $file->getClientOriginalExtension();
                 $img = Image::make($file);
                 if (Image::make($file)->width() > 720) {
                     $img->resize(720, null, function ($constraint) {

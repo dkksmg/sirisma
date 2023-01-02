@@ -20,6 +20,9 @@ class IsKasi
         if (Auth::user() && Auth::user()->role == 'KASI') {
             return $next($request);
         }
-        return redirect('/');
+        // return redirect('/');
+        else {
+            return redirect()->route('login');
+        }
     }
 }

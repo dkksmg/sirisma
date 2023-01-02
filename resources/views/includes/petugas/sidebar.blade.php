@@ -3,7 +3,7 @@
         <div class="sidenav-menu">
             <div class="nav accordion" id="accordionSidenav">
                 <div class="sidenav-menu-heading">Notifikasi</div>
-                <a class="nav-link" href="#!">
+                <a class="nav-link" href="{{ route('petugas.penelitian-baru') }}">
                     <div class="nav-link-icon"><i data-feather="bell"></i></div>
                     Permohonan
                     @if ($penelitianBaruSidebar != 0)
@@ -13,7 +13,7 @@
                         </span>
                     @endif
                 </a>
-                <a class="nav-link" href="#!">
+                <a class="nav-link" href="{{ route('petugas.pesan') }}">
                     <div class="nav-link-icon"><i data-feather="mail"></i></div>
                     Pesan
                     @if ($countmessage != 0)
@@ -26,11 +26,11 @@
                 <!-- Sidenav Menu Heading (Core)-->
                 <div class="sidenav-menu-heading">Utama</div>
                 <!-- Sidenav Accordion (Dashboard)-->
-                <a class="nav-link" href="{{ route('dashboard-petugas') }}">
+                <a class="nav-link" href="{{ route('petugas.dashboard') }}">
                     <div class="nav-link-icon"><i data-feather="activity"></i></div>
                     Dashboard
                 </a>
-                <a class="nav-link" href="{{ route('dashboard-petugas') }}">
+                <a class="nav-link" href="{{ route('petugas.pesan') }}">
                     <div class="nav-link-icon"><i data-feather="message-circle"></i></div>
                     Pesan
                 </a>
@@ -43,13 +43,13 @@
                     Penelitian
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse {{ (Request::segment(2) == 'penelitian-baru-petugas' ? 'show' : '' || Request::segment(2) == 'penelitian-terproses-petugas') ? 'show' : '' }}"
+                <div class="collapse {{ (Request::segment(2) == 'penelitian-baru' ? 'show' : '' || Request::segment(2) == 'penelitian-terproses') ? 'show' : '' }}"
                     id="collapseApps" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavAppsMenu">
-                        <a class="nav-link " href="{{ route('penelitian-baru-petugas.index') }}">
+                        <a class="nav-link " href="{{ route('petugas.penelitian-baru') }}">
                             Baru
                         </a>
-                        <a class="nav-link" href="{{ route('penelitian-terproses-petugas.index') }}">
+                        <a class="nav-link" href="{{ route('petugas.penelitian-terproses') }}">
                             Terproses
                         </a>
                     </nav>

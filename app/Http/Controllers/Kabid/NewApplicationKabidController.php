@@ -13,6 +13,7 @@ use App\Models\ApplicationType;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 
 class NewApplicationKabidController extends Controller
@@ -104,7 +105,7 @@ class NewApplicationKabidController extends Controller
             ->whereNull('one.deleted_at')
             ->get();
         $types = ApplicationType::all();
-        $data = Application::with(['applicant', 'user', 'type', 'addonapplicant'])->findOrFail($id);
+        $data = Application::with(['applicant', 'user', 'type', 'addonapplicant'])->findOrFail(Crypt::decrypt($id));
         $lokasi = LokasiTujuan::all()->sortBy('lokasi_tujuan');
         return view('pages.kabid.permohonan.show', [
             'types' => $types,
@@ -167,7 +168,7 @@ class NewApplicationKabidController extends Controller
             ];
             $logsurat = [new LogSurat($log)];
             $item->logsuratmany()->saveMany($logsurat);
-            return redirect()->route('penelitian-baru-kabid.index')->with(['success' => 'Permohonan Terproses!']);
+            return redirect()->route('kabid.penelitian-baru')->with(['success' => 'Permohonan Terproses!']);
         }
     }
     /**

@@ -20,6 +20,9 @@ class IsPetugas
         if (Auth::user() && Auth::user()->role == 'PETUGAS') {
             return $next($request);
         }
-        return redirect('/');
+        // return redirect('/');
+        else {
+            return redirect()->route('login');
+        }
     }
 }

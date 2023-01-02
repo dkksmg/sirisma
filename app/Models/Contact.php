@@ -13,4 +13,9 @@ class Contact extends Model
 
     protected $fillable = ['nama_lengkap', 'email', 'subject_kontak', 'pesan'];
     protected $hidden = [];
+
+    public function data_user()
+    {
+        return $this->belongsTo(User::class, 'email', 'email');
+    }
 }

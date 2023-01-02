@@ -48,7 +48,8 @@
                                     <!-- Profile picture upload button-->
 
                                     <div class="card mb-4 mb-xl-0 mt-3">
-                                        <input class="btn btn-primary" type="file" name="imageprofile" />
+                                        <input class="btn btn-primary" type="file" name="imageprofile"
+                                            accept="image/png, image/jpeg" />
                                     </div>
                                 </div>
                             </div>

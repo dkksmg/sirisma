@@ -13,6 +13,7 @@ use App\Models\ApplicationType;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 
 class NewApplicationKasiController extends Controller
@@ -105,7 +106,7 @@ class NewApplicationKasiController extends Controller
             ->where(['two.status_surat' => 'proses', 'two.role' => 'KABID'])
             ->get();
         $types = ApplicationType::all();
-        $data = Application::with(['applicant', 'user', 'type', 'addonapplicant'])->findOrFail($id);
+        $data = Application::with(['applicant', 'user', 'type', 'addonapplicant'])->findOrFail(Crypt::decrypt($id));
         $lokasi = LokasiTujuan::all()->sortBy('lokasi_tujuan');
         return view('pages.kasi.permohonan.show', [
             'types' => $types,
@@ -139,7 +140,7 @@ class NewApplicationKasiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $item = Application::findOrFail($id);
+        $item = Application::findOrFail(Crypt::decrypt($id));
         if ($request->status_surat == 'tolak') {
             $validator = Validator::make($request->all(), [
                 'status_surat' => 'required',
@@ -168,7 +169,7 @@ class NewApplicationKasiController extends Controller
             ];
             $logsurat = [new LogSurat($log)];
             $item->logsuratmany()->saveMany($logsurat);
-            return redirect()->route('penelitian-baru-kasi.index')->with(['success' => 'Permohonan Terproses!']);
+            return redirect()->route('kasi.penelitian-baru')->with(['success' => 'Permohonan Terproses!']);
         }
     }
 

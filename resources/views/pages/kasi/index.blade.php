@@ -209,7 +209,7 @@
             </div>
         </main>
 
-        @include('includes.cs.footer')
+        @include('includes.kasi.footer')
     </div>
 @endsection
 @push('addon-script')

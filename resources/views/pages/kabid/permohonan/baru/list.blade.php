@@ -164,7 +164,7 @@
                                                             <td>
                                                                 <button class="btn btn-sm btn-warning fa-solid fa-eye"
                                                                     title="Preview Permohonan"
-                                                                    onClick="window.open('{{ Route('penelitian-baru-kabid.show', $permohonan->id_application) }}','_blank', 'location=yes,height=800,width=700,scrollbars=yes,status=yes');">
+                                                                    onClick="window.open('{{ Route('kabid.lihat-penelitian', Crypt::encrypt($permohonan->id_application)) }}','_blank', 'location=yes,height=800,width=700,scrollbars=yes,status=yes');">
                                                                 </button>
                                                             </td>
                                                             <td>
@@ -193,7 +193,7 @@
         <div class="modal fade" id="staticBackdrop{{ $agenda->id_application }}" data-bs-backdrop="static"
             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
-                <form action="{{ route('penelitian-baru-kabid.update', $agenda->id_application) }}" method="post">
+                <form action="{{ route('kabid.penelitian-baru-update', $agenda->id_application) }}" method="post">
                     @csrf
                     @method('PUT')
                     <div class="modal-content">

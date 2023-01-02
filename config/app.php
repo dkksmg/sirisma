@@ -187,6 +187,7 @@ return [
          */
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
         // Alfa6661\AutoNumber\AutoNumberServiceProvider::class,
         Mews\Captcha\CaptchaServiceProvider::class,
         Mavinoo\Batch\BatchServiceProvider::class,
@@ -220,6 +221,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
         'Batch' => Mavinoo\Batch\BatchFacade::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         // 'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
     ])->toArray(),
 

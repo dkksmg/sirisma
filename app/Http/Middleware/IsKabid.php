@@ -20,6 +20,9 @@ class IsKabid
         if (Auth::user() && Auth::user()->role == 'KABID') {
             return $next($request);
         }
-        return redirect('/');
+        // return redirect('/');
+        else {
+            return redirect()->route('login');
+        }
     }
 }

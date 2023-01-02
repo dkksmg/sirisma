@@ -3,7 +3,7 @@
         <div class="sidenav-menu">
             <div class="nav accordion" id="accordionSidenav">
                 <div class="sidenav-menu-heading">Notifikasi</div>
-                <a class="nav-link" href="{{ route('penelitian-baru-kasi.index') }}">
+                <a class="nav-link" href="{{ route('kasi.penelitian-baru') }}">
                     <div class="nav-link-icon"><i data-feather="bell"></i></div>
                     Permohonan
                     @if ($penelitianBaruSidebar != 0)
@@ -26,7 +26,7 @@
                 <!-- Sidenav Menu Heading (Core)-->
                 <div class="sidenav-menu-heading">Utama</div>
                 <!-- Sidenav Accordion (Dashboard)-->
-                <a class="nav-link" href="{{ route('dashboard-kasi') }}">
+                <a class="nav-link" href="{{ route('kasi.dashboard') }}">
                     <div class="nav-link-icon"><i data-feather="activity"></i></div>
                     Dashboard
                 </a>
@@ -39,13 +39,13 @@
                     Penelitian
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse {{ (Request::segment(2) == 'penelitian-baru-kasi' ? 'show' : '' || Request::segment(2) == 'penelitian-terproses-kasi') ? 'show' : '' }}"
+                <div class="collapse {{ (Request::segment(2) == 'penelitian-baru' ? 'show' : '' || Request::segment(2) == 'penelitian-terproses') ? 'show' : '' }}"
                     id="collapseApps" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavAppsMenu">
-                        <a class="nav-link " href="{{ route('penelitian-baru-kasi.index') }}">
+                        <a class="nav-link " href="{{ route('kasi.penelitian-baru') }}">
                             Baru
                         </a>
-                        <a class="nav-link" href="{{ route('penelitian-terproses-kasi.index') }}">
+                        <a class="nav-link" href="{{ route('kasi.penelitian-terproses') }}">
                             Terproses
                         </a>
                     </nav>

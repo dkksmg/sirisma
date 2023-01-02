@@ -1,31 +1,33 @@
 <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
     <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-        <img src="{{ url('assets/img/pemkot.png') }}" height="50px" width="auto" alt="icon sirisma" /> <span class="fs-4">SIRISMA</span>
+        <img src="{{ url('assets/img/pemkot.png') }}" height="50px" width="auto" alt="icon sirisma" /> <span
+            class="fs-4">SIRISMA</span>
     </a>
 
     <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('home') }}">Home</a>
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('kontak') }}">Kontak</a>
         @auth()
-        <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('permohonan') }}">Permohonan</a>
-        <div class="dropdown">
-            <a class="ml-5 me-3 py-2 text-dark text-decoration-none dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Hai, {{ Auth::user()->name }}
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <form action="{{ route('logout') }}" method="POST" class=" dropdown-item">
-                        @csrf
-                        <button class="btn-out">Keluar</button>
-                    </form>
-                </li>
-            </ul>
-        </div>
+            <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('permohonan') }}">Permohonan</a>
+            <div class="dropdown">
+                <a class="ml-5 me-3 py-2 text-dark text-decoration-none dropdown-toggle" type="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Hai, {{ Auth::user()->name }}
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <form action="{{ route('logout') }}" method="POST" class=" dropdown-item">
+                            @csrf
+                            <button class="btn-out">Keluar</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
         @endauth
 
         @guest()
-        <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('login') }}">Login</a>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('register') }}">Register</a>
+            <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('login') }}">Login</a>
+            <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('register') }}">Register</a>
         @endguest
     </nav>
 </div>

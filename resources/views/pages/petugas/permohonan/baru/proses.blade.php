@@ -188,7 +188,7 @@
                                                                                         <th>
                                                                                             <button
                                                                                                 class="btn btn-sm btn-warning"
-                                                                                                onClick="window.open('{{ route('profile_pemohon', $data->id_application) }}','_blank', 'location=yes,height=800,width=700,scrollbars=yes,status=yes');">
+                                                                                                onClick="window.open('{{ route('petugas.profile-pemohon', $data->id_application) }}','_blank', 'location=yes,height=800,width=700,scrollbars=yes,status=yes');">
                                                                                                 Pemohon</button>
                                                                                         </th>
                                                                                     </tr>

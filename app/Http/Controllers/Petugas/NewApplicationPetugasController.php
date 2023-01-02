@@ -14,6 +14,7 @@ use App\Models\ApplicationType;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 
 class NewApplicationPetugasController extends Controller
@@ -143,7 +144,7 @@ class NewApplicationPetugasController extends Controller
     }
     public function profile_pemohon($id)
     {
-        $user = Application::findOrFail($id);
+        $user = Application::findOrFail(Crypt::decrypt($id));
         $data = Applicant::with(['user', 'province_ktp', 'district_ktp', 'sub_district_ktp', 'village_ktp', 'province_domisili', 'district_domisili', 'sub_district_domisili', 'village_domisili'])->findOrFail($user->id_applicant);
         // dd($data);
         return view('pages.petugas.pemohon.index', [

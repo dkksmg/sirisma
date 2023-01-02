@@ -3,7 +3,7 @@
         <div class="sidenav-menu">
             <div class="nav accordion" id="accordionSidenav">
                 <div class="sidenav-menu-heading">Notifikasi</div>
-                <a class="nav-link" href="{{ route('penelitian-baru-kabid.index') }}">
+                <a class="nav-link" href="{{ route('kabid.penelitian-baru') }}">
                     <div class="nav-link-icon"><i data-feather="bell"></i></div>
                     Permohonan
                     @if ($penelitianBaruSidebar != 0)
@@ -26,7 +26,7 @@
                 <!-- Sidenav Menu Heading (Core)-->
                 <div class="sidenav-menu-heading">Utama</div>
                 <!-- Sidenav Accordion (Dashboard)-->
-                <a class="nav-link" href="{{ route('dashboard-kabid') }}">
+                <a class="nav-link" href="{{ route('kabid.dashboard') }}">
                     <div class="nav-link-icon"><i data-feather="activity"></i></div>
                     Dashboard
                 </a>
@@ -39,13 +39,13 @@
                     Penelitian
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse {{ (Request::segment(2) == 'penelitian-baru-kabid' ? 'show' : '' || Request::segment(2) == 'penelitian-terproses-kabid') ? 'show' : '' }}"
+                <div class="collapse {{ (Request::segment(2) == 'penelitian-baru' ? 'show' : '' || Request::segment(2) == 'penelitian-terproses') ? 'show' : '' }}"
                     id="collapseApps" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavAppsMenu">
-                        <a class="nav-link " href="{{ route('penelitian-baru-kabid.index') }}">
+                        <a class="nav-link " href="{{ route('kabid.penelitian-baru') }}">
                             Baru
                         </a>
-                        <a class="nav-link" href="{{ route('penelitian-terproses-kabid.index') }}">
+                        <a class="nav-link" href="{{ route('kabid.penelitian-terproses') }}">
                             Terproses
                         </a>
                     </nav>
@@ -59,8 +59,8 @@
                 </a>
                 <div class="collapse" id="collapseFlows" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="#">Baru</a>
-                        <a class="nav-link" href="#">Terproses</a>
+                        <a class="nav-link" href="javascript:void(0)">Baru</a>
+                        <a class="nav-link" href="javascript:void(0)">Terproses</a>
                     </nav>
                 </div>
             </div>

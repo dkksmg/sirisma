@@ -17,10 +17,16 @@ class IsCs
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user() && Auth::user()->role == 'CS') {
+        // if (Auth::user() && Auth::user()->role == 'CS') {
+        //     return $next($request);
+        //     // return redirect()->route('dashboard-cs');
+        // }
+        // return redirect('/');
+
+        if (auth::check() && Auth::user()->role == 'CS') {
             return $next($request);
-            // return redirect()->route('dashboard-cs');
+        } else {
+            return redirect()->route('login');
         }
-        return redirect('/');
     }
 }
