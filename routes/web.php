@@ -30,6 +30,7 @@ use App\Http\Controllers\Petugas\ProcessedApplicationPetugasController;
 use App\Http\Controllers\Petugas\ProfilePetugasController;
 use App\Http\Controllers\User\ApplicantController;
 use App\Http\Controllers\User\ApplicationController;
+use App\Http\Controllers\Master\MasterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -155,3 +156,4 @@ Auth::routes(['verify' => true]);
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::post('simpan-pesan', [HomeController::class, 'store'])->name('simpan-pesan');
+Route::get('provinsi', [MasterController::class, 'getProvfromAPI']);
