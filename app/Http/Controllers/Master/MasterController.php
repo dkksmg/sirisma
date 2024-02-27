@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
+use App\Models\Province;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
@@ -24,9 +25,23 @@ class MasterController extends Controller
                 // Mendapatkan body (konten) dari respons
                 $data = $response->getBody()->getContents();
                 $hasil = json_decode($data,true);
-                dd($hasil);
+                foreach($hasil as $prov){
+                    // dd($prov);
+                   $dataprov = Province::where('nama_provinsi','=',ucwords(strtolower($prov['nama'])))
+                   ->first();
+                if($dataprov !=null){
+
+                   $dataprov->update([
+                    'kode_provinsi'=>$prov['kode_provinsi'],
+                   ]);
+                }
+            }
+
+
                 // Lakukan operasi apapun yang Anda butuhkan dengan data yang diterima
-                return response()->json(json_decode($data));
+                return response()->json([
+                    'message'=>'Berhasil update'
+                ]);
             } else {
                 // Jika request tidak berhasil, kembalikan respons dengan status code yang sesuai
                 return response()->json(['message' => 'Failed to retrieve data from API'], $statusCode);

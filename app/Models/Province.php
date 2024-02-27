@@ -10,9 +10,11 @@ class Province extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = [
-        'nama_provinsi',
-    ];
+    // protected $fillable = [
+    //     'nama_provinsi',
+    // ];
+
+    protected $guarded = ["id"];
     protected $primaryKey = 'id_provinsi';
     public function district()
     {
