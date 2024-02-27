@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        {{-- <div class="row">
             {{ Form::hidden('applicant', $data->id_applicant) }}
             <div class="col-md-4" wire:key="UNIQUE_KEY">
                 <div class="form-group mb-3 mt-2" wire:ignore>
@@ -233,7 +233,7 @@
                     @enderror
                 </div>
             </div>
-        </div>
+        </div> --}}
         <br />
         <div class="text-center mt-5">
             <a class="btn btn-secondary" href="{{ route('permohonan.index') }}">Kembali</a>
